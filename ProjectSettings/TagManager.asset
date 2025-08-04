@@ -38,9 +38,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Groud
     uniqueID: 239923463
+    locked: 0
+  - name: Object
+    uniqueID: 1059432815
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0

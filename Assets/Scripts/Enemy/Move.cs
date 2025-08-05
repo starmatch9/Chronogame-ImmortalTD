@@ -24,12 +24,6 @@ public class Move : MonoBehaviour
 
     Rigidbody2D body;
 
-    //所有点的公式
-    float widthStart = -7.5f;
-    float widthEnd = 7.5f;
-    float heightStart = -3.5f;
-    float heightEnd = 4.5f;
-
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
@@ -143,6 +137,11 @@ public class Move : MonoBehaviour
     //调整
     public void Adjust()
     {
+        //所有点的公式
+        float widthStart = -7.5f;
+        float widthEnd = 7.5f;
+        float heightStart = -3.5f;
+        float heightEnd = 4.5f;
         //调整物体的位置
         for (float x = widthStart; x <= widthEnd; x += 1.0f)
         {

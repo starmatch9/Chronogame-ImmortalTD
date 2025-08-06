@@ -1,20 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static GlobalData;
 
 public class TowerInitial : MonoBehaviour
 {
     //攻击范围半径
     [Range(0, 20)]public float attackRange = 2f;
-
     //子弹预制体
     public GameObject bulletPrefab;
 
-    //敌人列表(后期从敌人生成点类获取，生产一个加一个)
-    public List<Enemy> enemies = new List<Enemy>();
+    List<Enemy> enemies = new List<Enemy>();
 
-    public Enemy oneEnemy;
-
+    //public Enemy oneEnemy;
     //用来计算间隔时间
     float timeSinceLastShot = 0f;
 
@@ -26,8 +24,9 @@ public class TowerInitial : MonoBehaviour
 
     private void Start()
     {
+        enemies = globalEnemies; //获取全局敌人列表
         //初始化敌人列表
-        enemies.Add(oneEnemy);
+        //enemies.Add(oneEnemy);
     }
     void Update()
     {
@@ -36,7 +35,6 @@ public class TowerInitial : MonoBehaviour
         if (timeSinceLastShot < 0.5f) { 
             return; //如果时间间隔小于1秒，则不执行攻击逻辑
         }
-
         Enemy closestEnemy = FindClosestEnemy(attackRange);
 
         if (closestEnemy != null)
@@ -45,8 +43,6 @@ public class TowerInitial : MonoBehaviour
         }
 
         timeSinceLastShot = 0f; //重置时间间隔
-
-
     }
 
     void Shoot(GameObject enemy)
@@ -91,7 +87,6 @@ public class TowerInitial : MonoBehaviour
         // 绘制无填充圆圈
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
-
     public void Adjust()
     {
         //所有点的公式

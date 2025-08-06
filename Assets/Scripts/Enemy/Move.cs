@@ -34,12 +34,17 @@ public class Move : MonoBehaviour
     void Update()
     {
         RunAlongRoad();
+    }
 
-        ////按下空格键时移动角色
-        //if (Input.GetKeyDown(KeyCode.Space))
-        //{
-        //    MoveObject();
-        //}
+    void OnEnable()
+    {
+        Adjust();
+        isMoving = false; //重置移动状态
+    }
+
+    void OnDisable()
+    {
+        direction = arrow.NONE; //重置方向
     }
 
     public void RunAlongRoad()
@@ -137,11 +142,13 @@ public class Move : MonoBehaviour
     //调整
     public void Adjust()
     {
+        //调整的点要包含外面那一圈！！
+
         //所有点的公式
-        float widthStart = -7.5f;
-        float widthEnd = 7.5f;
-        float heightStart = -3.5f;
-        float heightEnd = 4.5f;
+        float widthStart = -8.5f;
+        float widthEnd = 8.5f;
+        float heightStart = -4.5f;
+        float heightEnd = 5.5f;
         //调整物体的位置
         for (float x = widthStart; x <= widthEnd; x += 1.0f)
         {

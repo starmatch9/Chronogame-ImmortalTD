@@ -5,6 +5,8 @@ using UnityEngine;
 //抽象方法必须重写
 public abstract class Enemy : MonoBehaviour
 {
+    EnemySpawn enemySpawn; //敌人生成器
+
     HealthBar healthBar; //血条
 
     float maxHealth = 100f; //最大血量
@@ -22,19 +24,21 @@ public abstract class Enemy : MonoBehaviour
         //获取血条组件
         healthBar = GetComponentInChildren<HealthBar>();
     }
-
-    private void OnEnable()
+    
+    //游戏对象生成时需要调整的功能
+    public void GameObjectSpawn()
     {
-        //在启用时重置血量
-        health = maxHealth; //重置血量
-        isDead = false; //重置死亡状态
-        healthBar.SetHealth(health / maxHealth); //更新血条显示
+        isDead = false;
     }
 
-    private void OnDisable()
+    //重置敌人状态（在对象池中用的到）
+    public void GameObjectReset()
     {
-        //在禁用时重置血量
-        isDead = true; //重置死亡状态
+        
+        health = maxHealth; //重置血量
+        healthBar.SetHealth(health / maxHealth); //更新血条显示
+        //重置状态时，进行对象回收
+        enemySpawn.ReturnEnemy(gameObject);
     }
 
     //获取血量值
@@ -50,7 +54,10 @@ public abstract class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
+            isDead = true;
             gameObject.SetActive(false); //敌人死亡
+
+            GameObjectReset(); //重置敌人状态
         }
     }
 
@@ -64,5 +71,11 @@ public abstract class Enemy : MonoBehaviour
     public GameObject GetGameObject()
     {
         return gameObject;
+    }
+
+    //设置敌人生成器
+    public void SetEnemySpawn(EnemySpawn spawn)
+    {
+        enemySpawn = spawn;
     }
 }

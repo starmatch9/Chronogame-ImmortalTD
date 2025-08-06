@@ -40,13 +40,8 @@ public class Move : MonoBehaviour
     {
         Adjust();
         isMoving = false; //重置移动状态
-    }
-
-    void OnDisable()
-    {
         direction = arrow.NONE; //重置方向
     }
-
     public void RunAlongRoad()
     {
         if (!isMoving)

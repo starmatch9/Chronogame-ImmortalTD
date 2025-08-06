@@ -15,7 +15,6 @@ public class Attribute : Enemy
             //²âÊÔ
             MinusHealth(30);
             Destroy(collision.gameObject); //Ïú»Ù×Óµ¯
-
         }
     }
 }

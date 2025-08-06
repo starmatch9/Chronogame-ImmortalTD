@@ -12,63 +12,102 @@ public class EnemySpawn : MonoBehaviour
 
     public GameObject enemyPrefab; //敌人预制体
 
-    public int enemyNumber = 10; //最大敌人数量
+    public int enemyNumber = 20; //最大敌人数量
 
-    public int poolSize = 5;
+    int poolSize = 10;   //对象池的容量
 
     public Tilemap roadTilemap;
 
-    private List<GameObject> enemyPool; //敌人对象池
+    private Queue<GameObject> enemyPool; //敌人对象池
+
+    [Range(0f, 5f)]public float spawnInterval = 1f; //生成间隔时间
 
     void Start()
     {
-        // 初始化对象池
-        enemyPool = new List<GameObject>();
+        // 初始化对象
+        enemyPool = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
             GameObject enemy = Instantiate(enemyPrefab);
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
 
             //这一步很重要
             enemy.GetComponent<Move>().roadTilemap = roadTilemap; //设置路径
-
             enemy.SetActive(false); //初始时不激活
-            enemyPool.Add(enemy);
+            enemyScript.SetEnemySpawn(this); //设置生成器
+            //依次加入对应数量的敌人
+            enemyPool.Enqueue(enemy);
         }
     }
 
+    //这种计时方法可以后续改进
     void Update()
     {
         timer += Time.deltaTime;
-
-        if (timer <= 2f) //每秒生成一个敌人
+        if (timer <= spawnInterval) //每秒生成一个敌人
         {
             return;
         }
-
         if (spawnedEnemyCount < enemyNumber)
         {
             SpawnEnemy();
-
             spawnedEnemyCount++;
         }
         timer = 0f; //重置计时器
     }
 
-    void SpawnEnemy()
+    //获取对象
+    public GameObject GetEnemy()
     {
-        // 查找一个未激活的敌人
-        foreach (GameObject enemy in enemyPool)
+        if(enemyPool.Count <= 0)
         {
-            if (!enemy.activeInHierarchy)
-            {
-                enemy.transform.position = transform.position; //设置生成位置
+            /*目前每次扩容5个*/
+            ExpandPool(5);
+        }
+        //取敌人
+        return enemyPool.Dequeue();
+    }
 
-                enemy.SetActive(true); //激活敌人
-                globalEnemies.Add(enemy.GetComponent<Enemy>()); //添加到全局敌人列表
-                return; //只生成一个敌人
-            }
+    //对象池扩容
+    void ExpandPool(int additionalSize)
+    {
+        for (int i = 0; i < additionalSize; i++)
+        {
+            //要和初始化时一模一样
+            GameObject enemy = Instantiate(enemyPrefab);
+            Enemy enemyScript = enemy.GetComponent<Enemy>();
+            enemy.GetComponent<Move>().roadTilemap = roadTilemap; //设置路径
+            enemy.SetActive(false); //初始时不激活
+            enemyScript.SetEnemySpawn(this); //设置生成器
+            enemyPool.Enqueue(enemy);
         }
     }
 
+    //回收对象
+    public void ReturnEnemy(GameObject enemy)
+    {
+        enemy.SetActive(false); //禁用敌人
+        enemyPool.Enqueue(enemy); //重新加入队列
+    }
 
+    //生成敌人，同时是使用对象池的上下文
+    void SpawnEnemy()
+    {
+        //从对象池获取一个敌人
+        GameObject oneEnemy = GetEnemy(); 
+        //设置生成位置
+        oneEnemy.transform.position = transform.position; 
+        //激活敌人
+        oneEnemy.SetActive(true);
+        //激活的同时调用想过方法
+        oneEnemy.GetComponent<Enemy>().GameObjectSpawn();
+
+        Enemy enemyScript = oneEnemy.GetComponent<Enemy>();
+
+        if (!globalEnemies.Contains(enemyScript))
+        {
+            //添加到全局敌人列表
+            globalEnemies.Add(enemyScript);
+        }
+    }
 }

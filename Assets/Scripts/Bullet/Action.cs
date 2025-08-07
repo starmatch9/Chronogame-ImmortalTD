@@ -10,7 +10,14 @@ public class Action : MonoBehaviour
     Vector3 direction;
     void Update()
     {
-        if (target != null)
+        /*重点*/
+        //
+        // - activeSelf与activeInHierarchy的区别:
+        //
+        // - activeSelf是指对象本身的激活状态，不受父物体影响，与层级无关，当父物体被禁用时，子物体的activeSelf状态不变。
+        // - activeInHierarchy是指对象在层级中的实际激活状态，受父物体影响，当父物体被禁用时，子物体的activeInHierarchy状态也会变为false。
+        //
+        if (target != null && target.activeInHierarchy)
         {
             // 计算移动方向,归一化方向向量方便于控制速度
             direction = (target.transform.position - transform.position).normalized;

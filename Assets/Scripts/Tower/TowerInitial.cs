@@ -3,16 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GlobalData;
 
+//这个脚本用来初始化一个塔
+//关于塔的特殊效果统统放在子弹上！！！！（暂定）
 public class TowerInitial : MonoBehaviour
 {
-    //攻击范围半径
-    [Range(0, 20)]public float attackRange = 2f;
     //子弹预制体
     public GameObject bulletPrefab;
+
+    //攻击范围半径
+    [Range(0, 20)]public float attackRange = 2f;
+
+    //子弹间隔时间
+    [Range(0, 2)]public float shootTime = 0.5f;
 
     List<Enemy> enemies = new List<Enemy>();
 
     //public Enemy oneEnemy;
+
     //用来计算间隔时间
     float timeSinceLastShot = 0f;
 
@@ -25,14 +32,12 @@ public class TowerInitial : MonoBehaviour
     private void Start()
     {
         enemies = globalEnemies; //获取全局敌人列表
-        //初始化敌人列表
-        //enemies.Add(oneEnemy);
     }
     void Update()
     {
         //计算时间间隔.累加时间
         timeSinceLastShot += Time.deltaTime;
-        if (timeSinceLastShot < 0.5f) { 
+        if (timeSinceLastShot < shootTime) { 
             return; //如果时间间隔小于1秒，则不执行攻击逻辑
         }
         Enemy closestEnemy = FindClosestEnemy(attackRange);

@@ -22,6 +22,8 @@ public class EnemySpawn : MonoBehaviour
 
     [Range(0f, 5f)]public float spawnInterval = 1f; //生成间隔时间
 
+    bool isSpawning = false;
+
     void Start()
     {
         // 初始化对象
@@ -43,19 +45,34 @@ public class EnemySpawn : MonoBehaviour
     //这种计时方法可以后续改进
     void Update()
     {
-        timer += Time.deltaTime;
-        if (timer <= spawnInterval) //每秒生成一个敌人
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            return;
+            //注意：此布尔变量即敌人生成的开关
+            isSpawning = true;
         }
-        if (spawnedEnemyCount < enemyNumber)
-        {
-            SpawnEnemy();
-            spawnedEnemyCount++;
-        }
-        timer = 0f; //重置计时器
-    }
 
+        if (isSpawning)
+        {
+            timer += Time.deltaTime;
+            //目前每秒生成一个敌人
+            if (timer <= spawnInterval) 
+            {
+                return;
+            }
+            if (spawnedEnemyCount < enemyNumber)
+            {
+                SpawnEnemy();
+                spawnedEnemyCount++;
+            }
+            else
+            {
+                //重置状态
+                isSpawning = false;
+                spawnedEnemyCount = 0;
+            }
+            timer = 0f; //重置计时器
+        }
+    }
     //获取对象
     public GameObject GetEnemy()
     {

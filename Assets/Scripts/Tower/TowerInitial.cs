@@ -40,7 +40,9 @@ public class TowerInitial : MonoBehaviour
         if (timeSinceLastShot < shootTime) { 
             return; //如果时间间隔小于1秒，则不执行攻击逻辑
         }
-        Enemy closestEnemy = FindClosestEnemy(attackRange);
+
+        //Enemy closestEnemy = FindClosestEnemy(attackRange);
+        Enemy closestEnemy = FindClosestToFinishEnemy(attackRange);
 
         if (closestEnemy != null)
         {
@@ -79,6 +81,37 @@ public class TowerInitial : MonoBehaviour
             {
                 closestDistance = distance;
                 closestEnemy = enemy;
+            }
+        }
+        return closestEnemy;
+    }
+
+    //定位攻击半径内离终点最近的敌人
+    Enemy FindClosestToFinishEnemy(float ShootingDistance)
+    {
+        Enemy closestEnemy = null;
+        float longestSurvivalTime = 0;//生存时间为0
+        //遍历列表中的所有敌人
+        foreach (Enemy enemy in enemies)
+        {
+            //跳过不需要攻击的敌人
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            //筛选掉超过攻击范围的敌人
+            float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
+            if (distance < ShootingDistance)
+            {
+                //
+                //获取离终点最近的敌人，目前思路：敌人生成后，存活时间最长的就是离终点最近的
+                //
+                float survivalTime = enemy.GetComponent<Move>().survivalTime;
+                if (survivalTime > longestSurvivalTime)
+                {
+                    longestSurvivalTime = survivalTime;
+                    closestEnemy = enemy;
+                }
             }
         }
         return closestEnemy;

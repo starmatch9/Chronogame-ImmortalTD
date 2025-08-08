@@ -22,6 +22,8 @@ public class Move : MonoBehaviour
 
     public Tilemap roadTilemap;
 
+    public float survivalTime = 0f;
+
     Rigidbody2D body;
 
     void Awake()
@@ -51,6 +53,8 @@ public class Move : MonoBehaviour
         }
         else
         {
+            survivalTime += Time.deltaTime; //增加存活时间
+
             //按照行驶的方向检测有路没有
             if (direction == arrow.UP)
             {

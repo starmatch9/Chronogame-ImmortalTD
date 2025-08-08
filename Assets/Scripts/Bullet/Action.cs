@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//子弹的！！！子弹的！！！子弹的！！！
 //此为子弹的行为脚本只用来写行为逻辑，不可涉及任何数值逻辑
 public class Action : MonoBehaviour
 {
-    GameObject target;
+    [HideInInspector]
+    public GameObject target;
+
     float moveSpeed = 5f;
     Vector3 direction;
     void Update()
@@ -28,6 +31,7 @@ public class Action : MonoBehaviour
         {
             //如果没有目标，则子弹沿着原来的方向移动
             transform.position += direction * moveSpeed * Time.deltaTime;
+            target = null; //清除目标
         }
     }
     public void SetTarget(GameObject enemy)

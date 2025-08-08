@@ -360,7 +360,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.3
+  m_Radius: 0.2
 --- !u!114 &8955654145722386125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -375,6 +375,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   roadTilemap: {fileID: 0}
+  survivalTime: 0
 --- !u!114 &4629737237879756610
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -32,7 +32,8 @@ public abstract class Enemy : MonoBehaviour
     //这个方法检测子弹碰撞，调用MinusHealth方法
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Bullet"))
+        //还得对号入座，瞄准的哪个敌人只能打哪个敌人，而触发不了其他敌人的碰撞器
+        if (collision.CompareTag("Bullet") && collision.GetComponent<Action>().target == gameObject)
         {
             //获取子弹的数据脚本
             //测试
@@ -54,7 +55,7 @@ public abstract class Enemy : MonoBehaviour
     //重置敌人状态（在对象池中用的到）
     public void GameObjectReset()
     {
-        
+        GetComponent<Move>().survivalTime = 0f; //重置存活时间
         health = maxHealth; //重置血量
         healthBar.SetHealth(health / maxHealth); //更新血条显示
         //重置状态时，进行对象回收

@@ -11,6 +11,15 @@ public class Action : MonoBehaviour
 
     float moveSpeed = 5f;
     Vector3 direction;
+
+    //防止子弹飞出地图后不销毁
+    float maxDistance = 100f;
+    Vector3 initialPosition;
+    private void Start()
+    {
+        //记录初始位置
+        initialPosition = transform.position;
+    }
     void Update()
     {
         /*重点*/
@@ -32,6 +41,14 @@ public class Action : MonoBehaviour
             //如果没有目标，则子弹沿着原来的方向移动
             transform.position += direction * moveSpeed * Time.deltaTime;
             target = null; //清除目标
+        }
+
+
+        //检测距离，过远销毁
+        float currentDistance = Vector3.Distance(transform.position, initialPosition);
+        if (currentDistance >= maxDistance)
+        {
+            Destroy(gameObject); //销毁
         }
     }
     public void SetTarget(GameObject enemy)

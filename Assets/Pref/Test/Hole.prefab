@@ -943,11 +943,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ba91374b5d18764abc091e4a54fb873, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerJin: {fileID: 7840369632004733024, guid: 52aa2a2ae71726844b6d771f3905cb78, type: 3}
-  towerMu: {fileID: 137325107342924781, guid: 831b28a59f89aeb43b228f6bdb1aee0c, type: 3}
-  towerShui: {fileID: 3876247458427569871, guid: 492d0b07cdf2ab34a95faa05a5cec01a, type: 3}
-  towerHuo: {fileID: 8905422682730285257, guid: 3cff43711b4ae1d468679e6c5d9e9a25, type: 3}
-  towerTu: {fileID: 6995110032544103911, guid: 31207395f7ca8f9408f10f401aa6d9d0, type: 3}
+  towerJin: {fileID: 8008154651846594243, guid: df8983fb4180ef846af74b73d04bf8c5, type: 3}
+  towerMu: {fileID: 5337873676291326886, guid: 779a983e4682afc41940d2e377c42590, type: 3}
+  towerShui: {fileID: 480589149556982478, guid: ce0fa73e174502d4d85f6f2f9691642f, type: 3}
+  towerHuo: {fileID: 2237260605941642274, guid: 3b5596c5f4984ad4680f5bfc02a46c99, type: 3}
+  towerTu: {fileID: 2038134459825971482, guid: f4096c42f173ea74095edc52aa7d5cd3, type: 3}
 --- !u!1 &7682143550916920996
 GameObject:
   m_ObjectHideFlags: 0

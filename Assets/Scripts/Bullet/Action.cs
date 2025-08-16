@@ -43,7 +43,6 @@ public class Action : MonoBehaviour
             target = null; //清除目标
         }
 
-
         //检测距离，过远销毁
         float currentDistance = Vector3.Distance(transform.position, initialPosition);
         if (currentDistance >= maxDistance)

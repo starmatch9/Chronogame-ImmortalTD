@@ -7,13 +7,20 @@ using static GlobalData;
 //关于塔的特殊效果统统放在子弹上！！！！（暂定）
 public class TowerInitial : MonoBehaviour
 {
+    //一个塔对应一个坑
+    [HideInInspector]
+    public Transform hole;
+
     //子弹预制体
+    [Header("子弹预制件")]
     public GameObject bulletPrefab;
 
     //攻击范围半径
+    [Header("索敌范围")]
     [Range(0, 20)]public float attackRange = 2f;
 
     //子弹间隔时间
+    [Header("攻击间隔时间")]
     [Range(0, 2)]public float shootTime = 0.5f;
 
     List<Enemy> enemies = new List<Enemy>();
@@ -54,8 +61,10 @@ public class TowerInitial : MonoBehaviour
 
     void Shoot(GameObject enemy)
     {
+        //子弹在塔上方1.5米的位置发射
+        Vector3 offset = new Vector3(0, 1f, 0);
         //实例化子弹
-        GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, transform.position + offset, Quaternion.identity);
         //需要锚定子弹的目标，获取子弹的行为脚本
         Action bulletScript = bullet.GetComponent<Action>();
         bulletScript.SetTarget(enemy);
@@ -115,6 +124,12 @@ public class TowerInitial : MonoBehaviour
             }
         }
         return closestEnemy;
+    }
+
+    //设置对应坑
+    public void SetHole(Transform hole)
+    {
+        this.hole = hole;
     }
 
     //在编辑模式下显示Gizmo

@@ -33,18 +33,38 @@ public abstract class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //还得对号入座，瞄准的哪个敌人只能打哪个敌人，而触发不了其他敌人的碰撞器
-        if (collision.CompareTag("Bullet") && collision.GetComponent<Action>().target == gameObject)
+        if (collision.CompareTag("Bullet") && collision.GetComponent<Bullet>().target == gameObject)
         {
             //获取子弹的数据脚本
+            Bullet bullet = collision.GetComponent<Bullet>();
+
             //测试
-            MinusHealth(GetAttack());
-            Destroy(collision.gameObject); //销毁子弹
+            AcceptAttack(GetAttack(bullet));
+
+            //销毁子弹前调用“死”
+            //包括死前的逻辑以及销毁本身
+            collision.GetComponent<Bullet>().Die();
+
         }
     }
 
     //注意：获取子弹的攻击力（子类必须实现）！！！！！其必须传入子弹脚本作为参数！！虽然现在没有写
+    //
+    //这个只用于实现不同敌人对不同子弹的抗性！！注意，只是子弹！！
+    //
     //子类中，方法的逻辑可能随着敌人抗性、子弹类型等不同而不同！！！！！
-    public abstract float GetAttack();
+    public abstract float GetAttack(Bullet bullet);
+
+
+    //
+    //重要：承受攻击！！！！可能需要子类重写！！！！让MinusHealth方法不对外暴露！！！
+    //
+    //用此方法区分与子弹的统一管理，这个方法用于连接其他类，造成荆棘等特殊伤害
+    //
+    public virtual void AcceptAttack(float attack)
+    {
+        MinusHealth(attack);
+    }
 
     //游戏对象生成时需要调整的功能
     public void GameObjectSpawn()
@@ -58,6 +78,13 @@ public abstract class Enemy : MonoBehaviour
         GetComponent<Move>().survivalTime = 0f; //重置存活时间
         health = maxHealth; //重置血量
         healthBar.SetHealth(health / maxHealth); //更新血条显示
+
+        //重置冻结状态
+        if (Freeze.enemyHitCount.ContainsKey(this))    //记住：ContainsKey用判断字典中是否包含某个键
+        {
+            Freeze.enemyHitCount.Remove(this); //移除敌人冻结状态
+        }
+
         //重置状态时，进行对象回收
         enemySpawn.ReturnEnemy(gameObject);
     }
@@ -68,7 +95,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     //扣除血量值
-    public void MinusHealth(float attack) {
+    void MinusHealth(float attack) {
         health -= attack;
 
         healthBar.SetHealth(health / maxHealth); //更新血条显示

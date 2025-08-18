@@ -6,9 +6,9 @@ using UnityEngine;
 //虽然一开始用了属性这个单词，实际上用“普通敌人”比较合适
 public class Attribute : Enemy
 {
-    public override float GetAttack()
+    public override float GetAttack(Bullet bullet)
     {
-        return 30f;
+        return bullet.GetBaseAttack();
     }
 
 }

@@ -23,7 +23,7 @@ public class TowerInitial : MonoBehaviour
     [Header("攻击间隔时间")]
     [Range(0, 2)]public float shootTime = 0.5f;
 
-    List<Enemy> enemies = new List<Enemy>();
+    //List<Enemy> enemies = new List<Enemy>();
 
     //public Enemy oneEnemy;
 
@@ -34,11 +34,6 @@ public class TowerInitial : MonoBehaviour
     {
         //调整物体至中央
         Adjust();
-    }
-
-    private void Start()
-    {
-        enemies = globalEnemies; //获取全局敌人列表
     }
     void Update()
     {
@@ -66,7 +61,7 @@ public class TowerInitial : MonoBehaviour
         //实例化子弹
         GameObject bullet = Instantiate(bulletPrefab, transform.position + offset, Quaternion.identity);
         //需要锚定子弹的目标，获取子弹的行为脚本
-        Action bulletScript = bullet.GetComponent<Action>();
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.SetTarget(enemy);
     }
 
@@ -76,7 +71,7 @@ public class TowerInitial : MonoBehaviour
         Enemy closestEnemy = null;
         float closestDistance = Mathf.Infinity;//初始最近距离为无穷大
         //遍历列表中的所有敌人
-        foreach (Enemy enemy in enemies)
+        foreach (Enemy enemy in GlobalData.globalEnemies)
         {
             //跳过不需要攻击的敌人
             if (enemy.NoMoreShotsNeeded())
@@ -101,7 +96,7 @@ public class TowerInitial : MonoBehaviour
         Enemy closestEnemy = null;
         float longestSurvivalTime = 0;//生存时间为0
         //遍历列表中的所有敌人
-        foreach (Enemy enemy in enemies)
+        foreach (Enemy enemy in GlobalData.globalEnemies)
         {
             //跳过不需要攻击的敌人
             if (enemy.NoMoreShotsNeeded())

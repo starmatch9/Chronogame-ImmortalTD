@@ -24,6 +24,26 @@ public class Move : MonoBehaviour
 
     public float survivalTime = 0f;
 
+    bool isStopMove = false;
+
+    //记录当前移动速度
+    Vector2 currentVelocity;
+
+    //暂停移动
+    public void StopMove()
+    {
+        currentVelocity = body.velocity;
+        body.velocity = Vector2.zero; //停止移动
+
+        isStopMove = true;
+    }
+    //继续移动
+    public void ContinueMove()
+    {
+        body.velocity = currentVelocity;
+        isStopMove = false;
+    }
+
     Rigidbody2D body;
 
     void Awake()
@@ -35,6 +55,11 @@ public class Move : MonoBehaviour
 
     void Update()
     {
+        if (isStopMove)
+        {
+            return;
+        }
+
         RunAlongRoad();
     }
 

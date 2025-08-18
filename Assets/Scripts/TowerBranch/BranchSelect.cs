@@ -14,6 +14,7 @@ public class BranchSelect : MonoBehaviour
         //初始化游戏对象
         GameObject newTower = Instantiate(tower, transform.parent.position, Quaternion.identity);
         Transform originalHole = transform.parent.gameObject.GetComponent<TowerInitial>().hole;
+        // --------------------这个后面记得改成Tower，二级塔的基类--------------------
         newTower.GetComponent<TowerInitial>().SetHole(originalHole); //设置对应的坑
 
         //找到子物体，然后先禁用它

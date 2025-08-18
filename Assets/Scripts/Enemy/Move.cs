@@ -41,6 +41,7 @@ public class Move : MonoBehaviour
     public void ContinueMove()
     {
         body.velocity = currentVelocity;
+        currentVelocity = Vector2.zero; //清空当前速度
         isStopMove = false;
     }
 

@@ -33,18 +33,49 @@ public class BingBullet : Bullet
             //有的话，加加
             ++Freeze.enemyHitCount[targetEnemy];
 
-            //加完检测次数是否大于目标
-            if (Freeze.enemyHitCount[targetEnemy] >= maxCount)
+            //加完检测次数是否等于目标   （大于都不行！！不然会重复执行）
+            if (Freeze.enemyHitCount[targetEnemy] == maxCount)
             {
+                
+
+                //禁用渲染器与碰撞器
+                transform.Find("Renderer").GetComponent<Renderer>().enabled = false;
+                GetComponent<Collider2D>().enabled = false;
+
                 //放冻结逻辑
+                yield return StartCoroutine(SpawnSnow(targetEnemy));
 
-
+                //重置次数
+                if (Freeze.enemyHitCount.ContainsKey(targetEnemy))
+                {
+                    Freeze.enemyHitCount[targetEnemy] = 0;
+                }
             }
-
         }
 
-
         yield return base.DieAction(); //调用基类的死亡逻辑
+    }
+
+    //生成雪花
+    IEnumerator SpawnSnow(Enemy enemy)
+    {
+        //生成雪花实例         (第四个参数为父物体位置，表示生成物作为子物体)
+        GameObject snow = Instantiate(snowPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
+        //设置雪花的持续时间
+        yield return StartCoroutine(SnowLifetime(snow, enemy));
+    }
+
+    //雪花生命周期协程
+    IEnumerator SnowLifetime(GameObject snow, Enemy enemy)
+    {
+        enemy.gameObject.GetComponent<Move>().StopMove();
+
+        yield return new WaitForSeconds(freezeTime); //等待冻结时间
+
+        Destroy(snow);
+
+        //时间到，解除冻结
+        enemy.gameObject.GetComponent<Move>().ContinueMove();
     }
 
 

@@ -55,7 +55,6 @@ public abstract class Enemy : MonoBehaviour
     //子类中，方法的逻辑可能随着敌人抗性、子弹类型等不同而不同！！！！！
     public abstract float GetAttack(Bullet bullet);
 
-
     //
     //重要：承受攻击！！！！可能需要子类重写！！！！让MinusHealth方法不对外暴露！！！
     //
@@ -76,6 +75,7 @@ public abstract class Enemy : MonoBehaviour
     public void GameObjectReset()
     {
         GetComponent<Move>().survivalTime = 0f; //重置存活时间
+        GetComponent<Move>().ResetSpeed(); //重置速度因子为1
         health = maxHealth; //重置血量
         healthBar.SetHealth(health / maxHealth); //更新血条显示
 

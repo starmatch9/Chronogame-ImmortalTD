@@ -2,40 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
+using static UnityEngine.GraphicsBuffer;
 
-public class ZhaoTower : Tower
+public class RongTower : Tower
 {
-    //  *--   沼泽塔   --*
+    /*  -熔岩塔 （烫脚塔）-  */
 
-    //沼泽塔在9宫格的范围内生成沼泽地面，检测到路面直接生成，没有其余动作
     [TextArea]
-    public string Tips = "注意：沼泽塔的“索敌范围”和“间隔时间”不生效。";
+    public string Tips = "注意：熔岩塔的“索敌范围”不生效。";
 
-    [Header("生成方格的边长，比如九宫格的边长为3")]
+    [Header("生成方格的边长，比如九宫格的边长为3。")]
     [Range(1, 5)] public int length = 3;
-
-    [Header("减速为原来的多少，百分比")]
-    [Range(0f, 1f)] public float slowFactor = 0.3f;
 
     //注意：路面列表需要单独放在路面管理器中，将其设置为全局静态变量，初始化时根据管理器中的路面进行添加
     [Header("路面列表（注意：这个参数后续要放到全局管理器中统一管理！！！）")]
     public List<Tilemap> tilemaps = new List<Tilemap>();
 
-    [Header("泥潭方格预制件")]
-    public GameObject mudPrefab;
+    [Header("熔岩方格预制件")]
+    public GameObject lavaPrefab;
 
-    public override void Update(){}
-    public override void TowerAction() { }
+    [Header("熔岩存在时长")]
+    [Range(0, 15f)]public float lavaDuration = 5f;
 
-    public void Start()
+    [Header("熔岩烫脚间隔时间")]
+    [Range(0, 5f)] public float lavaAttackInterval = 0.75f;
+
+    [Header("熔岩烫脚伤害")]
+    [Range(0, 100f)] public float lavaAttack = 0.75f;
+
+
+    //管理所有踩在熔岩上的敌人
+    [HideInInspector]
+    public List<Enemy> enemies = new List<Enemy>();
+
+    private void Start()
     {
-        //生成沼泽地面
-        SpawnMud();
+        TowerAction();
+    }
+
+    public override void TowerAction()
+    {
+        SpawnLava();
+    }
+
+    //熔岩的攻击
+    void LavaAttack()
+    {
+
+        //列表本体总是变化，所以需要复制一份
+        List<Enemy> enemiesCopy = new List<Enemy>(enemies);
+
+        foreach (Enemy enemy in enemiesCopy)
+        {
+            //跳过不需要攻击的敌人(一定不能忘了这段)
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            enemy.AcceptAttack(lavaAttack);
+        }
     }
 
     //生成沼泽地面
-    public void SpawnMud()
+    public void SpawnLava()
     {
         //获取九宫格内的所有点
         List<Vector3> points = GetAllPointInGrid();
@@ -43,12 +72,46 @@ public class ZhaoTower : Tower
         //遍历每个点
         foreach (Vector3 point in points)
         {
-            //生成泥潭方格
-            GameObject mud = Instantiate(mudPrefab, point, Quaternion.identity);
-            mud.gameObject.GetComponent<Mud>().SetSlowFactor(slowFactor);
+            //生成熔岩方格
+            GameObject lava = Instantiate(lavaPrefab, point, Quaternion.identity);
+            lava.GetComponent<Lava>().SetTower(this);
+
+            //开始熔岩的生命周期
+            StartCoroutine(LavaLifetime(lava));
+        }
+        //生成熔岩的同时，开始烫脚周期
+        StartCoroutine(LavaAttackLife());
+    }
+
+    IEnumerator LavaAttackLife()
+    {
+        //大计时器记录生命时长
+        //小计时器记录攻击间隔
+        float bigTimer = 0f;
+        float smallTimer = 0f;
+
+        while (bigTimer < lavaDuration)
+        {
+            if (smallTimer >= lavaAttackInterval)
+            {
+                LavaAttack();
+
+                smallTimer = 0f; //重置小计时器
+            }
+            yield return null;
+            bigTimer += Time.deltaTime;
+            smallTimer += Time.deltaTime;
         }
     }
 
+    //熔岩的生命周期
+    private IEnumerator LavaLifetime(GameObject lava)
+    {
+        yield return new WaitForSeconds(lavaDuration);
+
+        //销毁熔岩
+        Destroy(lava);
+    }
 
     //获得九宫格内的所有点
     public List<Vector3> GetAllPointInGrid()
@@ -61,14 +124,13 @@ public class ZhaoTower : Tower
         //第一个点的位置
         float first_x = x - (length - 1) / 2;
         float first_y = y + (length - 1) / 2;
-
         //一共有  边长 * 边长  个点需要遍历  （如果是偶数个自动减去1）
         int l = ((length - 1) / 2) * 2 + 1;
 
         //外面决定第几行，里面决定第几列
         for (int i = 0; i < l; ++i)
         {
-            for (int j = 0; j <  l; ++j)
+            for (int j = 0; j < l; ++j)
             {
                 //每个点的坐标
                 //现在是第i行第j列的点
@@ -93,10 +155,9 @@ public class ZhaoTower : Tower
         return points;
     }
 
-    //不同于基类的圆形范围，这里是一个正方形的范围
     public override void OnDrawGizmos()
     {
-        float halfSize = (float)length / 2;
+        float halfSize = (float)length / 2; //边长3，半边长1.5
         Vector3 center = transform.position;
 
         //定义四个角
@@ -114,5 +175,4 @@ public class ZhaoTower : Tower
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
     }
-
 }

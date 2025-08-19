@@ -29,6 +29,42 @@ public class Move : MonoBehaviour
     //记录当前移动速度
     Vector2 currentVelocity;
 
+    /* 以下两个是一组 */
+
+    //减速或加速移动(参数为百分比)
+    public void ChangeSpeed(float factor)
+    {
+        isStopMove = true;
+        SetSpeedFactor(factor);
+        body.velocity = body.velocity * speedFactor;
+        isStopMove = false;
+    }
+    //重置速度（撤销速度因子的影响）
+    public void ResetSpeed()
+    {
+        isStopMove = true;
+        if(GetSpeed() < speed)
+        {
+            body.velocity = body.velocity / speedFactor; //撤销速度因子的影响
+        }
+        SetSpeedFactor(1f); //重置速度因子为1
+        isStopMove = false;
+    }
+
+    float speedFactor = 1f; //速度因子，默认为1
+
+    void SetSpeedFactor(float factor)
+    {
+        speedFactor = factor;
+    }
+
+    //用于获取速度，方便进行更改
+    public float GetSpeed()
+    {
+        return speed * speedFactor;
+    }
+
+
     //暂停移动
     public void StopMove()
     {
@@ -79,7 +115,8 @@ public class Move : MonoBehaviour
         }
         else
         {
-            survivalTime += Time.deltaTime; //增加存活时间
+            //时间的增加需要考虑速度因子
+            survivalTime += Time.deltaTime * speedFactor; //增加存活时间
 
             //按照行驶的方向检测有路没有
             if (direction == arrow.UP)
@@ -129,22 +166,22 @@ public class Move : MonoBehaviour
         Vector3 rightPosition = currentPosition + new Vector3(1, 0, 0); //右方位置
         if (IsPositionOnTile(upPosition) && direction != arrow.UP)
         {
-            body.velocity = new Vector2(0, speed); //向上移动
+            body.velocity = new Vector2(0, GetSpeed()); //向上移动
             direction = arrow.DOWN;
         }
         else if (IsPositionOnTile(downPosition) && direction != arrow.DOWN)
         {
-            body.velocity = new Vector2(0, -speed); //向下移动
+            body.velocity = new Vector2(0, -GetSpeed()); //向下移动
             direction = arrow.UP;
         }
         else if (IsPositionOnTile(leftPosition) && direction != arrow.LEFT)
         {
-            body.velocity = new Vector2(-speed, 0); //向左移动
+            body.velocity = new Vector2(-GetSpeed(), 0); //向左移动
             direction = arrow.RIGHT;
         }
         else if (IsPositionOnTile(rightPosition) && direction != arrow.RIGHT)
         {
-            body.velocity = new Vector2(speed, 0); //向右移动
+            body.velocity = new Vector2(GetSpeed(), 0); //向右移动
             direction = arrow.LEFT;
         }
         else

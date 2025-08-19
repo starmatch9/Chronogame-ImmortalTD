@@ -94,7 +94,7 @@ public abstract class Tower : MonoBehaviour
         return closestEnemy;
     }
 
-    void OnDrawGizmos()
+    public virtual void OnDrawGizmos()
     {
         // …Ë÷√Gizmo—’…´
         Gizmos.color = Color.red;

@@ -43,12 +43,12 @@ public class RongTower : Tower
     public override void TowerAction()
     {
         SpawnLava();
+        UpdateEnemies();
     }
 
     //熔岩的攻击
     void LavaAttack()
     {
-
         //列表本体总是变化，所以需要复制一份
         List<Enemy> enemiesCopy = new List<Enemy>(enemies);
 
@@ -60,6 +60,27 @@ public class RongTower : Tower
                 continue;
             }
             enemy.AcceptAttack(lavaAttack);
+        }
+    }
+
+    //刷新敌人列表
+    private void UpdateEnemies()
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            //移除不需要攻击的敌人
+            if (enemy.NoMoreShotsNeeded())
+            {
+
+            }
+            float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
+            //勾股定理
+            float range = Mathf.Sqrt(Mathf.Pow(length/2, 2) + Mathf.Pow(length, 2));
+            if (distance > range)
+            {
+                enemies.Remove(enemy);
+                continue;
+            }
         }
     }
 

@@ -94,6 +94,11 @@ public abstract class Tower : MonoBehaviour
         return closestEnemy;
     }
 
+    public void SetHole(Transform hole)
+    {
+        this.hole = hole;
+    }
+
     public virtual void OnDrawGizmos()
     {
         // …Ë÷√Gizmo—’…´

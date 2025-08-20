@@ -555,8 +555,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11e6a7037628f9440b8c3b59752a9ee3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  branch_1: {fileID: 480589149556982478, guid: ce0fa73e174502d4d85f6f2f9691642f, type: 3}
-  branch_2: {fileID: 2038134459825971482, guid: f4096c42f173ea74095edc52aa7d5cd3, type: 3}
+  branch_1: {fileID: 1041664603381812693, guid: 94d65e81f039aeb47b995959fbccff54, type: 3}
+  branch_2: {fileID: 5386414523487734383, guid: 5848599cb1941304f94c797d6eb80663, type: 3}
 --- !u!60 &9066941307562882656
 PolygonCollider2D:
   m_ObjectHideFlags: 0

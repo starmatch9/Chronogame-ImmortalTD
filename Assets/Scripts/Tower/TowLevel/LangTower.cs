@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -64,21 +65,61 @@ public class LangTower : Tower
         //}
 
         //生成浪
+        StartCoroutine(SpawnWave());
 
-
+        //推
+        PushEnemies();
 
         UpdateEnemies();//刷新敌人列表
     }
 
-    //生成浪（协程）
-    public void SpawnWave()
+    public void PushEnemies()
     {
-        if (enemies.Count == 0)
+        //防止发生变化得复制一份（new是复制！！不然就是引用了！！）
+        List<Enemy> enemiesCopy  = new List<Enemy>(enemies);
+
+        foreach (Enemy enemy in enemiesCopy)
+        { 
+            StartCoroutine(EnemyBack(enemy));
+        }
+    }
+
+    IEnumerator EnemyBack(Enemy enemy) {
+        //减速因子
+        float slowFactor = -1f;
+
+        Move move = enemy.gameObject.GetComponent<Move>();
+        move.ResetSpeed();
+        move.ChangeSpeed(slowFactor);
+
+        yield return new WaitForSeconds(0.4f);
+
+        move.ResetSpeed();
+    }
+
+    //生成浪（协程）actionTime的时间从point[Count-1]到point[0]
+    public IEnumerator SpawnWave()
+    {
+        //先把预制件放出了
+        GameObject wave = Instantiate(wavePrefab, points[points.Count - 1], Quaternion.identity);
+
+        //points的数量代表point-1的线段，每个线段的用时为actionTime / point - 1
+        float partTime = actionTime / (points.Count - 1);
+        int index = points.Count - 1;
+        while(index > 0)
         {
-            return;
+            float timer = 0;
+            while(timer < partTime)
+            {
+                wave.transform.position = Vector3.Lerp(points[index], points[index - 1], timer / partTime);
+
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            --index;
         }
 
-
+        Destroy(wave);
     }
 
     //确保从0到length-1的顺序就是浪的移动顺序
@@ -206,7 +247,7 @@ public class LangTower : Tower
         Vector3 bottomRight = center + new Vector3(halfSize, -halfSize, 0);
 
         //设置Gizmos颜色
-        Gizmos.color = Color.red;
+        Gizmos.color = UnityEngine.Color.red;
 
         //绘制四条边
         Gizmos.DrawLine(topRight, topLeft);

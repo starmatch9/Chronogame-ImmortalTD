@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.PlasticSCM.Editor.WebApi;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -43,7 +44,7 @@ public class Move : MonoBehaviour
     public void ResetSpeed()
     {
         isStopMove = true;
-        if(GetSpeed() < speed)
+        if(GetSpeed() != speed)
         {
             body.velocity = body.velocity / speedFactor; //撤销速度因子的影响
         }

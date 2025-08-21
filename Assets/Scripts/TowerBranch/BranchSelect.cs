@@ -11,6 +11,15 @@ public class BranchSelect : MonoBehaviour
     //与TowerSelect类似
     void PlaceTower(GameObject tower)
     {
+        //找售价
+        int price = GlobalElementPowerFunction.towerSale[tower];
+        if (!GlobalElementPowerFunction.CanMinus(price))
+        {
+            //输出“元素力数量不够”的字样
+            return;
+        }
+        GlobalElementPowerFunction.MinusCount(price);
+
         //初始化游戏对象
         GameObject newTower = Instantiate(tower, transform.parent.position, Quaternion.identity);
         Transform originalHole = transform.parent.gameObject.GetComponent<TowerInitial>().hole;

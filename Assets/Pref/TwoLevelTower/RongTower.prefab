@@ -49,9 +49,7 @@ MonoBehaviour:
   attackRange: 0
   actionTime: 7
   Tips: "\u6CE8\u610F\uFF1A\u7194\u5CA9\u5854\u7684\u201C\u7D22\u654C\u8303\u56F4\u201D\u4E0D\u751F\u6548\u3002"
-  length: 5
-  tilemaps:
-  - {fileID: 0}
+  length: 3
   lavaPrefab: {fileID: 8413160782344827409, guid: 2405fec3f8ec8c24299606d10c054010, type: 3}
   lavaDuration: 7
   lavaAttackInterval: 0.5

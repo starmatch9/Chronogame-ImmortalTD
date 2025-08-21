@@ -59,7 +59,7 @@ public class LuTower : Tower
         yield return new WaitForSeconds(furnaceDuration - 0.2f - absorbDuration);
 
         //生成元素力
-        //elementManager.AddElement(elementAmount);
+        GlobalElementPowerFunction.AddCount(elementAmount);
 
         //禁用图标
         icon.SetActive(false);

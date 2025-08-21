@@ -15,8 +15,8 @@ public class RongTower : Tower
     [Range(1, 5)] public int length = 3;
 
     //注意：路面列表需要单独放在路面管理器中，将其设置为全局静态变量，初始化时根据管理器中的路面进行添加
-    [Header("路面列表（注意：这个参数后续要放到全局管理器中统一管理！！！）")]
-    public List<Tilemap> tilemaps = new List<Tilemap>();
+    //[Header("路面列表（注意：这个参数后续要放到全局管理器中统一管理！！！）")]
+    //public List<Tilemap> tilemaps = new List<Tilemap>();
 
     [Header("熔岩方格预制件")]
     public GameObject lavaPrefab;
@@ -160,9 +160,9 @@ public class RongTower : Tower
 
                 Vector3 point = new Vector3(point_x, point_y, transform.position.z);
                 //列表不为空时，判断是否在路面上
-                if (tilemaps.Count != 0)
+                if (GlobalData.globalRoads.Count != 0)
                 {
-                    foreach (Tilemap tilemap in tilemaps)
+                    foreach (Tilemap tilemap in GlobalData.globalRoads)
                     {
                         //如果在路面上
                         if (tilemap.HasTile(tilemap.WorldToCell(point)) && !points.Contains(point))

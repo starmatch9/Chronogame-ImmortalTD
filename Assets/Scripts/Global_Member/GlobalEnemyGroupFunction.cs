@@ -14,7 +14,7 @@ public static class GlobalEnemyGroupFunction
     static int index = 0;
 
     //维护当前波次，是当前，当前！
-    static EnemyGroupItem item;
+    public static EnemyGroupItem item;
 
     //开始释放一波敌人
     public static void StartOneEnemyGroup()
@@ -77,5 +77,21 @@ public static class GlobalEnemyGroupFunction
     //不显示按钮
     public static void CloseButton() { 
         nextOneBigButton.SetActive(false);
+    }
+
+    //重置所有静态变量
+    public static void ResetAllData()
+    {
+        //维护一个波次条目列表
+        enemyGroupItems = new List<EnemyGroupItem>();
+
+        //维护相关UI脚本，需要控制其激活状态，用于显示按钮与否
+        nextOneBigButton = null;
+
+        //维护一个指向列表条目的索引
+        index = 0;
+
+        //维护当前波次，是当前，当前！
+        item = null;
     }
 }

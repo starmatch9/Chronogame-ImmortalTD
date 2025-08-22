@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BranchSelect : MonoBehaviour
@@ -26,10 +27,16 @@ public class BranchSelect : MonoBehaviour
         // --------------------这个后面记得改成Tower，二级塔的基类--------------------
         newTower.GetComponent<Tower>().SetHole(originalHole); //设置对应的坑
 
+        GlobalData.towers.Add(newTower.GetComponent<Tower>());
+
         //找到子物体，然后先禁用它
         Transform child = transform.Find("TwoOptionsCanva");
         child.gameObject.SetActive(false);
         //然后在禁用本体
+        if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<TowerInitial>()))
+        {
+            GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<TowerInitial>());
+        }
         transform.parent.gameObject.SetActive(false);
         Destroy(transform.parent.gameObject); //销毁
     }

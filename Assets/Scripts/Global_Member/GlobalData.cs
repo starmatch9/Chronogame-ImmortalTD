@@ -7,6 +7,12 @@ public static class GlobalData
     //敌人列表
     public static List<Enemy> globalEnemies = new List<Enemy>();
 
+    //塔列表
+    public static List<Tower> towers = new List<Tower>();
+
+    //基础塔列表
+    public static List<TowerInitial> towersInitial = new List<TowerInitial>();
+
     //路径列表
     public static List<Tilemap> globalRoads = new List<Tilemap>();
 
@@ -38,5 +44,30 @@ public static class GlobalData
         //
         Debug.Log("你失败了");
 
+    }
+
+    //重置所有静态变量
+    public static void ResetAllData()
+    {
+        //敌人列表
+        globalEnemies = new List<Enemy>();
+
+        //塔列表
+        towers = new List<Tower>();
+
+        //基础塔列表
+        towersInitial = new List<TowerInitial>();
+
+        //路径列表
+        globalRoads = new List<Tilemap>();
+
+        //塔预制件列表
+        globalTowerPrefabs = new List<GameObject>();
+
+        //达到终点的敌人数量
+        FinalEnemyNumber = 0;
+
+        //游戏失败时，到达终点的敌人数量
+        maxNumber = 5;
     }
 }

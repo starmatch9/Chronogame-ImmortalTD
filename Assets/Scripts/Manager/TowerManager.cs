@@ -38,8 +38,9 @@ public class TowerManager : MonoBehaviour
 
     List<GameObject> towers = new List<GameObject>();
 
+    //这种全局都要用的东西，初始化的越早越好
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         //将所有预制件添加到列表
         towers.Add(JinTowerPref);

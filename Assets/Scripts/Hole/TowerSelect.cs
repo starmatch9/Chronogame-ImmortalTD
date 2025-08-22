@@ -22,6 +22,7 @@ public class TowerSelect : MonoBehaviour
     {
         //找售价
         int price = GlobalElementPowerFunction.towerSale[tower];
+
         if (!GlobalElementPowerFunction.CanMinus(price))
         {
             //输出“元素力数量不够”的字样

@@ -42,14 +42,21 @@ public class EnemySpawn : MonoBehaviour
         }
     }
 
+    //开关
+    public void Switch()
+    {
+        isSpawning = true;
+    }
+
+
     //这种计时方法可以后续改进
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            //注意：此布尔变量即敌人生成的开关
-            isSpawning = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    //注意：此布尔变量即敌人生成的开关
+        //    isSpawning = true;
+        //}
 
         if (isSpawning)
         {

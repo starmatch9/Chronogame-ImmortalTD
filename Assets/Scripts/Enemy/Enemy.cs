@@ -105,6 +105,9 @@ public abstract class Enemy : MonoBehaviour
             isDead = true;
             gameObject.SetActive(false); //敌人死亡
 
+            //封印术，调用所有死前行为（敌人到达终点时也要使用）
+            SealFunction();
+
             GameObjectReset(); //重置敌人状态
         }
     }
@@ -125,5 +128,13 @@ public abstract class Enemy : MonoBehaviour
     public void SetEnemySpawn(EnemySpawn spawn)
     {
         enemySpawn = spawn;
+    }
+
+    //敌人死后或到达终点时调用一次的函数(seal的意思是封印，参考团藏死前释放里四象封印术)
+    public void SealFunction()
+    {
+        //基本上都是全局方法了
+        GlobalEnemyGroupFunction.CheckEnd();
+        
     }
 }

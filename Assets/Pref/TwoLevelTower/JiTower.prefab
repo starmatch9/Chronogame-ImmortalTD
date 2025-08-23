@@ -223,4 +223,4 @@ MonoBehaviour:
   thornsPrefab: {fileID: 5055507192957987812, guid: 1d766d0a5a78b7143abfecdf8d0142a7, type: 3}
   thornsDuration: 1.8
   thornsAttackInterval: 0.6
-  thornsAttackDamage: 10
+  thornsAttackDamage: 5

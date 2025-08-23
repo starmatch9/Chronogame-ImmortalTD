@@ -166,7 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  baseAttack: 10
+  baseAttack: 5
   moveSpeed: 5
   snowPrefab: {fileID: 355812718014240502, guid: 1498643219becc54db214b265339804e, type: 3}
   freezeTime: 2.7

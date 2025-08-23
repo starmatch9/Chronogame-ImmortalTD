@@ -53,7 +53,7 @@ MonoBehaviour:
   lavaPrefab: {fileID: 8413160782344827409, guid: 2405fec3f8ec8c24299606d10c054010, type: 3}
   lavaDuration: 7
   lavaAttackInterval: 0.5
-  lavaAttack: 20
+  lavaAttack: 5
   enemies: []
 --- !u!1 &7500310946464720389
 GameObject:

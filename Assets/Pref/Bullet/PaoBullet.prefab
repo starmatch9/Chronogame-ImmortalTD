@@ -83,9 +83,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  baseAttack: 30
+  baseAttack: 5
   moveSpeed: 5
-  explosionAttack: 20
+  explosionAttack: 5
   explosionRange: 2
   bulletRenderer: {fileID: 2085998699466803353}
   dash: {fileID: 8733015174411134369}

@@ -11,7 +11,10 @@ public class StopGame : MonoBehaviour
         //所有生成器停止生成！！
         if(GlobalEnemyGroupFunction.item != null)
         {
-            GlobalEnemyGroupFunction.item.enemySpawn.enabled = false;
+            foreach(EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
+            {
+                spawn.enabled = false;
+            }
         }
 
         //所有敌人停止移动！！！
@@ -43,7 +46,12 @@ public class StopGame : MonoBehaviour
         //所有生成器启动！！
         if (GlobalEnemyGroupFunction.item != null)
         {
-            GlobalEnemyGroupFunction.item.enemySpawn.enabled = true;
+            foreach (EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
+            {
+                spawn.enabled = true;
+            }
+
+            //GlobalEnemyGroupFunction.item.enemySpawn.enabled = true;
         }
 
         //所有敌人j继续移动！！！

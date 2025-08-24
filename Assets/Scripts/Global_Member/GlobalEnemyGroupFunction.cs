@@ -16,6 +16,10 @@ public static class GlobalEnemyGroupFunction
     //维护当前波次，是当前，当前！
     public static EnemyGroupItem item;
 
+    //维护一个生命周期，确保敌人的生成能够设置时长有关方法
+    public static MonoBehaviour mono;
+
+
     //开始释放一波敌人
     public static void StartOneEnemyGroup()
     {
@@ -25,13 +29,26 @@ public static class GlobalEnemyGroupFunction
         }
         item = enemyGroupItems[index];
         //开始释放敌人
-        item.enemySpawn.Switch();
+        //item.enemySpawn.Switch();
+        mono.StartCoroutine(DispatchEnemy());
 
         //关闭按钮
         CloseButton();
 
         ++index;
     }
+
+    //加入时间差释放的敌人
+    public static IEnumerator DispatchEnemy()
+    {
+        foreach(EnemySpawn spawn in item.enemySpawnGroup)
+        {
+            spawn.Switch();
+
+            yield return new WaitForSeconds(item.timeDiff);  
+        }
+    }
+
 
     //检测波次是否结束
     public static void CheckEnd()

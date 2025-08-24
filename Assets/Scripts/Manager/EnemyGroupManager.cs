@@ -11,5 +11,6 @@ public class EnemyGroupManager : MonoBehaviour
     private void Awake()
     {
         GlobalEnemyGroupFunction.enemyGroupItems = enemyGroupItems;
+        GlobalEnemyGroupFunction.mono = this;
     }
 }

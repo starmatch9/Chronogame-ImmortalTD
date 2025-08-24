@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8311650033592879124}
   m_Layer: 0
   m_Name: Initial
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -223,6 +223,4 @@ MonoBehaviour:
   Tips: "\u6CE8\u610F\uFF1A\u6CBC\u6CFD\u5854\u7684\u201C\u7D22\u654C\u8303\u56F4\u201D\u548C\u201C\u95F4\u9694\u65F6\u95F4\u201D\u4E0D\u751F\u6548\u3002\u53EF\u4EE5\u90FD\u8BBE\u7F6E\u4E3A0\u51CF\u5C11\u6027\u80FD\u5F00\u9500"
   length: 3
   slowFactor: 0.684
-  tilemaps:
-  - {fileID: 0}
   mudPrefab: {fileID: 2169182946583768639, guid: 4638c7eef6456a44daeb8a5d31f9aa4b, type: 3}

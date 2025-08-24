@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3372184869612240854}
   m_Layer: 0
   m_Name: Initial
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -223,8 +223,6 @@ MonoBehaviour:
   actionTime: 1
   Tips: "\u6CE8\u610F\uFF1A\u6D6A\u5854\u7684\u201C\u7D22\u654C\u8303\u56F4\u201D\u4E0D\u751F\u6548\u3002\u201C\u884C\u4E3A\u95F4\u9694\u65F6\u95F4\u201D\u662F\u6D6A\u62CD\u6253\u4E00\u6B21\u7684\u65F6\u95F4\u3002"
   length: 3
-  tilemaps:
-  - {fileID: 0}
   waveTriggerPrefab: {fileID: 3889674977943464796, guid: c4b572686f82cbb419932ddcb3cae9ef, type: 3}
   wavePrefab: {fileID: 2763498896469773122, guid: 07124efd733751c4e83d2e6d86e8c175, type: 3}
   enemies: []

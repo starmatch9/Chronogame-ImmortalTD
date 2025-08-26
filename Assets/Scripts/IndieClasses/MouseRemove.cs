@@ -8,7 +8,10 @@ public class MouseRemove : MonoBehaviour
 
     bool following = false;
 
+    //是否可以点击，即鼠标在塔的上方
+    bool canClick = false;
 
+    GameObject currentCollision = null;
 
     //开始跟随鼠标
     public void StartFollow()
@@ -40,7 +43,37 @@ public class MouseRemove : MonoBehaviour
         {
             FollowMousePosition();
         }
+
+        if (canClick && Input.GetMouseButton(0))
+        {
+            //执行塔功能
+            ExecuteRemove();
+        }
     }
+
+    //执行塔的移除功能
+    void ExecuteRemove()
+    {
+        //获取有脚本的游戏对象
+        GameObject tower = currentCollision.transform.parent.gameObject;
+    
+        if(tower.GetComponent<TowerInitial>() != null)
+        {
+            TowerInitial t = tower.GetComponent<TowerInitial>();
+
+            t.Remove();
+        }
+
+        if(tower.GetComponent<Tower>() != null)
+        {
+            Tower t = tower.GetComponent<Tower>();
+
+            t.Remove();
+        }
+
+        StopFollow();
+    }
+
 
     //跟随方法主题
     private void FollowMousePosition()
@@ -64,7 +97,11 @@ public class MouseRemove : MonoBehaviour
             //变成半透明
             renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.5f);
 
-            Debug.Log("我要进来了！！");
+            canClick = true;
+
+            currentCollision = collision.gameObject;
+            
+            //Debug.Log("我要进来了！！");
         }
     }
 
@@ -76,7 +113,9 @@ public class MouseRemove : MonoBehaviour
             SpriteRenderer renderer = collision.gameObject.GetComponent<SpriteRenderer>();
             renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 1f);
 
+            canClick = false;
 
+            currentCollision = null;
         }
     }
 }

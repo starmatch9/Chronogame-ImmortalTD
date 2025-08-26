@@ -156,5 +156,11 @@ public class TowerInitial : MonoBehaviour
         }
     }
 
+    public void Remove()
+    {
+        //这里增加货币的回收方法
 
+        //
+        Destroy(gameObject);
+    }
 }

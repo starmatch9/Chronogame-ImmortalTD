@@ -106,4 +106,12 @@ public abstract class Tower : MonoBehaviour
         // 绘制无填充圆圈
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
+
+    public void Remove()
+    {
+        //这里增加货币的回收方法
+
+        //
+        Destroy(gameObject);
+    }
 }

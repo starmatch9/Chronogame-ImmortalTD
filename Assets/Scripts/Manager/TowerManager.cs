@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TowerManager : MonoBehaviour
 {
+    [Header("攻击范围图形预制件")]
+    [Header("圆形")]
+    public GameObject CircleArea;
+    [Header("方形")]
+    public GameObject SquareArea;
+
     [Header("Tower预制件全列表")]
     [Header("金")]
     public GameObject JinTowerPref;
@@ -61,5 +67,9 @@ public class TowerManager : MonoBehaviour
 
         //存入全局当中
         GlobalData.globalTowerPrefabs = towers;
+
+        GlobalTowerFunction.CircleArea = CircleArea;
+        GlobalTowerFunction.SquareArea = SquareArea;
+
     }
 }

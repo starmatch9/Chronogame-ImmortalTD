@@ -5,14 +5,15 @@ using UnityEngine.EventSystems;
 
 public class MouseClickTower : MonoBehaviour
 {
-    [Header("关于缩放")]
-    //原来的缩放比例
-    Vector3 originalScale;
-    //第一级缩放倍数
-    public float hoverScale = 1.2f;
+    [Header("当前塔")]
+    public TowerInitial towerInitial = null;
+    public Tower tower = null;
+
+    [Header("Selected物体")]
+    public GameObject selected = null;
 
     [Header("关于展开")]
-    public GameObject optionCanva;
+    public GameObject optionCanva = null;
 
     Vector3 originalCanvaScale;
 
@@ -23,7 +24,10 @@ public class MouseClickTower : MonoBehaviour
 
     void Awake()
     {
-        originalScale = transform.localScale;
+        if(optionCanva == null)
+        {
+            return;
+        }
         originalCanvaScale = optionCanva.transform.localScale;
     }
 
@@ -34,7 +38,19 @@ public class MouseClickTower : MonoBehaviour
         {
             return;
         }
-        transform.localScale = originalScale * hoverScale;
+        //transform.localScale = originalScale * hoverScale;
+        selected.SetActive(true);
+
+
+        //点击后执行的方法（如显示攻击范围）
+        if(towerInitial != null)
+        {
+            towerInitial.DrawAttackArea();
+        }
+        if (tower != null)
+        {
+            tower.DrawAttackArea();
+        }
     }
 
     // 鼠标离开
@@ -44,20 +60,38 @@ public class MouseClickTower : MonoBehaviour
         {
             return;
         }
-        transform.localScale = originalScale;
+        //transform.localScale = originalScale;
+        selected.SetActive(false);
+
+
+        //点击后执行的方法重置（如显示攻击范围）
+        if (towerInitial != null)
+        {
+            towerInitial.EraseAttackArea();
+        }
+        if (tower != null)
+        {
+            tower.EraseAttackArea();
+        }
     }
 
     //鼠标按下
     public void OnMouseDown()
     {
+        if (optionCanva == null)
+        {
+            return;
+        }
+
         if (isSelecting)
         {
             return;
         }
-        //返回原来的大小
-        transform.localScale = originalScale;
-
         isSelecting = true;
+
+        //点击后执行的方法（如显示攻击范围）
+        //tower.DrawAttackArea();
+
         //光翼展开！！
         if (OpenCloseOptionCavan != null)
         {
@@ -69,10 +103,25 @@ public class MouseClickTower : MonoBehaviour
 
     public void MouseReset()
     {
-        //重置大小
-        transform.localScale = originalScale;
+        if (optionCanva == null)
+        {
+            return;
+        }
+
         //重置选项界面
         isSelecting = false;
+        //重置选中状态
+        selected.SetActive(false);
+
+        //点击后执行的方法重置（如显示攻击范围）
+        if (towerInitial != null)
+        {
+            towerInitial.EraseAttackArea();
+        }
+        if (tower != null)
+        {
+            tower.EraseAttackArea();
+        }
 
         //收
         if (OpenCloseOptionCavan != null)

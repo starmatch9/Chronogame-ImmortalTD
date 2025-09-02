@@ -114,4 +114,24 @@ public abstract class Tower : MonoBehaviour
         //
         Destroy(gameObject);
     }
+
+
+    //¹¥»÷·¶Î§ÓÎÏ·¶ÔÏó
+    protected GameObject attackObject;
+    //»æÖÆ¹¥»÷·¶Î§
+    public virtual void DrawAttackArea()
+    {
+        attackObject = Instantiate(GlobalTowerFunction.CircleArea, transform.position, Quaternion.identity);
+
+        attackObject.transform.localScale = Vector3.one * 2 * attackRange;
+    }
+    //²Á³ý¹¥»÷·¶Î§
+    public virtual void EraseAttackArea()
+    {
+        if (attackObject != null)
+        {
+            Destroy(attackObject);
+        }
+    }
+
 }

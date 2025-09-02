@@ -32,12 +32,23 @@ public class BranchSelect : MonoBehaviour
         //找到子物体，然后先禁用它
         Transform child = transform.Find("TwoOptionsCanva");
         child.gameObject.SetActive(false);
+        //销毁前重置绘制
+        MouseClickTower mouseClickTower = GetComponent<MouseClickTower>();
+        if (mouseClickTower.towerInitial != null)
+        {
+            mouseClickTower.towerInitial.EraseAttackArea();
+        }
+        if (mouseClickTower.tower != null)
+        {
+            mouseClickTower.tower.EraseAttackArea();
+        }
         //然后在禁用本体
         if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<TowerInitial>()))
         {
             GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<TowerInitial>());
         }
         transform.parent.gameObject.SetActive(false);
+
         Destroy(transform.parent.gameObject); //销毁
     }
 

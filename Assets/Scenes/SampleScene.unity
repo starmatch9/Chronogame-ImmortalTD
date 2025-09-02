@@ -3801,6 +3801,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 333ec089b540e8d4f946804950cea1c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  CircleArea: {fileID: 7572193782397761302, guid: e76bd2b8f61f9d84bb5f4f90a592b5c5, type: 3}
+  SquareArea: {fileID: 2050471633593579048, guid: 15feb4eba28a27a42b9267a6adcd8dae, type: 3}
   JinTowerPref: {fileID: 8008154651846594243, guid: df8983fb4180ef846af74b73d04bf8c5, type: 3}
   MuTowerPref: {fileID: 5337873676291326886, guid: 779a983e4682afc41940d2e377c42590, type: 3}
   ShuiTowerPref: {fileID: 480589149556982478, guid: ce0fa73e174502d4d85f6f2f9691642f, type: 3}

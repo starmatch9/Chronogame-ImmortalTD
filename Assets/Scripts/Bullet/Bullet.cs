@@ -60,8 +60,9 @@ public class Bullet : MonoBehaviour
         else
         {
             //如果没有目标，则子弹沿着原来的方向移动
-            transform.position += direction * moveSpeed * Time.deltaTime;
-            target = null; //清除目标
+            //transform.position += direction * moveSpeed * Time.deltaTime;
+            //target = null; //清除目标
+            Die();
         }
 
         //计算旋转角度

@@ -255,4 +255,13 @@ public class LangTower : Tower
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
     }
+
+
+    //»æÖÆË÷µÐ·¶Î§
+    public override void DrawAttackArea()
+    {
+        attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);
+
+        attackObject.transform.localScale = Vector3.one * length;
+    }
 }

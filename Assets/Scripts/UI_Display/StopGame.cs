@@ -29,7 +29,7 @@ public class StopGame : MonoBehaviour
         }
         
         //所有基础塔暂停！！！
-        foreach(TowerInitial towerInitial in GlobalData.towersInitial)
+        foreach(Tower towerInitial in GlobalData.towersInitial)
         {
             towerInitial.enabled = false;
         }
@@ -66,7 +66,7 @@ public class StopGame : MonoBehaviour
         }
 
         //所有基础塔启动！！！
-        foreach (TowerInitial towerInitial in GlobalData.towersInitial)
+        foreach (Tower towerInitial in GlobalData.towersInitial)
         {
             towerInitial.enabled = true;
         }

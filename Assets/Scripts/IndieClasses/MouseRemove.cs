@@ -56,13 +56,7 @@ public class MouseRemove : MonoBehaviour
     {
         //获取有脚本的游戏对象
         GameObject tower = currentCollision.transform.parent.gameObject;
-    
-        if(tower.GetComponent<TowerInitial>() != null)
-        {
-            TowerInitial t = tower.GetComponent<TowerInitial>();
-
-            t.Remove();
-        }
+   
 
         if(tower.GetComponent<Tower>() != null)
         {

@@ -626,7 +626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 1748111173212577604}
+  towerInitial: {fileID: 0}
   tower: {fileID: 0}
   selected: {fileID: 5187906568279306375}
   optionCanva: {fileID: 8945669081403618394}
@@ -746,7 +746,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7145927347775715520}
-  - component: {fileID: 1748111173212577604}
+  - component: {fileID: 7433961568123293911}
   m_Layer: 0
   m_Name: JinTower
   m_TagString: Tower
@@ -770,7 +770,7 @@ Transform:
   - {fileID: 5452552042341985265}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1748111173212577604
+--- !u!114 &7433961568123293911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -779,13 +779,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 8008154651846594243}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002891f3560857344a94acb27a33c5d4, type: 3}
+  m_Script: {fileID: 11500000, guid: adbcd5fd59a77dc499b5bda48c9863ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
-  bulletPrefab: {fileID: 6335463960178079003, guid: 593b93316382b3a4c8a9bb45cc0a33a3, type: 3}
-  attackRange: 3
-  shootTime: 0.5
+  attackRange: 2
+  actionTime: 0.5
 --- !u!1 &8945669081403618394
 GameObject:
   m_ObjectHideFlags: 0

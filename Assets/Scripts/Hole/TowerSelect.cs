@@ -32,10 +32,10 @@ public class TowerSelect : MonoBehaviour
 
         //初始化游戏对象
         GameObject newTower = Instantiate(tower, transform.position, Quaternion.identity);
-        newTower.GetComponent<TowerInitial>().SetHole(transform); //设置对应的坑
+        newTower.GetComponent<Tower>().SetHole(transform); //设置对应的坑
 
         //添加到基础塔列表
-        GlobalData.towersInitial.Add(newTower.GetComponent<TowerInitial>());
+        GlobalData.towersInitial.Add(newTower.GetComponent<Tower>());
 
         //找到子物体，然后先禁用它
         Transform child = transform.Find("FiveOptionsCanva");

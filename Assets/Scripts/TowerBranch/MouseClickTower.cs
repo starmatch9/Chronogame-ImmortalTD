@@ -6,7 +6,6 @@ using UnityEngine.EventSystems;
 public class MouseClickTower : MonoBehaviour
 {
     [Header("当前塔")]
-    public TowerInitial towerInitial = null;
     public Tower tower = null;
 
     [Header("Selected物体")]
@@ -43,10 +42,6 @@ public class MouseClickTower : MonoBehaviour
 
 
         //点击后执行的方法（如显示攻击范围）
-        if(towerInitial != null)
-        {
-            towerInitial.DrawAttackArea();
-        }
         if (tower != null)
         {
             tower.DrawAttackArea();
@@ -65,10 +60,6 @@ public class MouseClickTower : MonoBehaviour
 
 
         //点击后执行的方法重置（如显示攻击范围）
-        if (towerInitial != null)
-        {
-            towerInitial.EraseAttackArea();
-        }
         if (tower != null)
         {
             tower.EraseAttackArea();
@@ -114,10 +105,6 @@ public class MouseClickTower : MonoBehaviour
         selected.SetActive(false);
 
         //点击后执行的方法重置（如显示攻击范围）
-        if (towerInitial != null)
-        {
-            towerInitial.EraseAttackArea();
-        }
         if (tower != null)
         {
             tower.EraseAttackArea();

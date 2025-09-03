@@ -23,7 +23,7 @@ public class BranchSelect : MonoBehaviour
 
         //初始化游戏对象
         GameObject newTower = Instantiate(tower, transform.parent.position, Quaternion.identity);
-        Transform originalHole = transform.parent.gameObject.GetComponent<TowerInitial>().hole;
+        Transform originalHole = transform.parent.gameObject.GetComponent<Tower>().hole;
         // --------------------这个后面记得改成Tower，二级塔的基类--------------------
         newTower.GetComponent<Tower>().SetHole(originalHole); //设置对应的坑
 
@@ -34,18 +34,14 @@ public class BranchSelect : MonoBehaviour
         child.gameObject.SetActive(false);
         //销毁前重置绘制
         MouseClickTower mouseClickTower = GetComponent<MouseClickTower>();
-        if (mouseClickTower.towerInitial != null)
-        {
-            mouseClickTower.towerInitial.EraseAttackArea();
-        }
         if (mouseClickTower.tower != null)
         {
             mouseClickTower.tower.EraseAttackArea();
         }
         //然后在禁用本体
-        if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<TowerInitial>()))
+        if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<Tower>()))
         {
-            GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<TowerInitial>());
+            GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<Tower>());
         }
         transform.parent.gameObject.SetActive(false);
 

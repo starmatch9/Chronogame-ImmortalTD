@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using static GlobalData;
 
+//————已废弃脚本————
+
 //这个脚本用来初始化一个塔
 //关于塔的特殊效果统统放在子弹上！！！！（暂定）
 public class TowerInitial : MonoBehaviour

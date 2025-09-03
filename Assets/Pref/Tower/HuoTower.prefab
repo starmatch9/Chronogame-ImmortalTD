@@ -45,7 +45,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5409899934097675}
-  - component: {fileID: 496363337622657609}
+  - component: {fileID: 3224825055386554328}
   m_Layer: 0
   m_Name: HuoTower
   m_TagString: Tower
@@ -69,7 +69,7 @@ Transform:
   - {fileID: 2330361304454633939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &496363337622657609
+--- !u!114 &3224825055386554328
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -78,13 +78,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2237260605941642274}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 002891f3560857344a94acb27a33c5d4, type: 3}
+  m_Script: {fileID: 11500000, guid: de3af0bba589f554b9ad7f1abbea723b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
-  bulletPrefab: {fileID: 6335463960178079003, guid: 593b93316382b3a4c8a9bb45cc0a33a3, type: 3}
-  attackRange: 3
-  shootTime: 0.5
+  attackRange: 2
+  actionTime: 0.5
 --- !u!1 &2817542310857297084
 GameObject:
   m_ObjectHideFlags: 0
@@ -864,7 +863,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 496363337622657609}
+  towerInitial: {fileID: 0}
   tower: {fileID: 0}
   selected: {fileID: 8476959654887821147}
   optionCanva: {fileID: 3761888237445473429}

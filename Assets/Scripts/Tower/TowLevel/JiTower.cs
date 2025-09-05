@@ -1,73 +1,120 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class JiTower : Tower
 {
-    //    * ¾£¼¬Ëş *
+    //    * è†æ£˜å¡” *
 
-    //ºòÑ¡Ò»£ºÔÚÄ¿±êµĞÈË½ÅÏÂÉú³É¾£¼¬£¨Ñ¡È¡£©
-    //ºòÑ¡¶ş£ºÔÚËşÖÜÎ§Ö±½ÓÉú³É¾£¼¬
+    //å€™é€‰ä¸€ï¼šåœ¨ç›®æ ‡æ•Œäººè„šä¸‹ç”Ÿæˆè†æ£˜ï¼ˆé€‰å–ï¼‰
+    //å€™é€‰äºŒï¼šåœ¨å¡”å‘¨å›´ç›´æ¥ç”Ÿæˆè†æ£˜
 
-    //¾£¼¬Ô¤ÖÆ¼ş
-    [Header("¾£¼¬Ô¤ÖÆ¼ş")]
+    [Header("å­å¼¹é¢„åˆ¶ä»¶")]
+    public GameObject bulletPref;
+
+    //è†æ£˜é¢„åˆ¶ä»¶
+    [Header("è†æ£˜é¢„åˆ¶ä»¶")]
     public GameObject thornsPrefab;
 
-    //¾£¼¬³ÖĞøÊ±¼ä
-    [Header("¾£¼¬³ÖĞøÊ±¼ä")]
+    [Header("è†æ£˜ç”Ÿæˆæ—¶é—´é—´éš”")]
+    [Range(0f, 20f)] public float spawnDuration = 4f;
+
+    //è†æ£˜æŒç»­æ—¶é—´
+    [Header("è†æ£˜æŒç»­æ—¶é—´")]
     [Range(0f, 10f)] public float thornsDuration = 2f;
 
-    //¾£¼¬ÉËº¦Ê±¼ä¼ä¸ô£¨Ôİ¶¨Í¨¹ıĞ­³ÌÊµÏÖ£©
-    [Header("¾£¼¬ÉËº¦Ê±¼ä¼ä¸ô")]
+    //è†æ£˜ä¼¤å®³æ—¶é—´é—´éš”ï¼ˆæš‚å®šé€šè¿‡åç¨‹å®ç°ï¼‰
+    [Header("è†æ£˜ä¼¤å®³æ—¶é—´é—´éš”")]
     [Range(0f, 5f)] public float thornsAttackInterval = 0.5f;
 
-    //¾£¼¬µÄÒ»´Î¹¥»÷ÉËº¦
-    [Header("¾£¼¬µÄÒ»´Î¹¥»÷ÉËº¦")]
+    //è†æ£˜çš„ä¸€æ¬¡æ”»å‡»ä¼¤å®³
+    [Header("è†æ£˜çš„ä¸€æ¬¡æ”»å‡»ä¼¤å®³")]
     [Range(0f, 100f)] public float thornsAttackDamage = 10f;
 
-    //Î¬»¤Ò»¸ö¾£¼¬ÉúÃüÖÜÆÚÖĞĞèÒª¹¥»÷µÄµĞÈËÁĞ±í
+    [Header("æœ€å¤šç¼ ç»•å‡ ä¸ªæ•Œäºº")]
+    [Range(0, 20)] public int maxNumber = 4;
+
+    //ç»´æŠ¤ä¸€ä¸ªè†æ£˜ç”Ÿå‘½å‘¨æœŸä¸­éœ€è¦æ”»å‡»çš„æ•Œäººåˆ—è¡¨
     List<Enemy> enemies = new List<Enemy>();
+
+
+    float timer0 = 0f; //è®¡æ—¶å™¨
+    public override void Update()
+    {
+        //timerè®°å½•æµªç”Ÿæˆé—´éš”
+        timer += Time.deltaTime;
+        if (timer >= spawnDuration)
+        {
+            ExecuteAction();
+            timer = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+        //timer0è®°å½•å­å¼¹é—´éš”
+        timer0 += Time.deltaTime;
+        if (timer0 >= actionTime)
+        {
+            if (FindClosestToFinishEnemy() == null)
+            {
+                return;
+            }
+            GameObject target = FindClosestToFinishEnemy().gameObject;
+            Shoot(target);
+            timer0 = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+    }
+    //å‘å°„å­å¼¹ï¼ŒåŠç”Ÿæˆå­å¼¹å®ä¾‹
+    void Shoot(GameObject enemy)
+    {
+        // åç§» ï¼šå­å¼¹åœ¨å¡”ä¸Šæ–¹1.5ç±³çš„ä½ç½®å‘å°„
+        Vector3 offset = new Vector3(0, 1f, 0);
+
+        //å®ä¾‹åŒ–å­å¼¹
+        GameObject bullet = Instantiate(bulletPref, transform.position + offset, Quaternion.identity);
+
+        //éœ€è¦é”šå®šå­å¼¹çš„ç›®æ ‡ï¼Œè·å–å­å¼¹çš„è¡Œä¸ºè„šæœ¬
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.SetTarget(enemy);
+    }
 
     public override void TowerAction()
     {
-        //»ñÈ¡¹¥»÷·¶Î§ÄÚµÄµĞÈË
-        enemies = FindEnemyInside();
+        //è·å–æ”»å‡»èŒƒå›´å†…çš„æ•Œäºº
+        enemies = FindEnemyInside(maxNumber);
         if (enemies.Count == 0)
         {
-            return; //Ã»ÓĞµĞÈËÔò²»Ö´ĞĞ
+            return; //æ²¡æœ‰æ•Œäººåˆ™ä¸æ‰§è¡Œ
         }
-        //ÔÚÃ¿¸öµĞÈË½ÅÏÂÉú³É¾£¼¬
+        //åœ¨æ¯ä¸ªæ•Œäººè„šä¸‹ç”Ÿæˆè†æ£˜
         foreach (Enemy enemy in enemies)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
             }
-            //Éú³É¾£¼¬
+            //ç”Ÿæˆè†æ£˜
             SpawnThorns(enemy);
         }
     }
 
-    //Éú³É¾£¼¬
+    //ç”Ÿæˆè†æ£˜
     void SpawnThorns(Enemy enemy)
     {
-        //Éú³É¾£¼¬ÊµÀı         (µÚËÄ¸ö²ÎÊıÎª¸¸ÎïÌåÎ»ÖÃ£¬±íÊ¾Éú³ÉÎï×÷Îª×ÓÎïÌå)
+        //ç”Ÿæˆè†æ£˜å®ä¾‹         (ç¬¬å››ä¸ªå‚æ•°ä¸ºçˆ¶ç‰©ä½“ä½ç½®ï¼Œè¡¨ç¤ºç”Ÿæˆç‰©ä½œä¸ºå­ç‰©ä½“)
         GameObject thorns = Instantiate(thornsPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
         
-        //ÉèÖÃ¾£¼¬µÄ³ÖĞøÊ±¼ä
+        //è®¾ç½®è†æ£˜çš„æŒç»­æ—¶é—´
         StartCoroutine(ThornsLifetime(thorns, enemy));
     }
 
-    //¾£¼¬ÉúÃüÖÜÆÚĞ­³Ì
+    //è†æ£˜ç”Ÿå‘½å‘¨æœŸåç¨‹
     IEnumerator ThornsLifetime(GameObject thorns, Enemy target)
     {
-        //Í£Ö¹µĞÈËµÄÒÆ¶¯
+        //åœæ­¢æ•Œäººçš„ç§»åŠ¨
         target.gameObject.GetComponent<Move>().StopMove();
 
-        //´ó¼ÆÊ±Æ÷¼ÇÂ¼ÉúÃüÊ±³¤
-        //Ğ¡¼ÆÊ±Æ÷¼ÇÂ¼¹¥»÷¼ä¸ô
+        //å¤§è®¡æ—¶å™¨è®°å½•ç”Ÿå‘½æ—¶é•¿
+        //å°è®¡æ—¶å™¨è®°å½•æ”»å‡»é—´éš”
         float bigTimer = 0f;
         float smallTimer = 0f;
 
@@ -75,12 +122,12 @@ public class JiTower : Tower
         {
             if (smallTimer >= thornsAttackInterval)
             {
-                //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË
+                //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
                 if (!target.NoMoreShotsNeeded())
                 {
                     target.AcceptAttack(thornsAttackDamage);
                 }
-                smallTimer = 0f; //ÖØÖÃĞ¡¼ÆÊ±Æ÷
+                smallTimer = 0f; //é‡ç½®å°è®¡æ—¶å™¨
             }
             yield return null;
             bigTimer += Time.deltaTime;
@@ -89,10 +136,10 @@ public class JiTower : Tower
 
         Destroy(thorns);
 
-        //»Ö¸´µĞÈËÒÆ¶¯
+        //æ¢å¤æ•Œäººç§»åŠ¨
         target.gameObject.GetComponent<Move>().ContinueMove();
 
-        //Çå¿ÕµĞÈË
+        //æ¸…ç©ºæ•Œäºº
         enemies.Clear();
     }
 }

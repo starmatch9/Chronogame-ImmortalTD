@@ -49,9 +49,7 @@ public class LuTower : Tower
             StartCoroutine(furnaceLife());
             timer0 = 0f; //重置计时器
         }
-
     }
-
 
     public override void TowerAction()
     {

@@ -63,6 +63,30 @@ public abstract class Tower : MonoBehaviour
         return enemies;
     }
 
+    public List<Enemy> FindEnemyInside(int number)
+    {
+        List<Enemy> enemies = new List<Enemy>();
+        foreach (Enemy enemy in GlobalData.globalEnemies)
+        {
+            //跳过不需要攻击的敌人
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            //获取攻击范围
+            float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
+            if (distance < attackRange)
+            {
+                enemies.Add(enemy);
+            }
+            if(enemies.Count == number)
+            {
+                break;
+            }
+        }
+        return enemies;
+    }
+
     //子类也许用的到：定位攻击半径内离终点最近的敌人
     public Enemy FindClosestToFinishEnemy()
     {
@@ -110,8 +134,12 @@ public abstract class Tower : MonoBehaviour
     public void Remove()
     {
         //这里增加货币的回收方法
-
         //
+
+        //还原坑
+        hole.gameObject.SetActive(true);
+
+        //xiaohui
         Destroy(gameObject);
     }
 

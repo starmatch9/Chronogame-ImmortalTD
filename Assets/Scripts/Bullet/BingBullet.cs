@@ -1,51 +1,54 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BingBullet : Bullet
 {
-    //    *- ±ù×Óµ¯ -*
+    //    *- å†°å­å¼¹ -*
 
-    //ÎªÁË²»¸ÉÈÅµĞÈËµÄÄÚ²¿Âß¼­£¨ÒòÎª±¾Éí¾Í¹»ÂÒÁË£©
-    //ÕâÀï²»²ÉÓÃÔÚµĞÈË½Å±¾Àï¼Ó¶³½áÂß¼­
-    //¶øÊÇÍ¨¹ıÈ«¾Ö½Å±¾¿ØÖÆµĞÈË¶³½á£¬ÇëÒÆ²½µ½Freeze.cs½Å±¾ÖĞ²é¿´
+    //ä¸ºäº†ä¸å¹²æ‰°æ•Œäººçš„å†…éƒ¨é€»è¾‘ï¼ˆå› ä¸ºæœ¬èº«å°±å¤Ÿä¹±äº†ï¼‰
+    //è¿™é‡Œä¸é‡‡ç”¨åœ¨æ•Œäººè„šæœ¬é‡ŒåŠ å†»ç»“é€»è¾‘
+    //è€Œæ˜¯é€šè¿‡å…¨å±€è„šæœ¬æ§åˆ¶æ•Œäººå†»ç»“ï¼Œè¯·ç§»æ­¥åˆ°Freeze.csè„šæœ¬ä¸­æŸ¥çœ‹
 
-    [Header("Ñ©»¨Ô¤ÖÆ¼ş")]
+    [Header("é›ªèŠ±é¢„åˆ¶ä»¶")]
     public GameObject snowPrefab;
 
-    [Header("¶³½áÊ±¼ä")]
+    [Header("å†»ç»“æ—¶é—´")]
     [Range(0f, 10f)] public float freezeTime = 3f;
+
+    [Header("å†»ç»“åæ•Œäººä¼¤å®³å€æ•°")]
+    [Range(1f, 2f)] public float mul = 1.2f;
 
     int maxCount = 0;
 
-    //×Óµ¯ËÀÍöÇ°ÀÛ¼Æ¶³½á
+    //å­å¼¹æ­»äº¡å‰ç´¯è®¡å†»ç»“
     public override IEnumerator DieAction()
     {
         Enemy targetEnemy = target.GetComponent<Enemy>();
-        //´ò»÷µĞÈËÇ°ÀÛ¼Æ´ÎÊı
+        //æ‰“å‡»æ•Œäººå‰ç´¯è®¡æ¬¡æ•°
         if (!Freeze.enemyHitCount.ContainsKey(targetEnemy))
         {
-            //×ÖµäÖĞÃ»ÓĞ£¬¾Í¼ÓÉÏ
+            //å­—å…¸ä¸­æ²¡æœ‰ï¼Œå°±åŠ ä¸Š
             Freeze.enemyHitCount.Add(targetEnemy, 1);
         }
         else
         {
-            //ÓĞµÄ»°£¬¼Ó¼Ó
+            //æœ‰çš„è¯ï¼ŒåŠ åŠ 
             ++Freeze.enemyHitCount[targetEnemy];
 
-            //¼ÓÍê¼ì²â´ÎÊıÊÇ·ñµÈÓÚÄ¿±ê   £¨´óÓÚ¶¼²»ĞĞ£¡£¡²»È»»áÖØ¸´Ö´ĞĞ£©
+            //åŠ å®Œæ£€æµ‹æ¬¡æ•°æ˜¯å¦ç­‰äºç›®æ ‡   ï¼ˆå¤§äºéƒ½ä¸è¡Œï¼ï¼ä¸ç„¶ä¼šé‡å¤æ‰§è¡Œï¼‰
             if (Freeze.enemyHitCount[targetEnemy] == maxCount)
             {
                 
 
-                //½ûÓÃäÖÈ¾Æ÷ÓëÅö×²Æ÷
+                //ç¦ç”¨æ¸²æŸ“å™¨ä¸ç¢°æ’å™¨
                 transform.Find("Renderer").GetComponent<Renderer>().enabled = false;
                 GetComponent<Collider2D>().enabled = false;
 
-                //·Å¶³½áÂß¼­
+                //æ”¾å†»ç»“é€»è¾‘
                 yield return StartCoroutine(SpawnSnow(targetEnemy));
 
-                //ÖØÖÃ´ÎÊı
+                //é‡ç½®æ¬¡æ•°
                 if (Freeze.enemyHitCount.ContainsKey(targetEnemy))
                 {
                     Freeze.enemyHitCount[targetEnemy] = 0;
@@ -53,28 +56,31 @@ public class BingBullet : Bullet
             }
         }
 
-        yield return base.DieAction(); //µ÷ÓÃ»ùÀàµÄËÀÍöÂß¼­
+        yield return base.DieAction(); //è°ƒç”¨åŸºç±»çš„æ­»äº¡é€»è¾‘
     }
 
-    //Éú³ÉÑ©»¨
+    //ç”Ÿæˆé›ªèŠ±
     IEnumerator SpawnSnow(Enemy enemy)
     {
-        //Éú³ÉÑ©»¨ÊµÀı         (µÚËÄ¸ö²ÎÊıÎª¸¸ÎïÌåÎ»ÖÃ£¬±íÊ¾Éú³ÉÎï×÷Îª×ÓÎïÌå)
+        //ç”Ÿæˆé›ªèŠ±å®ä¾‹         (ç¬¬å››ä¸ªå‚æ•°ä¸ºçˆ¶ç‰©ä½“ä½ç½®ï¼Œè¡¨ç¤ºç”Ÿæˆç‰©ä½œä¸ºå­ç‰©ä½“)
         GameObject snow = Instantiate(snowPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
-        //ÉèÖÃÑ©»¨µÄ³ÖĞøÊ±¼ä
+        //è®¾ç½®é›ªèŠ±çš„æŒç»­æ—¶é—´
         yield return StartCoroutine(SnowLifetime(snow, enemy));
     }
 
-    //Ñ©»¨ÉúÃüÖÜÆÚĞ­³Ì
+    //é›ªèŠ±ç”Ÿå‘½å‘¨æœŸåç¨‹
     IEnumerator SnowLifetime(GameObject snow, Enemy enemy)
     {
         enemy.gameObject.GetComponent<Move>().StopMove();
+        //åŠ ä¼¤
+        enemy.SetDefense(1f - mul);
 
-        yield return new WaitForSeconds(freezeTime); //µÈ´ı¶³½áÊ±¼ä
+        yield return new WaitForSeconds(freezeTime); //ç­‰å¾…å†»ç»“æ—¶é—´
 
         Destroy(snow);
 
-        //Ê±¼äµ½£¬½â³ı¶³½á
+        //æ—¶é—´åˆ°ï¼Œè§£é™¤å†»ç»“
+        enemy.ResetDefense();
         enemy.gameObject.GetComponent<Move>().ContinueMove();
     }
 

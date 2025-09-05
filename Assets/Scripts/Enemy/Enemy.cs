@@ -1,139 +1,154 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
-//¿¼ÂÇÖÆ×÷½Ó¿Ú£¬Ê¹ÓÃ×°ÊÎÆ÷Ä£Ê½À´ÊµÏÖ²»Í¬µĞÈËµÄĞĞÎª(ÈçÌØĞ§¿¹ĞÔ),Ê¹ÓÃ³éÏó»ùÀà
-//Ğé·½·¨¿ÉÖØĞÂ
-//³éÏó·½·¨±ØĞëÖØĞ´
+//è€ƒè™‘åˆ¶ä½œæ¥å£ï¼Œä½¿ç”¨è£…é¥°å™¨æ¨¡å¼æ¥å®ç°ä¸åŒæ•Œäººçš„è¡Œä¸º(å¦‚ç‰¹æ•ˆæŠ—æ€§),ä½¿ç”¨æŠ½è±¡åŸºç±»
+//è™šæ–¹æ³•å¯é‡æ–°
+//æŠ½è±¡æ–¹æ³•å¿…é¡»é‡å†™
 
-/*Ã¿¸ö×ÓÀà±ØĞëÊµÏÖOnTriggerEnter·½·¨*/
+/*æ¯ä¸ªå­ç±»å¿…é¡»å®ç°OnTriggerEnteræ–¹æ³•*/
 
 public abstract class Enemy : MonoBehaviour
 {
-    EnemySpawn enemySpawn; //µĞÈËÉú³ÉÆ÷
+    EnemySpawn enemySpawn; //æ•Œäººç”Ÿæˆå™¨
 
-    HealthBar healthBar; //ÑªÌõ
+    HealthBar healthBar; //è¡€æ¡
 
-    float maxHealth = 100f; //×î´óÑªÁ¿
+    float maxHealth = 100f; //æœ€å¤§è¡€é‡
 
-    bool isDead = false; //ÊÇ·ñËÀÍö
+    bool isDead = false; //æ˜¯å¦æ­»äº¡
 
-    //ÑªÁ¿Öµ
+    float defense = 0;  //é˜²å¾¡ç³»æ•°ï¼Œä¸º0å³æ²¡æœ‰é˜²å¾¡ç³»æ•°
+
+    //è¡€é‡å€¼
     public float health = 100;
 
-    //ÒÆ¶¯ËÙ¶È
+    //ç§»åŠ¨é€Ÿåº¦
     public float speed = 2f;
 
     private void Awake()
     {
-        //»ñÈ¡ÑªÌõ×é¼ş
+        //è·å–è¡€æ¡ç»„ä»¶
         healthBar = GetComponentInChildren<HealthBar>();
     }
 
-    /*×¢Òâ£ºÕâÀï¼ì²âµÄÊÇ×Óµ¯£¡£¡£¡*/
-    //Õâ¸ö·½·¨¼ì²â×Óµ¯Åö×²£¬µ÷ÓÃMinusHealth·½·¨
+    float currentDefense;
+    //è®¾ç½®é˜²å¾¡ç³»æ•°
+    public void SetDefense(float defenseFactor)
+    {
+        currentDefense = defense;
+        defense = defenseFactor;
+    }
+    //é‡ç½®é˜²å¾¡ç³»æ•°
+    public void ResetDefense()
+    {
+        defense = currentDefense;
+    }
+
+    /*æ³¨æ„ï¼šè¿™é‡Œæ£€æµ‹çš„æ˜¯å­å¼¹ï¼ï¼ï¼*/
+    //è¿™ä¸ªæ–¹æ³•æ£€æµ‹å­å¼¹ç¢°æ’ï¼Œè°ƒç”¨MinusHealthæ–¹æ³•
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //»¹µÃ¶ÔºÅÈë×ù£¬Ãé×¼µÄÄÄ¸öµĞÈËÖ»ÄÜ´òÄÄ¸öµĞÈË£¬¶ø´¥·¢²»ÁËÆäËûµĞÈËµÄÅö×²Æ÷
+        //è¿˜å¾—å¯¹å·å…¥åº§ï¼Œç„å‡†çš„å“ªä¸ªæ•Œäººåªèƒ½æ‰“å“ªä¸ªæ•Œäººï¼Œè€Œè§¦å‘ä¸äº†å…¶ä»–æ•Œäººçš„ç¢°æ’å™¨
         if (collision.CompareTag("Bullet") && (collision.GetComponent<Bullet>().target == gameObject || collision.GetComponent<Bullet>().penetrate ))
         {
-            //»ñÈ¡×Óµ¯µÄÊı¾İ½Å±¾
+            //è·å–å­å¼¹çš„æ•°æ®è„šæœ¬
             Bullet bullet = collision.GetComponent<Bullet>();
 
-            //²âÊÔ
+            //æµ‹è¯•
             AcceptAttack(GetAttack(bullet));
 
-            //Ïú»Ù×Óµ¯Ç°µ÷ÓÃ¡°ËÀ¡±
-            //°üÀ¨ËÀÇ°µÄÂß¼­ÒÔ¼°Ïú»Ù±¾Éí
-            collision.GetComponent<Bullet>().Die();
+            //é”€æ¯å­å¼¹å‰è°ƒç”¨â€œæ­»â€
+            //åŒ…æ‹¬æ­»å‰çš„é€»è¾‘ä»¥åŠé”€æ¯æœ¬èº«
+            collision.GetComponent<Bullet>().Die(this);
 
         }
     }
 
-    //×¢Òâ£º»ñÈ¡×Óµ¯µÄ¹¥»÷Á¦£¨×ÓÀà±ØĞëÊµÏÖ£©£¡£¡£¡£¡£¡Æä±ØĞë´«Èë×Óµ¯½Å±¾×÷Îª²ÎÊı£¡£¡ËäÈ»ÏÖÔÚÃ»ÓĞĞ´
+    //æ³¨æ„ï¼šè·å–å­å¼¹çš„æ”»å‡»åŠ›ï¼ˆå­ç±»å¿…é¡»å®ç°ï¼‰ï¼ï¼ï¼ï¼ï¼å…¶å¿…é¡»ä¼ å…¥å­å¼¹è„šæœ¬ä½œä¸ºå‚æ•°ï¼ï¼è™½ç„¶ç°åœ¨æ²¡æœ‰å†™
     //
-    //Õâ¸öÖ»ÓÃÓÚÊµÏÖ²»Í¬µĞÈË¶Ô²»Í¬×Óµ¯µÄ¿¹ĞÔ£¡£¡×¢Òâ£¬Ö»ÊÇ×Óµ¯£¡£¡
+    //è¿™ä¸ªåªç”¨äºå®ç°ä¸åŒæ•Œäººå¯¹ä¸åŒå­å¼¹çš„æŠ—æ€§ï¼ï¼æ³¨æ„ï¼Œåªæ˜¯å­å¼¹ï¼ï¼
     //
-    //×ÓÀàÖĞ£¬·½·¨µÄÂß¼­¿ÉÄÜËæ×ÅµĞÈË¿¹ĞÔ¡¢×Óµ¯ÀàĞÍµÈ²»Í¬¶ø²»Í¬£¡£¡£¡£¡£¡
+    //å­ç±»ä¸­ï¼Œæ–¹æ³•çš„é€»è¾‘å¯èƒ½éšç€æ•ŒäººæŠ—æ€§ã€å­å¼¹ç±»å‹ç­‰ä¸åŒè€Œä¸åŒï¼ï¼ï¼ï¼ï¼
     public abstract float GetAttack(Bullet bullet);
 
     //
-    //ÖØÒª£º³ĞÊÜ¹¥»÷£¡£¡£¡£¡¿ÉÄÜĞèÒª×ÓÀàÖØĞ´£¡£¡£¡£¡ÈÃMinusHealth·½·¨²»¶ÔÍâ±©Â¶£¡£¡£¡
+    //é‡è¦ï¼šæ‰¿å—æ”»å‡»ï¼ï¼ï¼ï¼å¯èƒ½éœ€è¦å­ç±»é‡å†™ï¼ï¼ï¼ï¼è®©MinusHealthæ–¹æ³•ä¸å¯¹å¤–æš´éœ²ï¼ï¼ï¼
     //
-    //ÓÃ´Ë·½·¨Çø·ÖÓë×Óµ¯µÄÍ³Ò»¹ÜÀí£¬Õâ¸ö·½·¨ÓÃÓÚÁ¬½ÓÆäËûÀà£¬Ôì³É¾£¼¬µÈÌØÊâÉËº¦
+    //ç”¨æ­¤æ–¹æ³•åŒºåˆ†ä¸å­å¼¹çš„ç»Ÿä¸€ç®¡ç†ï¼Œè¿™ä¸ªæ–¹æ³•ç”¨äºè¿æ¥å…¶ä»–ç±»ï¼Œé€ æˆè†æ£˜ç­‰ç‰¹æ®Šä¼¤å®³
     //
     public virtual void AcceptAttack(float attack)
     {
         MinusHealth(attack);
     }
 
-    //ÓÎÏ·¶ÔÏóÉú³ÉÊ±ĞèÒªµ÷ÕûµÄ¹¦ÄÜ
+    //æ¸¸æˆå¯¹è±¡ç”Ÿæˆæ—¶éœ€è¦è°ƒæ•´çš„åŠŸèƒ½
     public void GameObjectSpawn()
     {
         isDead = false;
     }
 
-    //ÖØÖÃµĞÈË×´Ì¬£¨ÔÚ¶ÔÏó³ØÖĞÓÃµÄµ½£©
+    //é‡ç½®æ•ŒäººçŠ¶æ€ï¼ˆåœ¨å¯¹è±¡æ± ä¸­ç”¨çš„åˆ°ï¼‰
     public void GameObjectReset()
     {
-        GetComponent<Move>().survivalTime = 0f; //ÖØÖÃ´æ»îÊ±¼ä
-        GetComponent<Move>().ResetSpeed(); //ÖØÖÃËÙ¶ÈÒò×ÓÎª1
-        health = maxHealth; //ÖØÖÃÑªÁ¿
-        healthBar.SetHealth(health / maxHealth); //¸üĞÂÑªÌõÏÔÊ¾
+        GetComponent<Move>().survivalTime = 0f; //é‡ç½®å­˜æ´»æ—¶é—´
+        GetComponent<Move>().ResetSpeed(); //é‡ç½®é€Ÿåº¦å› å­ä¸º1
+        health = maxHealth; //é‡ç½®è¡€é‡
+        healthBar.SetHealth(health / maxHealth); //æ›´æ–°è¡€æ¡æ˜¾ç¤º
 
-        //ÖØÖÃ¶³½á×´Ì¬
-        if (Freeze.enemyHitCount.ContainsKey(this))    //¼Ç×¡£ºContainsKeyÓÃÅĞ¶Ï×ÖµäÖĞÊÇ·ñ°üº¬Ä³¸ö¼ü
+        //é‡ç½®å†»ç»“çŠ¶æ€
+        if (Freeze.enemyHitCount.ContainsKey(this))    //è®°ä½ï¼šContainsKeyç”¨åˆ¤æ–­å­—å…¸ä¸­æ˜¯å¦åŒ…å«æŸä¸ªé”®
         {
-            Freeze.enemyHitCount.Remove(this); //ÒÆ³ıµĞÈË¶³½á×´Ì¬
+            Freeze.enemyHitCount.Remove(this); //ç§»é™¤æ•Œäººå†»ç»“çŠ¶æ€
         }
 
-        //ÖØÖÃ×´Ì¬Ê±£¬½øĞĞ¶ÔÏó»ØÊÕ
+        //é‡ç½®çŠ¶æ€æ—¶ï¼Œè¿›è¡Œå¯¹è±¡å›æ”¶
         enemySpawn.ReturnEnemy(gameObject);
     }
 
-    //»ñÈ¡ÑªÁ¿Öµ
+    //è·å–è¡€é‡å€¼
     public float GetHealth() { 
         return health; 
     }
 
-    //¿Û³ıÑªÁ¿Öµ
+    //æ‰£é™¤è¡€é‡å€¼
     void MinusHealth(float attack) {
-        health -= attack;
+        health -= attack * (1 - defense);
 
-        healthBar.SetHealth(health / maxHealth); //¸üĞÂÑªÌõÏÔÊ¾
+        healthBar.SetHealth(health / maxHealth); //æ›´æ–°è¡€æ¡æ˜¾ç¤º
 
         if (health <= 0)
         {
             isDead = true;
-            gameObject.SetActive(false); //µĞÈËËÀÍö
+            gameObject.SetActive(false); //æ•Œäººæ­»äº¡
 
-            //·âÓ¡Êõ£¬µ÷ÓÃËùÓĞËÀÇ°ĞĞÎª£¨µĞÈËµ½´ïÖÕµãÊ±Ò²ÒªÊ¹ÓÃ£©
+            //å°å°æœ¯ï¼Œè°ƒç”¨æ‰€æœ‰æ­»å‰è¡Œä¸ºï¼ˆæ•Œäººåˆ°è¾¾ç»ˆç‚¹æ—¶ä¹Ÿè¦ä½¿ç”¨ï¼‰
             SealFunction();
 
-            GameObjectReset(); //ÖØÖÃµĞÈË×´Ì¬
+            GameObjectReset(); //é‡ç½®æ•ŒäººçŠ¶æ€
         }
     }
 
-    //ÅĞ¶ÏµÄÒÀ¾İ¿ÉÒÔÔÚ×ÓÀàÖĞÖØĞ´
-    //ÊÇ·ñ²»ÔÙĞèÒª¹¥»÷
+    //åˆ¤æ–­çš„ä¾æ®å¯ä»¥åœ¨å­ç±»ä¸­é‡å†™
+    //æ˜¯å¦ä¸å†éœ€è¦æ”»å‡»
     public virtual bool NoMoreShotsNeeded() {
-        return isDead; //Èç¹ûÑªÁ¿Ğ¡ÓÚµÈÓÚ0£¬Ôò²»ÔÙĞèÒª¹¥»÷
+        return isDead; //å¦‚æœè¡€é‡å°äºç­‰äº0ï¼Œåˆ™ä¸å†éœ€è¦æ”»å‡»
     }    
 
-    //»ñÈ¡µĞÈËÓÎÏ·¶ÔÏó£¨¡­¡­ºÃÏñÓĞµã¶à´ËÒ»¾ÙÁË£©
+    //è·å–æ•Œäººæ¸¸æˆå¯¹è±¡ï¼ˆâ€¦â€¦å¥½åƒæœ‰ç‚¹å¤šæ­¤ä¸€ä¸¾äº†ï¼‰
     public GameObject GetGameObject()
     {
         return gameObject;
     }
 
-    //ÉèÖÃµĞÈËÉú³ÉÆ÷
+    //è®¾ç½®æ•Œäººç”Ÿæˆå™¨
     public void SetEnemySpawn(EnemySpawn spawn)
     {
         enemySpawn = spawn;
     }
 
-    //µĞÈËËÀºó»òµ½´ïÖÕµãÊ±µ÷ÓÃÒ»´ÎµÄº¯Êı(sealµÄÒâË¼ÊÇ·âÓ¡£¬²Î¿¼ÍÅ²ØËÀÇ°ÊÍ·ÅÀïËÄÏó·âÓ¡Êõ)
+    //æ•Œäººæ­»åæˆ–åˆ°è¾¾ç»ˆç‚¹æ—¶è°ƒç”¨ä¸€æ¬¡çš„å‡½æ•°(sealçš„æ„æ€æ˜¯å°å°ï¼Œå‚è€ƒå›¢è—æ­»å‰é‡Šæ”¾é‡Œå››è±¡å°å°æœ¯)
     public void SealFunction()
     {
-        //»ù±¾ÉÏ¶¼ÊÇÈ«¾Ö·½·¨ÁË
+        //åŸºæœ¬ä¸Šéƒ½æ˜¯å…¨å±€æ–¹æ³•äº†
         GlobalEnemyGroupFunction.CheckEnd();
         
     }

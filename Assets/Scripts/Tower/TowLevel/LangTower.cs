@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
@@ -7,51 +7,104 @@ using UnityEngine.UIElements;
 
 public class LangTower : Tower
 {
-    //  -* ÀËËş *-
+    //  -* æµªå¡” *-
 
-    //µ±Ç°Ë¼Â·£º¼ÓÈëÎ»ÖÃ¼ì²â£¬´ÓµĞÈËµÚÒ»·½¸ñ¿ªÊ¼£¬·´ÏòÍÆÀíµÃµÃµ½ÀËÂ·¾¶µÄ¾¡Í·Î»ÖÃ£¬ÔÚ´ËÉú³ÉÀË 
+    //å½“å‰æ€è·¯ï¼šåŠ å…¥ä½ç½®æ£€æµ‹ï¼Œä»æ•Œäººç¬¬ä¸€æ–¹æ ¼å¼€å§‹ï¼Œåå‘æ¨ç†å¾—å¾—åˆ°æµªè·¯å¾„çš„å°½å¤´ä½ç½®ï¼Œåœ¨æ­¤ç”Ÿæˆæµª 
 
     [TextArea]
-    public string Tips = "×¢Òâ£ºÀËËşµÄ¡°Ë÷µĞ·¶Î§¡±²»ÉúĞ§¡£¡°ĞĞÎª¼ä¸ôÊ±¼ä¡±ÊÇÀËÅÄ´òÒ»´ÎµÄÊ±¼ä¡£";
+    public string Tips = "æ³¨æ„ï¼šâ€œè¡Œä¸ºé—´éš”æ—¶é—´â€æ˜¯å­å¼¹ç”Ÿæˆçš„æ—¶é—´ã€‚";
 
-    [Header("Éú³É·½¸ñµÄ±ß³¤£¬±ÈÈç¾Å¹¬¸ñµÄ±ß³¤Îª3¡£")]
+    [Header("ç”Ÿæˆæ–¹æ ¼çš„è¾¹é•¿ï¼Œæ¯”å¦‚ä¹å®«æ ¼çš„è¾¹é•¿ä¸º3ã€‚")]
     [Range(1, 5)] public int length = 3;
 
-    //×¢Òâ£ºÂ·ÃæÁĞ±íĞèÒªµ¥¶À·ÅÔÚÂ·Ãæ¹ÜÀíÆ÷ÖĞ£¬½«ÆäÉèÖÃÎªÈ«¾Ö¾²Ì¬±äÁ¿£¬³õÊ¼»¯Ê±¸ù¾İ¹ÜÀíÆ÷ÖĞµÄÂ·Ãæ½øĞĞÌí¼Ó
-    //[Header("Â·ÃæÁĞ±í£¨×¢Òâ£ºÕâ¸ö²ÎÊıºóĞøÒª·Åµ½È«¾Ö¹ÜÀíÆ÷ÖĞÍ³Ò»¹ÜÀí£¡£¡£¡£©")]
+    [Header("å­å¼¹é¢„åˆ¶ä»¶")]
+    public GameObject bulletPref;
+
+    //æ³¨æ„ï¼šè·¯é¢åˆ—è¡¨éœ€è¦å•ç‹¬æ”¾åœ¨è·¯é¢ç®¡ç†å™¨ä¸­ï¼Œå°†å…¶è®¾ç½®ä¸ºå…¨å±€é™æ€å˜é‡ï¼Œåˆå§‹åŒ–æ—¶æ ¹æ®ç®¡ç†å™¨ä¸­çš„è·¯é¢è¿›è¡Œæ·»åŠ 
+    //[Header("è·¯é¢åˆ—è¡¨ï¼ˆæ³¨æ„ï¼šè¿™ä¸ªå‚æ•°åç»­è¦æ”¾åˆ°å…¨å±€ç®¡ç†å™¨ä¸­ç»Ÿä¸€ç®¡ç†ï¼ï¼ï¼ï¼‰")]
     //public List<Tilemap> tilemaps = new List<Tilemap>();
 
-    [Header("ÀË´¥·¢Æ÷Ô¤ÖÆ¼ş")]
+    [Header("æµªè§¦å‘å™¨é¢„åˆ¶ä»¶")]
     public GameObject waveTriggerPrefab;
 
-    [Header("ÀËÔ¤ÖÆ¼ş")]
+    [Header("æµªç”Ÿæˆé—´éš”")]
+    [Range(0, 20f)] public float waveDuration;
+
+    [Header("æµªé¢„åˆ¶ä»¶")]
     public GameObject wavePrefab;
 
-    //Î¬»¤ËùÓĞ½øÈëÀËËş·¶Î§µÄµĞÈËÁĞ±í
-    //µĞÈËÁĞ±í²»Îª¿ÕÊ±£¬²»ÄÜĞŞ¸ÄfirstPoint¡£µĞÈËÁĞ±íÎª¿ÕÊ±£¬¿ÉÒÔĞŞ¸ÄfirstPoint¡£
+    [Header("æµªä¼¤å®³")]
+    [Range(0f, 100f)]public int waveAttack = 15;
+
+    [Header("å›é€€é€Ÿåº¦")]
+    [Range(0, 5f)] public float backSpeed = 1f;
+
+    [Header("å›é€€æ—¶é—´")]
+    [Range(0, 2f)] public float backTime = 0.4f;
+
+    //ç»´æŠ¤æ‰€æœ‰è¿›å…¥æµªå¡”èŒƒå›´çš„æ•Œäººåˆ—è¡¨
+    //æ•Œäººåˆ—è¡¨ä¸ä¸ºç©ºæ—¶ï¼Œä¸èƒ½ä¿®æ”¹firstPointã€‚æ•Œäººåˆ—è¡¨ä¸ºç©ºæ—¶ï¼Œå¯ä»¥ä¿®æ”¹firstPointã€‚
     [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
 
-    //ÀËËş·¶Î§ÄÚµÄËùÓĞµã
+    //æµªå¡”èŒƒå›´å†…çš„æ‰€æœ‰ç‚¹
     List<Vector3> points = new List<Vector3>();
 
-    //µĞÈËÀ´Ï®µÄµã
+    //æ•Œäººæ¥è¢­çš„ç‚¹
     //[HideInInspector]
     //public Vector3 firstPoint;
 
     private void Start()
     {
-        //³õÊ¼»¯Â·ÃæÁĞ±í
+        //åˆå§‹åŒ–è·¯é¢åˆ—è¡¨
         points = GetAllPointInGrid();
-        //Éú³ÉÀË´¥·¢Æ÷
+        //ç”Ÿæˆæµªè§¦å‘å™¨
         foreach (Vector3 point in points)
         {
             GameObject waveTrigger = Instantiate(waveTriggerPrefab, point, Quaternion.identity);
             waveTrigger.GetComponent<WaveTrigger>().SetTower(this);
             waveTrigger.GetComponent<WaveTrigger>().point = point;
-            waveTrigger.transform.parent = transform; //½«´¥·¢Æ÷ÉèÎªÀËËşµÄ×ÓÎïÌå£¬·½±ã¹ÜÀí
+            waveTrigger.transform.parent = transform; //å°†è§¦å‘å™¨è®¾ä¸ºæµªå¡”çš„å­ç‰©ä½“ï¼Œæ–¹ä¾¿ç®¡ç†
         }
     }
+
+    float timer0 = 0f; //è®¡æ—¶å™¨
+    public override void Update()
+    {
+        //timerè®°å½•æµªç”Ÿæˆé—´éš”
+        timer += Time.deltaTime;
+        if (timer >= waveDuration)
+        {
+            ExecuteAction();
+            timer = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+        //timerè®°å½•å­å¼¹é—´éš”
+        timer0 += Time.deltaTime;
+        if (timer0 >= actionTime)
+        {
+            if (FindClosestToFinishEnemy() == null)
+            {
+                return;
+            }
+            GameObject target = FindClosestToFinishEnemy().gameObject;
+            Shoot(target);
+            timer0 = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+    }
+    //å‘å°„å­å¼¹ï¼ŒåŠç”Ÿæˆå­å¼¹å®ä¾‹
+    void Shoot(GameObject enemy)
+    {
+        // åç§» ï¼šå­å¼¹åœ¨å¡”ä¸Šæ–¹1.5ç±³çš„ä½ç½®å‘å°„
+        Vector3 offset = new Vector3(0, 1f, 0);
+
+        //å®ä¾‹åŒ–å­å¼¹
+        GameObject bullet = Instantiate(bulletPref, transform.position + offset, Quaternion.identity);
+
+        //éœ€è¦é”šå®šå­å¼¹çš„ç›®æ ‡ï¼Œè·å–å­å¼¹çš„è¡Œä¸ºè„šæœ¬
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.SetTarget(enemy);
+    }
+
 
     public override void TowerAction()
     {
@@ -64,46 +117,49 @@ public class LangTower : Tower
         //    Debug.Log(p);
         //}
 
-        //Éú³ÉÀË
+        //ç”Ÿæˆæµª
         StartCoroutine(SpawnWave());
 
-        //ÍÆ
+        //æ¨
         PushEnemies();
 
-        UpdateEnemies();//Ë¢ĞÂµĞÈËÁĞ±í
+        UpdateEnemies();//åˆ·æ–°æ•Œäººåˆ—è¡¨
     }
 
     public void PushEnemies()
     {
-        //·ÀÖ¹·¢Éú±ä»¯µÃ¸´ÖÆÒ»·İ£¨newÊÇ¸´ÖÆ£¡£¡²»È»¾ÍÊÇÒıÓÃÁË£¡£¡£©
+        //é˜²æ­¢å‘ç”Ÿå˜åŒ–å¾—å¤åˆ¶ä¸€ä»½ï¼ˆnewæ˜¯å¤åˆ¶ï¼ï¼ä¸ç„¶å°±æ˜¯å¼•ç”¨äº†ï¼ï¼ï¼‰
         List<Enemy> enemiesCopy  = new List<Enemy>(enemies);
 
         foreach (Enemy enemy in enemiesCopy)
-        { 
+        {
+            //æ•Œäººæ¥å—ä¼¤å®³
+            enemy.AcceptAttack(waveAttack);
+
             StartCoroutine(EnemyBack(enemy));
         }
     }
 
     IEnumerator EnemyBack(Enemy enemy) {
-        //¼õËÙÒò×Ó
-        float slowFactor = -1f;
+        //å‡é€Ÿå› å­
+        float slowFactor = -backSpeed;
 
         Move move = enemy.gameObject.GetComponent<Move>();
         move.ResetSpeed();
         move.ChangeSpeed(slowFactor);
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(backTime);
 
         move.ResetSpeed();
     }
 
-    //Éú³ÉÀË£¨Ğ­³Ì£©actionTimeµÄÊ±¼ä´Ópoint[Count-1]µ½point[0]
+    //ç”Ÿæˆæµªï¼ˆåç¨‹ï¼‰actionTimeçš„æ—¶é—´ä»point[Count-1]åˆ°point[0]
     public IEnumerator SpawnWave()
     {
-        //ÏÈ°ÑÔ¤ÖÆ¼ş·Å³öÁË
+        //å…ˆæŠŠé¢„åˆ¶ä»¶æ”¾å‡ºäº†
         GameObject wave = Instantiate(wavePrefab, points[points.Count - 1], Quaternion.identity);
 
-        //pointsµÄÊıÁ¿´ú±ípoint-1µÄÏß¶Î£¬Ã¿¸öÏß¶ÎµÄÓÃÊ±ÎªactionTime / point - 1
+        //pointsçš„æ•°é‡ä»£è¡¨point-1çš„çº¿æ®µï¼Œæ¯ä¸ªçº¿æ®µçš„ç”¨æ—¶ä¸ºactionTime / point - 1
         float partTime = actionTime / (points.Count - 1);
         int index = points.Count - 1;
         while(index > 0)
@@ -122,8 +178,8 @@ public class LangTower : Tower
         Destroy(wave);
     }
 
-    //È·±£´Ó0µ½length-1µÄË³Ğò¾ÍÊÇÀËµÄÒÆ¶¯Ë³Ğò
-    //firstPointÊÇµĞÈËÀ´Ï®µÄµÚÒ»¸öµã£¬ÊÇÀËµÄÖÕµã£¨ËùÒÔÀËÉú³ÉÒª·´×ÅÀ´£©
+    //ç¡®ä¿ä»0åˆ°length-1çš„é¡ºåºå°±æ˜¯æµªçš„ç§»åŠ¨é¡ºåº
+    //firstPointæ˜¯æ•Œäººæ¥è¢­çš„ç¬¬ä¸€ä¸ªç‚¹ï¼Œæ˜¯æµªçš„ç»ˆç‚¹ï¼ˆæ‰€ä»¥æµªç”Ÿæˆè¦åç€æ¥ï¼‰
     public void ResortPoint(Vector3 firstPoint)
     {
         List<Vector3> newPoints = new List<Vector3>();
@@ -132,7 +188,7 @@ public class LangTower : Tower
         
         newPoints.Add(firstPoint);
 
-        //ÔÚµ½´ïÊıÁ¿Ç°£¬ÍùÀïÃæ¼Ó
+        //åœ¨åˆ°è¾¾æ•°é‡å‰ï¼Œå¾€é‡Œé¢åŠ 
         while (newPoints.Count < points.Count)
         {
             foreach (Vector3 point in points)
@@ -141,11 +197,11 @@ public class LangTower : Tower
                 {
                     continue;
                 }
-                //ÉÏÏÂ×óÓÒËÄ¸öµã¿´Ò»±é
-                Vector3 upPosition = currentPoint + new Vector3(0, 1, 0); //ÉÏ·½Î»ÖÃ
-                Vector3 downPosition = currentPoint + new Vector3(0, -1, 0); //ÏÂ·½Î»ÖÃ
-                Vector3 leftPosition = currentPoint + new Vector3(-1, 0, 0); //×ó·½Î»ÖÃ
-                Vector3 rightPosition = currentPoint + new Vector3(1, 0, 0); //ÓÒ·½Î»ÖÃ
+                //ä¸Šä¸‹å·¦å³å››ä¸ªç‚¹çœ‹ä¸€é
+                Vector3 upPosition = currentPoint + new Vector3(0, 1, 0); //ä¸Šæ–¹ä½ç½®
+                Vector3 downPosition = currentPoint + new Vector3(0, -1, 0); //ä¸‹æ–¹ä½ç½®
+                Vector3 leftPosition = currentPoint + new Vector3(-1, 0, 0); //å·¦æ–¹ä½ç½®
+                Vector3 rightPosition = currentPoint + new Vector3(1, 0, 0); //å³æ–¹ä½ç½®
                 if (point.x == upPosition.x && point.y == upPosition.y)
                 {
                     newPoints.Add(point);
@@ -168,22 +224,22 @@ public class LangTower : Tower
                 }
             }
         }
-        //¸üĞÂË³Ğò
+        //æ›´æ–°é¡ºåº
         points = newPoints;
     }
 
-    //Ë¢ĞÂµĞÈËÁĞ±í
+    //åˆ·æ–°æ•Œäººåˆ—è¡¨
     private void UpdateEnemies()
     {
         foreach (Enemy enemy in enemies)
         {
-            //ÒÆ³ı²»ĞèÒª¹¥»÷µÄµĞÈË
+            //ç§»é™¤ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
             if (enemy.NoMoreShotsNeeded())
             {
 
             }
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
-            //¹´¹É¶¨Àí
+            //å‹¾è‚¡å®šç†
             float range = Mathf.Sqrt(Mathf.Pow(length / 2, 2) + Mathf.Pow(length, 2));
             if (distance > range)
             {
@@ -193,37 +249,37 @@ public class LangTower : Tower
         }
     }
 
-    //»ñµÃËùÓĞÔÚÂ·ÃæÉÏµÄµã
+    //è·å¾—æ‰€æœ‰åœ¨è·¯é¢ä¸Šçš„ç‚¹
     public List<Vector3> GetAllPointInGrid()
     {
         List<Vector3> points = new List<Vector3>();
 
-        //Ëş±¾ÉíµÄÎ»ÖÃ
+        //å¡”æœ¬èº«çš„ä½ç½®
         float x = transform.position.x;
         float y = transform.position.y;
-        //µÚÒ»¸öµãµÄÎ»ÖÃ
+        //ç¬¬ä¸€ä¸ªç‚¹çš„ä½ç½®
         float first_x = x - (length - 1) / 2;
         float first_y = y + (length - 1) / 2;
-        //Ò»¹²ÓĞ  ±ß³¤ * ±ß³¤  ¸öµãĞèÒª±éÀú  £¨Èç¹ûÊÇÅ¼Êı¸ö×Ô¶¯¼õÈ¥1£©
+        //ä¸€å…±æœ‰  è¾¹é•¿ * è¾¹é•¿  ä¸ªç‚¹éœ€è¦éå†  ï¼ˆå¦‚æœæ˜¯å¶æ•°ä¸ªè‡ªåŠ¨å‡å»1ï¼‰
         int l = ((length - 1) / 2) * 2 + 1;
 
-        //ÍâÃæ¾ö¶¨µÚ¼¸ĞĞ£¬ÀïÃæ¾ö¶¨µÚ¼¸ÁĞ
+        //å¤–é¢å†³å®šç¬¬å‡ è¡Œï¼Œé‡Œé¢å†³å®šç¬¬å‡ åˆ—
         for (int i = 0; i < l; ++i)
         {
             for (int j = 0; j < l; ++j)
             {
-                //Ã¿¸öµãµÄ×ø±ê
-                //ÏÖÔÚÊÇµÚiĞĞµÚjÁĞµÄµã
+                //æ¯ä¸ªç‚¹çš„åæ ‡
+                //ç°åœ¨æ˜¯ç¬¬iè¡Œç¬¬jåˆ—çš„ç‚¹
                 float point_x = first_x + i;
-                float point_y = first_y - j; //×¢Òâ£ºYÖáÊÇÏòÏÂµÄ£¬ËùÒÔÒª¼õÈ¥j
+                float point_y = first_y - j; //æ³¨æ„ï¼šYè½´æ˜¯å‘ä¸‹çš„ï¼Œæ‰€ä»¥è¦å‡å»j
 
                 Vector3 point = new Vector3(point_x, point_y, transform.position.z);
-                //ÁĞ±í²»Îª¿ÕÊ±£¬ÅĞ¶ÏÊÇ·ñÔÚÂ·ÃæÉÏ
+                //åˆ—è¡¨ä¸ä¸ºç©ºæ—¶ï¼Œåˆ¤æ–­æ˜¯å¦åœ¨è·¯é¢ä¸Š
                 if (GlobalData.globalRoads.Count != 0)
                 {
                     foreach (Tilemap tilemap in GlobalData.globalRoads)
                     {
-                        //Èç¹ûÔÚÂ·ÃæÉÏ
+                        //å¦‚æœåœ¨è·¯é¢ä¸Š
                         if (tilemap.HasTile(tilemap.WorldToCell(point)) && !points.Contains(point))
                         {
                             points.Add(point);
@@ -237,31 +293,35 @@ public class LangTower : Tower
 
     public override void OnDrawGizmos()
     {
-        float halfSize = (float)length / 2; //±ß³¤3£¬°ë±ß³¤1.5
+        float halfSize = (float)length / 2; //è¾¹é•¿3ï¼ŒåŠè¾¹é•¿1.5
         Vector3 center = transform.position;
 
-        //¶¨ÒåËÄ¸ö½Ç
+        //å®šä¹‰å››ä¸ªè§’
         Vector3 topRight = center + new Vector3(halfSize, halfSize, 0);
         Vector3 topLeft = center + new Vector3(-halfSize, halfSize, 0);
         Vector3 bottomLeft = center + new Vector3(-halfSize, -halfSize, 0);
         Vector3 bottomRight = center + new Vector3(halfSize, -halfSize, 0);
 
-        //ÉèÖÃGizmosÑÕÉ«
+        //è®¾ç½®Gizmosé¢œè‰²
         Gizmos.color = UnityEngine.Color.red;
 
-        //»æÖÆËÄÌõ±ß
+        //ç»˜åˆ¶å››æ¡è¾¹
         Gizmos.DrawLine(topRight, topLeft);
         Gizmos.DrawLine(topLeft, bottomLeft);
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
+
+        base.OnDrawGizmos();
     }
 
 
-    //»æÖÆË÷µĞ·¶Î§
-    public override void DrawAttackArea()
-    {
-        attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);
+    ////ç»˜åˆ¶ç´¢æ•ŒèŒƒå›´
+    //public override void DrawAttackArea()
+    //{
+    //    attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);
 
-        attackObject.transform.localScale = Vector3.one * length;
-    }
+    //    attackObject.transform.localScale = Vector3.one * length;
+
+    //    //base.DrawAttackArea();
+    //}
 }

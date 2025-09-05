@@ -65,7 +65,7 @@ public class Bullet : MonoBehaviour
             //如果没有目标，则子弹沿着原来的方向移动
             //transform.position += direction * moveSpeed * Time.deltaTime;
             //target = null; //清除目标
-            Die();
+            Die(null);
         }
 
         //计算旋转角度
@@ -103,9 +103,9 @@ public class Bullet : MonoBehaviour
     }
 
 
-    //由敌人调用该方法，子类不做多余干扰
+    //由敌人调用该方法
     //注意，此时目标敌人已经收到伤害
-    public void Die()
+    public virtual void Die(Enemy enemy)
     {
         //子弹死亡时，也就是销毁前需要调用的逻辑
         StartCoroutine(DieAction());

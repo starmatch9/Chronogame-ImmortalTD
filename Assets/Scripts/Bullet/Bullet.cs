@@ -1,35 +1,38 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-//×Óµ¯µÄĞĞÎª»ùÀà
+//å­å¼¹çš„è¡Œä¸ºåŸºç±»
 public class Bullet : MonoBehaviour
 {
     [HideInInspector]
     public GameObject target;
 
-    [Header("»ù´¡ÉËº¦")]
+    [Header("æ˜¯å¦ç©¿é€ä¼¤å®³")]
+    public bool penetrate = false;
+
+    [Header("åŸºç¡€ä¼¤å®³")]
     [Range(0f, 100f)]public float baseAttack = 10f;
 
 
-    [Header("ÒÆ¶¯ËÙ¶È")]
+    [Header("ç§»åŠ¨é€Ÿåº¦")]
     [Range(0f, 20f)]public float moveSpeed = 5f;
 
-    Vector3 direction;
+    protected Vector3 direction = new Vector3(0, 1, 0);
 
-    //·ÀÖ¹×Óµ¯·É³öµØÍ¼ºó²»Ïú»Ù
-    float maxDistance = 100f;
-    Vector3 initialPosition;
+    //é˜²æ­¢å­å¼¹é£å‡ºåœ°å›¾åä¸é”€æ¯
+    protected float maxDistance = 100f;
+    protected Vector3 initialPosition;
 
-    //Ô­À´ÌùÍ¼µÄ³¯Ïò
-    float rotationOffset = 180f;
+    //åŸæ¥è´´å›¾çš„æœå‘
+    protected float rotationOffset = 180f;
 
-    bool isStop = false; //ÊÇ·ñÍ£Ö¹ÒÆ¶¯
+    protected bool isStop = false; //æ˜¯å¦åœæ­¢ç§»åŠ¨
 
     public virtual void Start()
     {
-        //¼ÇÂ¼³õÊ¼Î»ÖÃ
+        //è®°å½•åˆå§‹ä½ç½®
         initialPosition = transform.position;
     }
     public virtual void Update()
@@ -41,43 +44,43 @@ public class Bullet : MonoBehaviour
         flyToTarget();
     }
 
-    void flyToTarget()
+    public virtual void flyToTarget()
     {
-        /*ÖØµã*/
+        /*é‡ç‚¹*/
         //
-        // - activeSelfÓëactiveInHierarchyµÄÇø±ğ:
+        // - activeSelfä¸activeInHierarchyçš„åŒºåˆ«:
         //
-        // - activeSelfÊÇÖ¸¶ÔÏó±¾ÉíµÄ¼¤»î×´Ì¬£¬²»ÊÜ¸¸ÎïÌåÓ°Ïì£¬Óë²ã¼¶ÎŞ¹Ø£¬µ±¸¸ÎïÌå±»½ûÓÃÊ±£¬×ÓÎïÌåµÄactiveSelf×´Ì¬²»±ä¡£
-        // - activeInHierarchyÊÇÖ¸¶ÔÏóÔÚ²ã¼¶ÖĞµÄÊµ¼Ê¼¤»î×´Ì¬£¬ÊÜ¸¸ÎïÌåÓ°Ïì£¬µ±¸¸ÎïÌå±»½ûÓÃÊ±£¬×ÓÎïÌåµÄactiveInHierarchy×´Ì¬Ò²»á±äÎªfalse¡£
+        // - activeSelfæ˜¯æŒ‡å¯¹è±¡æœ¬èº«çš„æ¿€æ´»çŠ¶æ€ï¼Œä¸å—çˆ¶ç‰©ä½“å½±å“ï¼Œä¸å±‚çº§æ— å…³ï¼Œå½“çˆ¶ç‰©ä½“è¢«ç¦ç”¨æ—¶ï¼Œå­ç‰©ä½“çš„activeSelfçŠ¶æ€ä¸å˜ã€‚
+        // - activeInHierarchyæ˜¯æŒ‡å¯¹è±¡åœ¨å±‚çº§ä¸­çš„å®é™…æ¿€æ´»çŠ¶æ€ï¼Œå—çˆ¶ç‰©ä½“å½±å“ï¼Œå½“çˆ¶ç‰©ä½“è¢«ç¦ç”¨æ—¶ï¼Œå­ç‰©ä½“çš„activeInHierarchyçŠ¶æ€ä¹Ÿä¼šå˜ä¸ºfalseã€‚
         //
         if (target != null && target.activeInHierarchy)
         {
-            // ¼ÆËãÒÆ¶¯·½Ïò,¹éÒ»»¯·½ÏòÏòÁ¿·½±ãÓÚ¿ØÖÆËÙ¶È
+            // è®¡ç®—ç§»åŠ¨æ–¹å‘,å½’ä¸€åŒ–æ–¹å‘å‘é‡æ–¹ä¾¿äºæ§åˆ¶é€Ÿåº¦
             direction = (target.transform.position - transform.position).normalized;
-            // Ã¿Ö¡ÒÆ¶¯
+            // æ¯å¸§ç§»åŠ¨
             transform.position += direction * moveSpeed * Time.deltaTime;
         }
         else
         {
-            //Èç¹ûÃ»ÓĞÄ¿±ê£¬Ôò×Óµ¯ÑØ×ÅÔ­À´µÄ·½ÏòÒÆ¶¯
+            //å¦‚æœæ²¡æœ‰ç›®æ ‡ï¼Œåˆ™å­å¼¹æ²¿ç€åŸæ¥çš„æ–¹å‘ç§»åŠ¨
             //transform.position += direction * moveSpeed * Time.deltaTime;
-            //target = null; //Çå³ıÄ¿±ê
+            //target = null; //æ¸…é™¤ç›®æ ‡
             Die();
         }
 
-        //¼ÆËãĞı×ª½Ç¶È
+        //è®¡ç®—æ—‹è½¬è§’åº¦
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle + rotationOffset);
 
-        //¼ì²â¾àÀë£¬¹ıÔ¶Ïú»Ù
+        //æ£€æµ‹è·ç¦»ï¼Œè¿‡è¿œé”€æ¯
         float currentDistance = Vector3.Distance(transform.position, initialPosition);
         if (currentDistance >= maxDistance)
         {
-            Destroy(gameObject); //Ïú»Ù
+            Destroy(gameObject); //é”€æ¯
         }
     }
 
-    //»ù´¡ÉËº¦
+    //åŸºç¡€ä¼¤å®³
     public virtual float GetBaseAttack()
     {
         return baseAttack;
@@ -100,24 +103,24 @@ public class Bullet : MonoBehaviour
     }
 
 
-    //ÓÉµĞÈËµ÷ÓÃ¸Ã·½·¨£¬×ÓÀà²»×ö¶àÓà¸ÉÈÅ
-    //×¢Òâ£¬´ËÊ±Ä¿±êµĞÈËÒÑ¾­ÊÕµ½ÉËº¦
+    //ç”±æ•Œäººè°ƒç”¨è¯¥æ–¹æ³•ï¼Œå­ç±»ä¸åšå¤šä½™å¹²æ‰°
+    //æ³¨æ„ï¼Œæ­¤æ—¶ç›®æ ‡æ•Œäººå·²ç»æ”¶åˆ°ä¼¤å®³
     public void Die()
     {
-        //×Óµ¯ËÀÍöÊ±£¬Ò²¾ÍÊÇÏú»ÙÇ°ĞèÒªµ÷ÓÃµÄÂß¼­
+        //å­å¼¹æ­»äº¡æ—¶ï¼Œä¹Ÿå°±æ˜¯é”€æ¯å‰éœ€è¦è°ƒç”¨çš„é€»è¾‘
         StartCoroutine(DieAction());
     }
 
-    //×ÓÀàÖØĞ´Ê±£¬ÔÚÂß¼­ºóÌí¼ÓBase.DieAction()£¬ÒÔÈ·±£µ÷ÓÃ»ùÀàµÄËÀÍöÂß¼­
+    //å­ç±»é‡å†™æ—¶ï¼Œåœ¨é€»è¾‘åæ·»åŠ Base.DieAction()ï¼Œä»¥ç¡®ä¿è°ƒç”¨åŸºç±»çš„æ­»äº¡é€»è¾‘
 
-    //ËÀÍöµÄÓĞ¹ØĞĞÎªÍ¨¹ıĞ­³ÌÊµÏÖ£¬·½±ãÌí¼ÓÑÓÊ±²Ù×÷
+    //æ­»äº¡çš„æœ‰å…³è¡Œä¸ºé€šè¿‡åç¨‹å®ç°ï¼Œæ–¹ä¾¿æ·»åŠ å»¶æ—¶æ“ä½œ
     public virtual IEnumerator DieAction()
     {
 
         yield return StartCoroutine(DestoryBullet());
     }
 
-    IEnumerator DestoryBullet()
+    public IEnumerator DestoryBullet()
     {
         yield return new WaitForSeconds(0f);
         Destroy(gameObject);

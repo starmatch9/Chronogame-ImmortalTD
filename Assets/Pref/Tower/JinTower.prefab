@@ -626,8 +626,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 0}
-  tower: {fileID: 0}
+  tower: {fileID: 7433961568123293911}
   selected: {fileID: 5187906568279306375}
   optionCanva: {fileID: 8945669081403618394}
 --- !u!114 &7344438304014137581
@@ -783,8 +782,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
-  attackRange: 2
+  attackRange: 4
   actionTime: 0.5
+  jinBullet: {fileID: 199511945951012087, guid: a7cff755c31e669458e30620d787153f, type: 3}
+  maxPenetrate: 3
+  Tips: "\u6CE8\u610F\uFF1A\u5B50\u5F39\u7684\u4F24\u5BB3\u53C2\u6570\u8BB0\u5F97\u8981\u53BB\u5B50\u5F39\u9884\u5236\u4EF6\u91CC\u9762\u8C03\u3002"
 --- !u!1 &8945669081403618394
 GameObject:
   m_ObjectHideFlags: 0

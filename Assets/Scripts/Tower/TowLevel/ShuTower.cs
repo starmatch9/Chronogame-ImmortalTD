@@ -1,28 +1,28 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ShuTower : Tower
 {
-    //  Ê÷Ëş
+    //  æ ‘å¡”
 
-    //Ôİ¶¨µ¥´¿Éú³ÉÔªËØÁ¦
+    //æš‚å®šå•çº¯ç”Ÿæˆå…ƒç´ åŠ›
 
-    //Ê÷ËşÃ¿´ÎÉú³ÉÔªËØÁ¦µÄÊıÁ¿
-    [Header("Ã¿´ÎÉú³ÉÔªËØÁ¦ÊıÁ¿")]
+    //æ ‘å¡”æ¯æ¬¡ç”Ÿæˆå…ƒç´ åŠ›çš„æ•°é‡
+    [Header("æ¯æ¬¡ç”Ÿæˆå…ƒç´ åŠ›æ•°é‡")]
     [Range(1, 1000)]public int elementAmount = 100;
 
-    [Header("ÔªËØÁ¦Í¼±êÓÎÏ·¶ÔÏó")]
+    [Header("å…ƒç´ åŠ›å›¾æ ‡æ¸¸æˆå¯¹è±¡")]
     public GameObject elementPower = null;
 
-    //Startº¯ÊıÖĞ»ñÈ¡ÔªËØÁ¦¹ÜÀíÆ÷£¨ÔªËØÁ¦Êı¾İ½»ÓÉÈ«¾Ö¹ÜÀí£©
+    //Startå‡½æ•°ä¸­è·å–å…ƒç´ åŠ›ç®¡ç†å™¨ï¼ˆå…ƒç´ åŠ›æ•°æ®äº¤ç”±å…¨å±€ç®¡ç†ï¼‰
 
     public override void TowerAction()
     {
-        //ÔªËØÁ¦Ôö¼ÓµÄĞ­³Ì¶¯»­
+        //å…ƒç´ åŠ›å¢åŠ çš„åç¨‹åŠ¨ç”»
         StartCoroutine(AddElementPower());
 
-        //Éú³ÉÔªËØÁ¦
+        //ç”Ÿæˆå…ƒç´ åŠ›
         GlobalElementPowerFunction.AddCount(elementAmount);
     }
 
@@ -31,7 +31,7 @@ public class ShuTower : Tower
         SpriteRenderer renderer = elementPower.GetComponent<SpriteRenderer>();
         Vector3 originalposition = elementPower.transform.position;
 
-        //ÉèÖÃ¶¯»­Ê±¼äÎª0.3Ãë
+        //è®¾ç½®åŠ¨ç”»æ—¶é—´ä¸º0.3ç§’
         float duration = 1f;
 
         float timer = 0f;
@@ -41,13 +41,13 @@ public class ShuTower : Tower
 
             if (elementPower != null)
             {
-                //ÑÕÉ«¸Ä±ä
+                //é¢œè‰²æ”¹å˜
                 float alpha = Mathf.Lerp(1f, 0f, timer / duration);
                 Color color = renderer.color;
                 color.a = alpha;
                 renderer.color = color;
 
-                //ÏòÉÏÒÆ¶¯
+                //å‘ä¸Šç§»åŠ¨
                 float distance = Mathf.Lerp(0f, 0.5f, timer / duration);
                 float newY = originalposition.y + distance;
                 elementPower.transform.position = new Vector3(originalposition.x, newY, originalposition.z);

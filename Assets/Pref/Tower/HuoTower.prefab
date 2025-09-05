@@ -82,8 +82,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
-  attackRange: 2
-  actionTime: 0.5
+  attackRange: 2.5
+  actionTime: 1.1
+  paoBullet: {fileID: 2697823155404872870, guid: 616b082418904bd48887dd39f788ff93, type: 3}
+  Tips: "\u6CE8\u610F\uFF1A\u5B50\u5F39\u7684\u4F24\u5BB3\u53C2\u6570\u8BB0\u5F97\u8981\u53BB\u5B50\u5F39\u9884\u5236\u4EF6\u91CC\u9762\u8C03\u3002"
 --- !u!1 &2817542310857297084
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,8 +865,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 0}
-  tower: {fileID: 0}
+  tower: {fileID: 3224825055386554328}
   selected: {fileID: 8476959654887821147}
   optionCanva: {fileID: 3761888237445473429}
 --- !u!114 &4503252542205227533

@@ -71,6 +71,7 @@ public static class GlobalEnemyGroupFunction
     { 
         if (index >= enemyGroupItems.Count)
         {
+            //这里编写关卡成功通过的逻辑
             Debug.Log("关卡已经结束了很后悔就好哈哈哈哈哈");
             return;
         }

@@ -1,26 +1,57 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LuTower : Tower
 {
-    //  * - Â¯Ëş - *
+    //  * - ç‚‰å¡” - *
 
-    //ÎüÊÕµĞÈË£¬Ö±½Ó¸øµĞÈË¿ÛÑª¼«´ó¼´¿É
+    //å¸æ”¶æ•Œäººï¼Œç›´æ¥ç»™æ•Œäººæ‰£è¡€æå¤§å³å¯
 
-    [Header("Á¶µ¤Í¼±ê")]
+    [Header("ç‚¼ä¸¹å›¾æ ‡")]
     public GameObject icon;
 
-    [Header("Á¶µ¤Ê±³¤")]
+    [Header("ç‚¼ä¸¹æ—¶é•¿ï¼ˆå³ç§’æ€é—´éš”ï¼‰")]
     [Range(0, 20)] public float furnaceDuration = 2f;
 
-    [Header("Ã¿´ÎÉú³ÉÔªËØÁ¦ÊıÁ¿")]
+    [Header("æ¯æ¬¡ç”Ÿæˆå…ƒç´ åŠ›æ•°é‡")]
     [Range(1, 1000)] public int elementAmount = 100;
 
-    //ÔªËØÁ¦ÏµÍ³£¨ÔªËØÁ¦¹ÜÀíÆ÷½Å±¾£©
+    [Header("å…ƒç´ åŠ›å›¾æ ‡æ¸¸æˆå¯¹è±¡")]
+    public GameObject elementPower = null;
+
+    [Header("å­å¼¹é¢„åˆ¶ä»¶")]
+    public GameObject bulletPref = null;
+
+    //å…ƒç´ åŠ›ç³»ç»Ÿï¼ˆå…ƒç´ åŠ›ç®¡ç†å™¨è„šæœ¬ï¼‰
     //public ElementManager elementManager;
 
-    //ºóĞø¿ÉÒÔĞ´Ò»¸öº¯Êı£¬ÔªËØÁ¦Á¿µÄÎüÊÕÓë¹ÖÑªÁ¿ÕıÏà¹Ø
+    //åç»­å¯ä»¥å†™ä¸€ä¸ªå‡½æ•°ï¼Œå…ƒç´ åŠ›é‡çš„å¸æ”¶ä¸æ€ªè¡€é‡æ­£ç›¸å…³
+
+    float timer0 = 0f; //è®¡æ—¶å™¨
+    public override void Update()
+    {
+        //timerè®°å½•å­å¼¹é—´éš”
+        timer += Time.deltaTime;
+        if (timer >= actionTime)
+        {
+            ExecuteAction();
+            timer = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+        //timerè®°å½•ç‚¼ä¸¹é—´éš”
+        timer0 += Time.deltaTime;
+        if (timer0 >= furnaceDuration)
+        {
+            if (FindClosestToFinishEnemy() == null)
+            {
+                return;
+            }
+            StartCoroutine(furnaceLife());
+            timer0 = 0f; //é‡ç½®è®¡æ—¶å™¨
+        }
+
+    }
+
 
     public override void TowerAction()
     {
@@ -28,17 +59,34 @@ public class LuTower : Tower
         {
             return;
         }
-        StartCoroutine(furnaceLife());
+        //å°„å‡»
+        GameObject target = FindClosestToFinishEnemy().gameObject;
+        Shoot(target);
+        //StartCoroutine(furnaceLife());
     }
 
-    //Á¶µ¤Â¯µÄÉúÃüÖÜÆÚ
+    //å‘å°„å­å¼¹ï¼ŒåŠç”Ÿæˆå­å¼¹å®ä¾‹
+    void Shoot(GameObject enemy)
+    {
+        // åç§» ï¼šå­å¼¹åœ¨å¡”ä¸Šæ–¹1.5ç±³çš„ä½ç½®å‘å°„
+        Vector3 offset = new Vector3(0, 1f, 0);
+
+        //å®ä¾‹åŒ–å­å¼¹
+        GameObject bullet = Instantiate(bulletPref, transform.position + offset, Quaternion.identity);
+
+        //éœ€è¦é”šå®šå­å¼¹çš„ç›®æ ‡ï¼Œè·å–å­å¼¹çš„è¡Œä¸ºè„šæœ¬
+        Bullet bulletScript = bullet.GetComponent<Bullet>();
+        bulletScript.SetTarget(enemy);
+    }
+
+    //ç‚¼ä¸¹ç‚‰çš„ç”Ÿå‘½å‘¨æœŸ
     IEnumerator furnaceLife()
     {
-        //°ÑµĞÈËÎü¹ıÀ´
+        //æŠŠæ•Œäººå¸è¿‡æ¥
         GameObject enemy = FindClosestToFinishEnemy().gameObject;
 
         float absorbDuration = 0.8f;
-        float absorbTimer = 0f; //ÎüÊÕËÙ¶È
+        float absorbTimer = 0f; //å¸æ”¶é€Ÿåº¦
         while (absorbTimer < absorbDuration)
         {
             enemy.transform.position = Vector2.Lerp(enemy.transform.position, transform.position, absorbTimer / absorbDuration);
@@ -46,24 +94,61 @@ public class LuTower : Tower
             absorbTimer += Time.deltaTime;
             yield return null;
         }
-        //Í£¶ÙÒ»ÏÂ
+        //åœé¡¿ä¸€ä¸‹
         yield return new WaitForSeconds(0.2f);
 
-        //µĞÈËÊÕµ½¼«´óÉËº¦
+        //æ•Œäººæ”¶åˆ°æå¤§ä¼¤å®³
         enemy.GetComponent<Enemy>().AcceptAttack(99999f);
 
-        //¼¤»îÍ¼±ê
+        //æ¿€æ´»å›¾æ ‡
         icon.SetActive(true);
 
-        //µÈ´ıÒ»¶ÎÊ±¼ä
+        //ç­‰å¾…ä¸€æ®µæ—¶é—´
         yield return new WaitForSeconds(furnaceDuration - 0.2f - absorbDuration);
 
-        //Éú³ÉÔªËØÁ¦
+        //å…ƒç´ åŠ›å¢åŠ çš„åç¨‹åŠ¨ç”»
+        StartCoroutine(AddElementPower());
+
+        //ç”Ÿæˆå…ƒç´ åŠ›
         GlobalElementPowerFunction.AddCount(elementAmount);
 
-        //½ûÓÃÍ¼±ê
+        //ç¦ç”¨å›¾æ ‡
         icon.SetActive(false);
+    }
 
+    //å…ƒç´ åŠ›æ ‡å¿—
+    public IEnumerator AddElementPower()
+    {
+        SpriteRenderer renderer = elementPower.GetComponent<SpriteRenderer>();
+        Vector3 originalposition = elementPower.transform.position;
+
+        //è®¾ç½®åŠ¨ç”»æ—¶é—´ä¸º0.3ç§’
+        float duration = 1f;
+
+        float timer = 0f;
+
+        elementPower.SetActive(true);
+        while (timer < duration)
+        {
+
+            if (elementPower != null)
+            {
+                //é¢œè‰²æ”¹å˜
+                float alpha = Mathf.Lerp(1f, 0f, timer / duration);
+                Color color = renderer.color;
+                color.a = alpha;
+                renderer.color = color;
+
+                //å‘ä¸Šç§»åŠ¨
+                float distance = Mathf.Lerp(0f, 0.5f, timer / duration);
+                float newY = originalposition.y + distance;
+                elementPower.transform.position = new Vector3(originalposition.x, newY, originalposition.z);
+            }
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        elementPower.SetActive(false);
+        elementPower.transform.position = originalposition;
     }
 
 }

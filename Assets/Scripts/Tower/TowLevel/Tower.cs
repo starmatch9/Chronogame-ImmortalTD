@@ -1,28 +1,28 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
-//Õâ¸öËş×÷ÎªËùÓĞÓµÓĞÌØÊâ¹¦ÄÜµÄ¶ş¼¶ËşµÄ»ùÀà
+//è¿™ä¸ªå¡”ä½œä¸ºæ‰€æœ‰æ‹¥æœ‰ç‰¹æ®ŠåŠŸèƒ½çš„äºŒçº§å¡”çš„åŸºç±»
 public abstract class Tower : MonoBehaviour
 {
-    //Ò»¸öËş¶ÔÓ¦Ò»¸ö¿Ó
+    //ä¸€ä¸ªå¡”å¯¹åº”ä¸€ä¸ªå‘
     [HideInInspector]
     public Transform hole;
 
-    //¹¥»÷·¶Î§°ë¾¶
-    [Header("Ë÷µĞ·¶Î§")]
+    //æ”»å‡»èŒƒå›´åŠå¾„
+    [Header("ç´¢æ•ŒèŒƒå›´")]
     [Range(0, 20)] public float attackRange = 2f;
 
-    //ĞĞ¶¯¼ä¸ôÊ±¼ä
-    [Header("ĞĞÎª¼ä¸ôÊ±¼ä")]
+    //è¡ŒåŠ¨é—´éš”æ—¶é—´
+    [Header("è¡Œä¸ºé—´éš”æ—¶é—´")]
     [Range(0, 20)] public float actionTime = 0.5f;
 
-    //Î¬»¤Ò»¸öµĞÈËÁĞ±í ±£»¤¼Ì³ĞÈÃ×ÓÀà¿ÉÒÔ·ÃÎÊ
-    //×¢Òâ£ºÕâÀïµÄµĞÈËÁĞ±í²»Í¬ÓÚTowerInitial£¬´ËÖ»Î¬»¤¹¥»÷·¶Î§ÄÚµÄµĞÈËÁĞ±í
+    //ç»´æŠ¤ä¸€ä¸ªæ•Œäººåˆ—è¡¨ ä¿æŠ¤ç»§æ‰¿è®©å­ç±»å¯ä»¥è®¿é—®
+    //æ³¨æ„ï¼šè¿™é‡Œçš„æ•Œäººåˆ—è¡¨ä¸åŒäºTowerInitialï¼Œæ­¤åªç»´æŠ¤æ”»å‡»èŒƒå›´å†…çš„æ•Œäººåˆ—è¡¨
     //protected List<Enemy> enemies = new List<Enemy>();
 
-    float timer = 0f; //¼ÆÊ±Æ÷
+    protected float timer = 0f; //è®¡æ—¶å™¨
     public virtual void Update()
     {
         timer += Time.deltaTime;
@@ -31,16 +31,16 @@ public abstract class Tower : MonoBehaviour
             return;
         }
         ExecuteAction();
-        timer = 0f; //ÖØÖÃ¼ÆÊ±Æ÷
+        timer = 0f; //é‡ç½®è®¡æ—¶å™¨
     }
 
-    //ĞĞÎª£¬ÓÃÓÚÃ¿¸ôÒ»¶ÎÊ±¼äÖ´ĞĞÒ»´ÎµÄ²Ù×÷
-    void ExecuteAction()
+    //è¡Œä¸ºï¼Œç”¨äºæ¯éš”ä¸€æ®µæ—¶é—´æ‰§è¡Œä¸€æ¬¡çš„æ“ä½œ
+    public void ExecuteAction()
     {
-        TowerAction(); //Ö´ĞĞËşµÄĞĞÎª
+        TowerAction(); //æ‰§è¡Œå¡”çš„è¡Œä¸º
     }
 
-    //×ÓÀàĞèÒªÊµÏÖµÄËşĞĞÎª
+    //å­ç±»éœ€è¦å®ç°çš„å¡”è¡Œä¸º
     public abstract void TowerAction();
 
     public List<Enemy> FindEnemyInside()
@@ -48,12 +48,12 @@ public abstract class Tower : MonoBehaviour
         List<Enemy> enemies = new List<Enemy>();
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
             }
-            //»ñÈ¡¹¥»÷·¶Î§
+            //è·å–æ”»å‡»èŒƒå›´
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
             if (distance < attackRange)
             {
@@ -63,25 +63,25 @@ public abstract class Tower : MonoBehaviour
         return enemies;
     }
 
-    //×ÓÀàÒ²ĞíÓÃµÄµ½£º¶¨Î»¹¥»÷°ë¾¶ÄÚÀëÖÕµã×î½üµÄµĞÈË
+    //å­ç±»ä¹Ÿè®¸ç”¨çš„åˆ°ï¼šå®šä½æ”»å‡»åŠå¾„å†…ç¦»ç»ˆç‚¹æœ€è¿‘çš„æ•Œäºº
     public Enemy FindClosestToFinishEnemy()
     {
         Enemy closestEnemy = null;
-        float longestSurvivalTime = 0;//Éú´æÊ±¼äÎª0
-        //±éÀúÁĞ±íÖĞµÄËùÓĞµĞÈË
+        float longestSurvivalTime = 0;//ç”Ÿå­˜æ—¶é—´ä¸º0
+        //éå†åˆ—è¡¨ä¸­çš„æ‰€æœ‰æ•Œäºº
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
             }
-            //É¸Ñ¡µô³¬¹ı¹¥»÷·¶Î§µÄµĞÈË
+            //ç­›é€‰æ‰è¶…è¿‡æ”»å‡»èŒƒå›´çš„æ•Œäºº
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
             if (distance < attackRange)
             {
                 //
-                //»ñÈ¡ÀëÖÕµã×î½üµÄµĞÈË£¬Ä¿Ç°Ë¼Â·£ºµĞÈËÉú³Éºó£¬´æ»îÊ±¼ä×î³¤µÄ¾ÍÊÇÀëÖÕµã×î½üµÄ
+                //è·å–ç¦»ç»ˆç‚¹æœ€è¿‘çš„æ•Œäººï¼Œç›®å‰æ€è·¯ï¼šæ•Œäººç”Ÿæˆåï¼Œå­˜æ´»æ—¶é—´æœ€é•¿çš„å°±æ˜¯ç¦»ç»ˆç‚¹æœ€è¿‘çš„
                 //
                 float survivalTime = enemy.GetComponent<Move>().survivalTime;
                 if (survivalTime > longestSurvivalTime)
@@ -101,31 +101,31 @@ public abstract class Tower : MonoBehaviour
 
     public virtual void OnDrawGizmos()
     {
-        // ÉèÖÃGizmoÑÕÉ«
+        // è®¾ç½®Gizmoé¢œè‰²
         Gizmos.color = Color.red;
-        // »æÖÆÎŞÌî³äÔ²È¦
+        // ç»˜åˆ¶æ— å¡«å……åœ†åœˆ
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }
 
     public void Remove()
     {
-        //ÕâÀïÔö¼Ó»õ±ÒµÄ»ØÊÕ·½·¨
+        //è¿™é‡Œå¢åŠ è´§å¸çš„å›æ”¶æ–¹æ³•
 
         //
         Destroy(gameObject);
     }
 
 
-    //¹¥»÷·¶Î§ÓÎÏ·¶ÔÏó
+    //æ”»å‡»èŒƒå›´æ¸¸æˆå¯¹è±¡
     protected GameObject attackObject;
-    //»æÖÆ¹¥»÷·¶Î§
+    //ç»˜åˆ¶æ”»å‡»èŒƒå›´
     public virtual void DrawAttackArea()
     {
         attackObject = Instantiate(GlobalTowerFunction.CircleArea, transform.position, Quaternion.identity);
 
         attackObject.transform.localScale = Vector3.one * 2 * attackRange;
     }
-    //²Á³ı¹¥»÷·¶Î§
+    //æ“¦é™¤æ”»å‡»èŒƒå›´
     public virtual void EraseAttackArea()
     {
         if (attackObject != null)

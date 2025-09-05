@@ -33,7 +33,7 @@ public abstract class Enemy : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         //还得对号入座，瞄准的哪个敌人只能打哪个敌人，而触发不了其他敌人的碰撞器
-        if (collision.CompareTag("Bullet") && collision.GetComponent<Bullet>().target == gameObject)
+        if (collision.CompareTag("Bullet") && (collision.GetComponent<Bullet>().target == gameObject || collision.GetComponent<Bullet>().penetrate ))
         {
             //获取子弹的数据脚本
             Bullet bullet = collision.GetComponent<Bullet>();

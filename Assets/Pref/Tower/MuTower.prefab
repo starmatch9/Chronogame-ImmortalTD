@@ -101,8 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 0}
-  tower: {fileID: 0}
+  tower: {fileID: 5695006188171832207}
   selected: {fileID: 4895565680800089143}
   optionCanva: {fileID: 8304926924989099928}
 --- !u!114 &3786324779054407761
@@ -374,6 +373,7 @@ MonoBehaviour:
   hole: {fileID: 0}
   attackRange: 2
   actionTime: 0.5
+  bulletPref: {fileID: 6335463960178079003, guid: 593b93316382b3a4c8a9bb45cc0a33a3, type: 3}
 --- !u!1 &5582333574566293502
 GameObject:
   m_ObjectHideFlags: 0

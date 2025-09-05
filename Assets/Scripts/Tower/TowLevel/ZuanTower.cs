@@ -1,70 +1,73 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
 public class ZuanTower : Tower
 {
-    // * ×êÍ·Ëş *
+    // * é’»å¤´å¡” *
 
-    [TextArea]
-    public string Tips = "×¢Òâ£ºË÷µĞ·¶Î§Ö¸ÔË¶¯¹ì¼£µÄ°ë¾¶£¬ĞĞÎª¼ä¸ôÖ¸×êÍ·ÈÆËş×ªÒ»ÖÜµÄÊ±¼ä¡£";
-
-    GameObject drill;
-
-    //Ğı×ªÆ«ÒÆ½Ç¶È
+    //æ—‹è½¬åç§»è§’åº¦
     float rotationOffset = 180f;
 
-    [Header("Ôì³ÉÉËº¦")]
+    [Header("é€ æˆä¼¤å®³")]
     [Range(0, 100)] public float damage = 30f;
 
-    Drill drillScript;
+    [Header("é’»å¤´é¢„åˆ¶ä»¶")]
+    public GameObject drill;
 
-    private void Start()
-    {
-        drill = transform.Find("Drill").gameObject;
-        drillScript = drill.GetComponent<Drill>();
-        drillScript.SetAttack(damage);
-        drill.SetActive(false);
-    }
+    [Header("æœ€å¤šç©¿é€å‡ ä¸ªæ•Œäºº")]
+    [Range(0, 20)] public int maxPenetrate = 0;
 
     public override void TowerAction()
     {
-        if (!drill.activeInHierarchy)
-        {
-            drill.SetActive(true);
-        }
-        StartCoroutine(FlyDrill(actionTime));
+        Shoot();
     }
 
-    //ÈÆËş×ªÒ»ÖÜ
-    IEnumerator FlyDrill(float circleTime)
+    //å‘ä¸Šä¸‹å·¦å³å››ä¸ªæ–¹å‘å‘å°„å­å¼¹
+    void Shoot()
     {
-        float timer = 0f;
-        float angle = 0f;
-
-        while (timer < circleTime)
-        {
-            timer += Time.deltaTime;
-            angle = -2 * Mathf.PI * (timer / circleTime); //¸ººÅ±íÊ¾Ë³Ê±Õë
-
-            //¼ÆËãÔ²ÖÜÉÏµÄµã
-            float x = transform.position.x + attackRange * Mathf.Cos(angle);
-            float y = transform.position.y + attackRange * Mathf.Sin(angle);
-
-            //¸üĞÂÎïÌåÎ»ÖÃ
-            drill.transform.position = new Vector3(x, y, drill.transform.position.z);
-
-            //¼ÆËãĞı×ª½Ç¶È
-            Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-            float angleArrow = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            drill.transform.rotation = Quaternion.Euler(0, 0, angleArrow + rotationOffset);
-
-            yield return null; // Ã¿Ö¡¸üĞÂ
-        }
-
-        timer = 0f; // ÖØÖÃ¼ÆÊ±Æ÷
+        //å®ä¾‹åŒ–å­å¼¹
+        GameObject bullet0 = Instantiate(drill, transform.position, Quaternion.identity);
+        bullet0.GetComponent<Drill>().SetDir(0);
+        bullet0.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        GameObject bullet1 = Instantiate(drill, transform.position, Quaternion.identity);
+        bullet1.GetComponent<Drill>().SetDir(1);
+        bullet1.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        GameObject bullet2 = Instantiate(drill, transform.position, Quaternion.identity);
+        bullet2.GetComponent<Drill>().SetDir(2);
+        bullet2.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        GameObject bullet3 = Instantiate(drill, transform.position, Quaternion.identity);
+        bullet3.GetComponent<Drill>().SetDir(3);
+        bullet3.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
     }
 
+    //ç»•å¡”è½¬ä¸€å‘¨
+    //IEnumerator FlyDrill(float circleTime)
+    //{
+    //    float timer = 0f;
+    //    float angle = 0f;
 
+    //    while (timer < circleTime)
+    //    {
+    //        timer += Time.deltaTime;
+    //        angle = -2 * Mathf.PI * (timer / circleTime); //è´Ÿå·è¡¨ç¤ºé¡ºæ—¶é’ˆ
+
+    //        //è®¡ç®—åœ†å‘¨ä¸Šçš„ç‚¹
+    //        float x = transform.position.x + attackRange * Mathf.Cos(angle);
+    //        float y = transform.position.y + attackRange * Mathf.Sin(angle);
+
+    //        //æ›´æ–°ç‰©ä½“ä½ç½®
+    //        drill.transform.position = new Vector3(x, y, drill.transform.position.z);
+
+    //        //è®¡ç®—æ—‹è½¬è§’åº¦
+    //        Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+    //        float angleArrow = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+    //        drill.transform.rotation = Quaternion.Euler(0, 0, angleArrow + rotationOffset);
+
+    //        yield return null; // æ¯å¸§æ›´æ–°
+    //    }
+
+    //    timer = 0f; // é‡ç½®è®¡æ—¶å™¨
+    //}
 }

@@ -21,6 +21,26 @@ public class TowerManager : MonoBehaviour
     public GameObject HuoTowerPref;
     [Header("土")]
     public GameObject TuTowerPref;
+    [Header("金Lv1")]
+    public GameObject JinTowerPref_Lv1;
+    [Header("木Lv1")]
+    public GameObject MuTowerPref_Lv1;
+    [Header("水Lv1")]
+    public GameObject ShuiTowerPref_Lv1;
+    [Header("火Lv1")]
+    public GameObject HuoTowerPref_Lv1;
+    [Header("土Lv1")]
+    public GameObject TuTowerPref_Lv1;
+    [Header("金Lv2")]
+    public GameObject JinTowerPref_Lv2;
+    [Header("木Lv2")]
+    public GameObject MuTowerPref_Lv2;
+    [Header("水Lv2")]
+    public GameObject ShuiTowerPref_Lv2;
+    [Header("火Lv2")]
+    public GameObject HuoTowerPref_Lv2;
+    [Header("土Lv2")]
+    public GameObject TuTowerPref_Lv2;
     [Header("钻")]
     public GameObject ZuanTowerPref;
     [Header("炉")]
@@ -54,6 +74,16 @@ public class TowerManager : MonoBehaviour
         towers.Add (ShuiTowerPref);
         towers.Add(HuoTowerPref);
         towers.Add(TuTowerPref);
+        towers.Add(JinTowerPref_Lv1);
+        towers.Add(MuTowerPref_Lv1);
+        towers.Add(ShuiTowerPref_Lv1);
+        towers.Add(HuoTowerPref_Lv1);
+        towers.Add(TuTowerPref_Lv1);
+        towers.Add(JinTowerPref_Lv2);
+        towers.Add(MuTowerPref_Lv2);
+        towers.Add(ShuiTowerPref_Lv2);
+        towers.Add(HuoTowerPref_Lv2);
+        towers.Add(TuTowerPref_Lv2);
         towers.Add(ZuanTowerPref);
         towers.Add(LuTowerPref);
         towers.Add(JiTowerPref);

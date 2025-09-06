@@ -138,6 +138,7 @@ public abstract class Tower : MonoBehaviour
 
         //还原坑
         hole.gameObject.SetActive(true);
+        hole.GetComponent<MouseClick>().MouseReset();
 
         //xiaohui
         Destroy(gameObject);

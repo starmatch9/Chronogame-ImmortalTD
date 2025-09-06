@@ -270,7 +270,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 0}
   tower: {fileID: 313038996244616851}
   selected: {fileID: 26260288728265212}
   optionCanva: {fileID: 0}
@@ -322,7 +321,10 @@ MonoBehaviour:
   hole: {fileID: 0}
   attackRange: 5
   actionTime: 4
+  bulletPref: {fileID: 4770538392129537883, guid: 40527528e9ce0a340a1775265c70fce6, type: 3}
   thornsPrefab: {fileID: 5055507192957987812, guid: 1d766d0a5a78b7143abfecdf8d0142a7, type: 3}
+  spawnDuration: 4
   thornsDuration: 1.8
   thornsAttackInterval: 0.6
   thornsAttackDamage: 5
+  maxNumber: 4

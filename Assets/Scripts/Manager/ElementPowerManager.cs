@@ -24,6 +24,30 @@ public class ElementPowerManager : MonoBehaviour
     [Header("土")]
     [Range(0, 99999)] public int _TuTower = 0;
 
+    [Header("五座基础塔Lv1的售价")]
+    [Header("金")]
+    [Range(0, 99999)] public int _JinTower_Lv1 = 0;
+    [Header("木")]
+    [Range(0, 99999)] public int _MuTower_Lv1 = 0;
+    [Header("水")]
+    [Range(0, 99999)] public int _ShuiTower_Lv1 = 0;
+    [Header("火")]
+    [Range(0, 99999)] public int _HuoTower_Lv1 = 0;
+    [Header("土")]
+    [Range(0, 99999)] public int _TuTower_Lv1 = 0;
+
+    [Header("五座基础塔Lv2的售价")]
+    [Header("金")]
+    [Range(0, 99999)] public int _JinTower_Lv2 = 0;
+    [Header("木")]
+    [Range(0, 99999)] public int _MuTower_Lv2 = 0;
+    [Header("水")]
+    [Range(0, 99999)] public int _ShuiTower_Lv2 = 0;
+    [Header("火")]
+    [Range(0, 99999)] public int _HuoTower_Lv2 = 0;
+    [Header("土")]
+    [Range(0, 99999)] public int _TuTower_Lv2 = 0;
+
     [Header("十座二级塔的售价")]
     [Header("钻")]
     [Range(0, 99999)] public int _ZuanTower = 0;
@@ -61,25 +85,65 @@ public class ElementPowerManager : MonoBehaviour
     {
         foreach (GameObject towerPref in GlobalData.globalTowerPrefabs)
         {
-            if (towerPref.name.Contains("Jin"))
+            if (towerPref.name.Contains("Jin") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _JinTower;
             }
-            if (towerPref.name.Contains("Mu"))
+            if (towerPref.name.Contains("Mu") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _MuTower;
             }
-            if (towerPref.name.Contains("Shui"))
+            if (towerPref.name.Contains("Shui") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _ShuiTower;
             }
-            if (towerPref.name.Contains("Huo"))
+            if (towerPref.name.Contains("Huo") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _HuoTower;
             }
-            if (towerPref.name.Contains("Tu"))
+            if (towerPref.name.Contains("Tu") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _TuTower;
+            }
+            if (towerPref.name.Contains("Jin") && towerPref.name.Contains("Lv1"))
+            {
+                prices[towerPref] = _JinTower_Lv1;
+            }
+            if (towerPref.name.Contains("Mu") && towerPref.name.Contains("Lv1"))
+            {
+                prices[towerPref] = _MuTower_Lv1;
+            }
+            if (towerPref.name.Contains("Shui") && towerPref.name.Contains("Lv1"))
+            {
+                prices[towerPref] = _ShuiTower_Lv1;
+            }
+            if (towerPref.name.Contains("Huo") && towerPref.name.Contains("Lv1"))
+            {
+                prices[towerPref] = _HuoTower_Lv1;
+            }
+            if (towerPref.name.Contains("Tu") && towerPref.name.Contains("Lv1"))
+            {
+                prices[towerPref] = _TuTower_Lv1;
+            }
+            if (towerPref.name.Contains("Jin") && towerPref.name.Contains("Lv2"))
+            {
+                prices[towerPref] = _JinTower_Lv2;
+            }
+            if (towerPref.name.Contains("Mu") && towerPref.name.Contains("Lv2"))
+            {
+                prices[towerPref] = _MuTower_Lv2;
+            }
+            if (towerPref.name.Contains("Shui") && towerPref.name.Contains("Lv2"))
+            {
+                prices[towerPref] = _ShuiTower_Lv2;
+            }
+            if (towerPref.name.Contains("Huo") && towerPref.name.Contains("Lv2"))
+            {
+                prices[towerPref] = _HuoTower_Lv2;
+            }
+            if (towerPref.name.Contains("Tu") && towerPref.name.Contains("Lv2"))
+            {
+                prices[towerPref] = _TuTower_Lv2;
             }
             if (towerPref.name.Contains("Zuan"))
             {

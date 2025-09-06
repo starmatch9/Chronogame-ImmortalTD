@@ -514,4 +514,4 @@ MonoBehaviour:
   furnaceDuration: 4
   elementAmount: 340
   elementPower: {fileID: 2311799729351794271}
-  bulletPref: {fileID: 6335463960178079003, guid: 593b93316382b3a4c8a9bb45cc0a33a3, type: 3}
+  bulletPref: {fileID: 5350680608043848611, guid: 5ed1cdf12fc85de4bbe56cb81ab21c04, type: 3}

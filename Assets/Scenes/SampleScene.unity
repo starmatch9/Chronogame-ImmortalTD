@@ -3602,6 +3602,16 @@ MonoBehaviour:
   _ShuiTower: 100
   _HuoTower: 100
   _TuTower: 100
+  _JinTower_Lv1: 0
+  _MuTower_Lv1: 0
+  _ShuiTower_Lv1: 0
+  _HuoTower_Lv1: 0
+  _TuTower_Lv1: 0
+  _JinTower_Lv2: 0
+  _MuTower_Lv2: 0
+  _ShuiTower_Lv2: 0
+  _HuoTower_Lv2: 0
+  _TuTower_Lv2: 0
   _ZuanTower: 100
   _LuTower: 100
   _JiTower: 100
@@ -3808,6 +3818,16 @@ MonoBehaviour:
   ShuiTowerPref: {fileID: 480589149556982478, guid: ce0fa73e174502d4d85f6f2f9691642f, type: 3}
   HuoTowerPref: {fileID: 2237260605941642274, guid: 3b5596c5f4984ad4680f5bfc02a46c99, type: 3}
   TuTowerPref: {fileID: 2038134459825971482, guid: f4096c42f173ea74095edc52aa7d5cd3, type: 3}
+  JinTowerPref_Lv1: {fileID: 4068031503867926534, guid: ac53a1c6e1abdf14d9a5ff88f3ae4a33, type: 3}
+  MuTowerPref_Lv1: {fileID: 1203225801595411352, guid: 33964a88fc66e824ca1e96b267ff06fb, type: 3}
+  ShuiTowerPref_Lv1: {fileID: 706411824625433675, guid: 5be76188110a3f94d99cf164854f97a2, type: 3}
+  HuoTowerPref_Lv1: {fileID: 6235048248814504590, guid: 74f618d69b3fa7148aa2a061aee497bf, type: 3}
+  TuTowerPref_Lv1: {fileID: 229809161418750231, guid: 32f8404a11b7e074baf5a7c670bcfc0c, type: 3}
+  JinTowerPref_Lv2: {fileID: 2634794298263152987, guid: dacccf22d447c9c48a461a5fd1f12fbd, type: 3}
+  MuTowerPref_Lv2: {fileID: 8483560778191014237, guid: b013ca50a48936e499fc751690bc232f, type: 3}
+  ShuiTowerPref_Lv2: {fileID: 4275146866072021134, guid: a1de261354111af4c898fd5c88c5406c, type: 3}
+  HuoTowerPref_Lv2: {fileID: 394190884891967172, guid: debf6f30049fae54c829ed46044c7fdf, type: 3}
+  TuTowerPref_Lv2: {fileID: 4287608571632905629, guid: 30dc60b08289452419b71f68ed8ac333, type: 3}
   ZuanTowerPref: {fileID: 1041664603381812693, guid: 94d65e81f039aeb47b995959fbccff54, type: 3}
   LuTowerPref: {fileID: 5386414523487734383, guid: 5848599cb1941304f94c797d6eb80663, type: 3}
   JiTowerPref: {fileID: 4457778802436981890, guid: 8ce8cd05b4b008441a15511424ae431d, type: 3}

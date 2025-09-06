@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,32 +6,32 @@ using static UnityEngine.GraphicsBuffer;
 
 public class RongTower : Tower
 {
-    /*  -ÈÛÑÒËş £¨ÌÌ½ÅËş£©-  */
+    /*  -ç†”å²©å¡” ï¼ˆçƒ«è„šå¡”ï¼‰-  */
 
     [TextArea]
-    public string Tips = "×¢Òâ£ºÈÛÑÒËşµÄ¡°Ë÷µĞ·¶Î§¡±²»ÉúĞ§¡£";
+    public string Tips = "æ³¨æ„ï¼šç†”å²©å¡”çš„â€œç´¢æ•ŒèŒƒå›´â€ä¸ç”Ÿæ•ˆã€‚";
 
-    [Header("Éú³É·½¸ñµÄ±ß³¤£¬±ÈÈç¾Å¹¬¸ñµÄ±ß³¤Îª3¡£")]
+    [Header("ç”Ÿæˆæ–¹æ ¼çš„è¾¹é•¿ï¼Œæ¯”å¦‚ä¹å®«æ ¼çš„è¾¹é•¿ä¸º3ã€‚")]
     [Range(1, 5)] public int length = 3;
 
-    //×¢Òâ£ºÂ·ÃæÁĞ±íĞèÒªµ¥¶À·ÅÔÚÂ·Ãæ¹ÜÀíÆ÷ÖĞ£¬½«ÆäÉèÖÃÎªÈ«¾Ö¾²Ì¬±äÁ¿£¬³õÊ¼»¯Ê±¸ù¾İ¹ÜÀíÆ÷ÖĞµÄÂ·Ãæ½øĞĞÌí¼Ó
-    //[Header("Â·ÃæÁĞ±í£¨×¢Òâ£ºÕâ¸ö²ÎÊıºóĞøÒª·Åµ½È«¾Ö¹ÜÀíÆ÷ÖĞÍ³Ò»¹ÜÀí£¡£¡£¡£©")]
+    //æ³¨æ„ï¼šè·¯é¢åˆ—è¡¨éœ€è¦å•ç‹¬æ”¾åœ¨è·¯é¢ç®¡ç†å™¨ä¸­ï¼Œå°†å…¶è®¾ç½®ä¸ºå…¨å±€é™æ€å˜é‡ï¼Œåˆå§‹åŒ–æ—¶æ ¹æ®ç®¡ç†å™¨ä¸­çš„è·¯é¢è¿›è¡Œæ·»åŠ 
+    //[Header("è·¯é¢åˆ—è¡¨ï¼ˆæ³¨æ„ï¼šè¿™ä¸ªå‚æ•°åç»­è¦æ”¾åˆ°å…¨å±€ç®¡ç†å™¨ä¸­ç»Ÿä¸€ç®¡ç†ï¼ï¼ï¼ï¼‰")]
     //public List<Tilemap> tilemaps = new List<Tilemap>();
 
-    [Header("ÈÛÑÒ·½¸ñÔ¤ÖÆ¼ş")]
+    [Header("ç†”å²©æ–¹æ ¼é¢„åˆ¶ä»¶")]
     public GameObject lavaPrefab;
 
-    [Header("ÈÛÑÒ´æÔÚÊ±³¤")]
+    [Header("ç†”å²©å­˜åœ¨æ—¶é•¿")]
     [Range(0, 15f)]public float lavaDuration = 5f;
 
-    [Header("ÈÛÑÒÌÌ½Å¼ä¸ôÊ±¼ä")]
+    [Header("ç†”å²©çƒ«è„šé—´éš”æ—¶é—´")]
     [Range(0, 5f)] public float lavaAttackInterval = 0.75f;
 
-    [Header("ÈÛÑÒÌÌ½ÅÉËº¦")]
+    [Header("ç†”å²©çƒ«è„šä¼¤å®³")]
     [Range(0, 100f)] public float lavaAttack = 0.75f;
 
 
-    //¹ÜÀíËùÓĞ²ÈÔÚÈÛÑÒÉÏµÄµĞÈË
+    //ç®¡ç†æ‰€æœ‰è¸©åœ¨ç†”å²©ä¸Šçš„æ•Œäºº
     [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
 
@@ -46,15 +46,15 @@ public class RongTower : Tower
         UpdateEnemies();
     }
 
-    //ÈÛÑÒµÄ¹¥»÷
+    //ç†”å²©çš„æ”»å‡»
     void LavaAttack()
     {
-        //ÁĞ±í±¾Ìå×ÜÊÇ±ä»¯£¬ËùÒÔĞèÒª¸´ÖÆÒ»·İ
+        //åˆ—è¡¨æœ¬ä½“æ€»æ˜¯å˜åŒ–ï¼Œæ‰€ä»¥éœ€è¦å¤åˆ¶ä¸€ä»½
         List<Enemy> enemiesCopy = new List<Enemy>(enemies);
 
         foreach (Enemy enemy in enemiesCopy)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË(Ò»¶¨²»ÄÜÍüÁËÕâ¶Î)
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº(ä¸€å®šä¸èƒ½å¿˜äº†è¿™æ®µ)
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
@@ -63,18 +63,19 @@ public class RongTower : Tower
         }
     }
 
-    //Ë¢ĞÂµĞÈËÁĞ±í
+    //åˆ·æ–°æ•Œäººåˆ—è¡¨
     private void UpdateEnemies()
     {
         foreach (Enemy enemy in enemies)
         {
-            //ÒÆ³ı²»ĞèÒª¹¥»÷µÄµĞÈË
+            //ç§»é™¤ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
             if (enemy.NoMoreShotsNeeded())
             {
-
+                enemies.Remove(enemy);
+                continue;
             }
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
-            //¹´¹É¶¨Àí
+            //å‹¾è‚¡å®šç†
             float range = Mathf.Sqrt(Mathf.Pow(length/2, 2) + Mathf.Pow(length, 2));
             if (distance > range)
             {
@@ -84,30 +85,30 @@ public class RongTower : Tower
         }
     }
 
-    //Éú³ÉÕÓÔóµØÃæ
+    //ç”Ÿæˆæ²¼æ³½åœ°é¢
     public void SpawnLava()
     {
-        //»ñÈ¡¾Å¹¬¸ñÄÚµÄËùÓĞµã
+        //è·å–ä¹å®«æ ¼å†…çš„æ‰€æœ‰ç‚¹
         List<Vector3> points = GetAllPointInGrid();
 
-        //±éÀúÃ¿¸öµã
+        //éå†æ¯ä¸ªç‚¹
         foreach (Vector3 point in points)
         {
-            //Éú³ÉÈÛÑÒ·½¸ñ
+            //ç”Ÿæˆç†”å²©æ–¹æ ¼
             GameObject lava = Instantiate(lavaPrefab, point, Quaternion.identity);
             lava.GetComponent<Lava>().SetTower(this);
 
-            //¿ªÊ¼ÈÛÑÒµÄÉúÃüÖÜÆÚ
+            //å¼€å§‹ç†”å²©çš„ç”Ÿå‘½å‘¨æœŸ
             StartCoroutine(LavaLifetime(lava));
         }
-        //Éú³ÉÈÛÑÒµÄÍ¬Ê±£¬¿ªÊ¼ÌÌ½ÅÖÜÆÚ
+        //ç”Ÿæˆç†”å²©çš„åŒæ—¶ï¼Œå¼€å§‹çƒ«è„šå‘¨æœŸ
         StartCoroutine(LavaAttackLife());
     }
 
     IEnumerator LavaAttackLife()
     {
-        //´ó¼ÆÊ±Æ÷¼ÇÂ¼ÉúÃüÊ±³¤
-        //Ğ¡¼ÆÊ±Æ÷¼ÇÂ¼¹¥»÷¼ä¸ô
+        //å¤§è®¡æ—¶å™¨è®°å½•ç”Ÿå‘½æ—¶é•¿
+        //å°è®¡æ—¶å™¨è®°å½•æ”»å‡»é—´éš”
         float bigTimer = 0f;
         float smallTimer = 0f;
 
@@ -117,7 +118,7 @@ public class RongTower : Tower
             {
                 LavaAttack();
 
-                smallTimer = 0f; //ÖØÖÃĞ¡¼ÆÊ±Æ÷
+                smallTimer = 0f; //é‡ç½®å°è®¡æ—¶å™¨
             }
             yield return null;
             bigTimer += Time.deltaTime;
@@ -125,46 +126,46 @@ public class RongTower : Tower
         }
     }
 
-    //ÈÛÑÒµÄÉúÃüÖÜÆÚ
+    //ç†”å²©çš„ç”Ÿå‘½å‘¨æœŸ
     private IEnumerator LavaLifetime(GameObject lava)
     {
         yield return new WaitForSeconds(lavaDuration);
 
-        //Ïú»ÙÈÛÑÒ
+        //é”€æ¯ç†”å²©
         Destroy(lava);
     }
 
-    //»ñµÃ¾Å¹¬¸ñÄÚµÄËùÓĞµã
+    //è·å¾—ä¹å®«æ ¼å†…çš„æ‰€æœ‰ç‚¹
     public List<Vector3> GetAllPointInGrid()
     {
         List<Vector3> points = new List<Vector3>();
 
-        //Ëş±¾ÉíµÄÎ»ÖÃ
+        //å¡”æœ¬èº«çš„ä½ç½®
         float x = transform.position.x;
         float y = transform.position.y;
-        //µÚÒ»¸öµãµÄÎ»ÖÃ
+        //ç¬¬ä¸€ä¸ªç‚¹çš„ä½ç½®
         float first_x = x - (length - 1) / 2;
         float first_y = y + (length - 1) / 2;
-        //Ò»¹²ÓĞ  ±ß³¤ * ±ß³¤  ¸öµãĞèÒª±éÀú  £¨Èç¹ûÊÇÅ¼Êı¸ö×Ô¶¯¼õÈ¥1£©
+        //ä¸€å…±æœ‰  è¾¹é•¿ * è¾¹é•¿  ä¸ªç‚¹éœ€è¦éå†  ï¼ˆå¦‚æœæ˜¯å¶æ•°ä¸ªè‡ªåŠ¨å‡å»1ï¼‰
         int l = ((length - 1) / 2) * 2 + 1;
 
-        //ÍâÃæ¾ö¶¨µÚ¼¸ĞĞ£¬ÀïÃæ¾ö¶¨µÚ¼¸ÁĞ
+        //å¤–é¢å†³å®šç¬¬å‡ è¡Œï¼Œé‡Œé¢å†³å®šç¬¬å‡ åˆ—
         for (int i = 0; i < l; ++i)
         {
             for (int j = 0; j < l; ++j)
             {
-                //Ã¿¸öµãµÄ×ø±ê
-                //ÏÖÔÚÊÇµÚiĞĞµÚjÁĞµÄµã
+                //æ¯ä¸ªç‚¹çš„åæ ‡
+                //ç°åœ¨æ˜¯ç¬¬iè¡Œç¬¬jåˆ—çš„ç‚¹
                 float point_x = first_x + i;
-                float point_y = first_y - j; //×¢Òâ£ºYÖáÊÇÏòÏÂµÄ£¬ËùÒÔÒª¼õÈ¥j
+                float point_y = first_y - j; //æ³¨æ„ï¼šYè½´æ˜¯å‘ä¸‹çš„ï¼Œæ‰€ä»¥è¦å‡å»j
 
                 Vector3 point = new Vector3(point_x, point_y, transform.position.z);
-                //ÁĞ±í²»Îª¿ÕÊ±£¬ÅĞ¶ÏÊÇ·ñÔÚÂ·ÃæÉÏ
+                //åˆ—è¡¨ä¸ä¸ºç©ºæ—¶ï¼Œåˆ¤æ–­æ˜¯å¦åœ¨è·¯é¢ä¸Š
                 if (GlobalData.globalRoads.Count != 0)
                 {
                     foreach (Tilemap tilemap in GlobalData.globalRoads)
                     {
-                        //Èç¹ûÔÚÂ·ÃæÉÏ
+                        //å¦‚æœåœ¨è·¯é¢ä¸Š
                         if (tilemap.HasTile(tilemap.WorldToCell(point)) && !points.Contains(point))
                         {
                             points.Add(point);
@@ -178,26 +179,26 @@ public class RongTower : Tower
 
     public override void OnDrawGizmos()
     {
-        float halfSize = (float)length / 2; //±ß³¤3£¬°ë±ß³¤1.5
+        float halfSize = (float)length / 2; //è¾¹é•¿3ï¼ŒåŠè¾¹é•¿1.5
         Vector3 center = transform.position;
 
-        //¶¨ÒåËÄ¸ö½Ç
+        //å®šä¹‰å››ä¸ªè§’
         Vector3 topRight = center + new Vector3(halfSize, halfSize, 0);
         Vector3 topLeft = center + new Vector3(-halfSize, halfSize, 0);
         Vector3 bottomLeft = center + new Vector3(-halfSize, -halfSize, 0);
         Vector3 bottomRight = center + new Vector3(halfSize, -halfSize, 0);
 
-        //ÉèÖÃGizmosÑÕÉ«
+        //è®¾ç½®Gizmosé¢œè‰²
         Gizmos.color = Color.red;
 
-        //»æÖÆËÄÌõ±ß
+        //ç»˜åˆ¶å››æ¡è¾¹
         Gizmos.DrawLine(topRight, topLeft);
         Gizmos.DrawLine(topLeft, bottomLeft);
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
     }
 
-    //»æÖÆË÷µĞ·¶Î§
+    //ç»˜åˆ¶ç´¢æ•ŒèŒƒå›´
     public override void DrawAttackArea()
     {
         attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);

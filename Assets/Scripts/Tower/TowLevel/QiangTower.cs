@@ -1,43 +1,47 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class QiangTower : Tower
 {
-    //  * Ç½Ëş * 
+    //  * å¢™å¡” * 
 
+    [Header("å¢™çš„æœ€å¤šé˜»æŒ¡æ•Œäººæ•°é‡")]
+    [Range(0, 10)] public int maxNumber = 5;
 
-    [Header("Ç½µÄ³ÖĞøÊ±¼ä")]
+    [Header("å¢™çš„æŒç»­æ—¶é—´")]
     [Range(0, 10)]public float wallDuration = 5f;
 
-    [Header("Ç½µÄµ¹ËúÉËº¦")]
+    [Header("å¢™çš„å€’å¡Œä¼¤å®³")]
     [Range(0, 100)]public float wallDamage = 40f;
 
-    [Header("Ç½µÄÔ¤ÖÆ¼ş")]  //Ç½µÄÔ¤ÖÆ¼şÒªÔÚyÖáÏòÏÂÆ«ÒÆ0.2
+    [Header("å¢™çš„é¢„åˆ¶ä»¶")]  //å¢™çš„é¢„åˆ¶ä»¶è¦åœ¨yè½´å‘ä¸‹åç§»0.2
     public GameObject wallPrefab;
 
     private void Start()
     {
-        TowerAction(); //ÔÚ¿ªÊ¼Ê±Ö´ĞĞÒ»´ÎËşµÄĞĞÎª
+        TowerAction(); //åœ¨å¼€å§‹æ—¶æ‰§è¡Œä¸€æ¬¡å¡”çš„è¡Œä¸º
     }
 
     public override void TowerAction()
     {
 
-        //Éú³ÉÇ½
+        //ç”Ÿæˆå¢™
         Enemy enemy = FindClosestToFinishEnemy();
         if (enemy == null)
         {
-            return; //Ã»ÓĞµĞÈËÔò²»Ö´ĞĞ
+            return; //æ²¡æœ‰æ•Œäººåˆ™ä¸æ‰§è¡Œ
         }
 
-        //È·¶¨Î»ÖÃ
+        //ç¡®å®šä½ç½®
         Vector3 spownPosition = new Vector3(enemy.GetGameObject().transform.position.x, enemy.GetGameObject().transform.position.y - 0.2f, enemy.GetGameObject().transform.position.z);
 
         GameObject wall = Instantiate(wallPrefab, spownPosition, Quaternion.identity);
 
-        //¿ªÊ¼Ç½µÄÉúÃüÖÜÆÚ
+        //å¼€å§‹å¢™çš„ç”Ÿå‘½å‘¨æœŸ
         Wall w = wall.GetComponent<Wall>();
+        //æœ€å¤§é˜»æŒ¡æ•°é‡
+        w.SetMaxEnemy(maxNumber);
         StartCoroutine(w.WallLife(wallDuration, wallDamage));
     }
 

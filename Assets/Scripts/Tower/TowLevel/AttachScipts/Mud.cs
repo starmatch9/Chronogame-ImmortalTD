@@ -1,10 +1,13 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Mud : MonoBehaviour
 {
-    //ËÙ¶È¼õÎªÔ­À´µÄ°Ù·ÖÖ®¶àÉÙ
+    //éœ€è¦è·å–æ²¼æ³½å¡”çš„æ•Œäººåˆ—è¡¨
+    ZhaoTower t;
+
+    //é€Ÿåº¦å‡ä¸ºåŸæ¥çš„ç™¾åˆ†ä¹‹å¤šå°‘
     float slowFactor = 0.3f;
 
     public void SetSlowFactor(float slowFactor)
@@ -12,15 +15,27 @@ public class Mud : MonoBehaviour
         this.slowFactor = slowFactor;
     }
 
+    public void SetTower(ZhaoTower tower)
+    {
+        t = tower;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //Ö»ÒªÊÇµĞÈË¾Í¼õËÙ
+        //åªè¦æ˜¯æ•Œäººå°±å‡é€Ÿ
         if (collision.CompareTag("Enemy"))
         {
+            //åŠ å…¥æ•Œäººåˆ—è¡¨
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (!t.enemyList.Contains(enemy))
+            {
+                t.enemyList.Add(enemy);
+            }
+
             Move move = collision.GetComponent<Move>();
             if (move != null)
             {
-                //·ÀÖ¹ÖØ¸´¼õËÙ£¬ÏÈÖØÖÃËÙ¶È
+                //é˜²æ­¢é‡å¤å‡é€Ÿï¼Œå…ˆé‡ç½®é€Ÿåº¦
                 move.ResetSpeed();
                 move.ChangeSpeed(slowFactor);
 
@@ -30,11 +45,18 @@ public class Mud : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        //Ö»ÒªÊÇµĞÈË£¬¼ì²âÒ»ÏÂÊÇ·ñĞèÒª±£³Ö¼õËÙ×´Ì¬
+        //åªè¦æ˜¯æ•Œäººï¼Œæ£€æµ‹ä¸€ä¸‹æ˜¯å¦éœ€è¦ä¿æŒå‡é€ŸçŠ¶æ€
         if (collision.CompareTag("Enemy"))
         {
+            //åŠ å…¥æ•Œäººåˆ—è¡¨
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (!t.enemyList.Contains(enemy))
+            {
+                t.enemyList.Add(enemy);
+            }
+
             Move move = collision.GetComponent<Move>();
-            //Èç¹û»Ö¸´ÁËÔ­ËÙ£¬¼ÌĞø¼õËÙ
+            //å¦‚æœæ¢å¤äº†åŸé€Ÿï¼Œç»§ç»­å‡é€Ÿ
             if(move.GetSpeed() == move.speed)
             {
                 move.ResetSpeed();
@@ -45,9 +67,17 @@ public class Mud : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //Ö»ÒªÊÇµĞÈË¾Í»Øµ½Ô­À´ËÙ¶È
+        //åªè¦æ˜¯æ•Œäººå°±å›åˆ°åŸæ¥é€Ÿåº¦
         if (collision.CompareTag("Enemy"))
         {
+            //åŠ å…¥æ•Œäººåˆ—è¡¨
+            Enemy enemy = collision.GetComponent<Enemy>();
+            if (t.enemyList.Contains(enemy))
+            {
+                t.enemyList.Remove(enemy);
+            }
+
+
             Move move = collision.GetComponent<Move>();
             if (move != null)
             {

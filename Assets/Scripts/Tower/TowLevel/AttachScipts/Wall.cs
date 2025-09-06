@@ -1,13 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Wall : MonoBehaviour
 {
-    //Ã¿´ÎÉú³ÉÒ»¶ÂÇ½£¬ËùÒÔ¿ÉÒÔÔÚ½Å±¾ÀïÎ¬»¤µ²×¡µÄµĞÈËÁĞ±í
+    //æœ€å¤§æ•Œäººæ•°
+    int maxEnemy = 0;
+
+    //æ¯æ¬¡ç”Ÿæˆä¸€å µå¢™ï¼Œæ‰€ä»¥å¯ä»¥åœ¨è„šæœ¬é‡Œç»´æŠ¤æŒ¡ä½çš„æ•Œäººåˆ—è¡¨
     List<Enemy> blockedEnemies = new List<Enemy>();
 
-    //½øÈëÊ±£¬µĞÈËÍ£ÏÂ
+    public void SetMaxEnemy(int m)
+    {
+        maxEnemy = m;
+    }
+
+    //è¿›å…¥æ—¶ï¼Œæ•Œäººåœä¸‹
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
@@ -16,9 +24,9 @@ public class Wall : MonoBehaviour
             Enemy enemy = collision.GetComponent<Enemy>();
 
             if (enemy != null) {
-                //ÎŞ·¨ÒÆ¶¯
+                //æ— æ³•ç§»åŠ¨
                 move.StopMove();
-                //½«µĞÈËÌí¼Óµ½ÁĞ±íÖĞ
+                //å°†æ•Œäººæ·»åŠ åˆ°åˆ—è¡¨ä¸­
                 if (!blockedEnemies.Contains(enemy))
                 {
                     blockedEnemies.Add(enemy);
@@ -29,12 +37,12 @@ public class Wall : MonoBehaviour
 
     void FallDown(float damage)
     {
-        //·ÀÖ¹ÁĞ±í±¾Ìå±ä»¯¸´ÖÆÒ»·İ
+        //é˜²æ­¢åˆ—è¡¨æœ¬ä½“å˜åŒ–å¤åˆ¶ä¸€ä»½
         List<Enemy> enemiesCopy = new List<Enemy>(blockedEnemies);
 
         foreach (Enemy enemy in enemiesCopy)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË(Ò»¶¨²»ÄÜÍüÁËÕâ¶Î)
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº(ä¸€å®šä¸èƒ½å¿˜äº†è¿™æ®µ)
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
@@ -46,27 +54,41 @@ public class Wall : MonoBehaviour
     public IEnumerator WallLife(float wallDuration, float wallDamage)
     {
 
-        //µÈ´ıÇ½µÄ³ÖĞøÊ±¼ä
-        yield return new WaitForSeconds(wallDuration);
+        //ç­‰å¾…å¢™çš„æŒç»­æ—¶é—´
+        //yield return new WaitForSeconds(wallDuration);
 
-        //Ç½µ¹ËúĞ­³Ì£¨µ¹ËúÊ±¼äÔÚÕâÀï¸Ä£©
+        //è®¡æ—¶å™¨
+        float timer = 0;
+        while(timer <= wallDuration)
+        {
+            //æ•°é‡è¿‡å¤§é€€å‡º
+            if (blockedEnemies.Count >= maxEnemy)
+            {
+                break;
+            }
+            yield return null;
+            timer += Time.deltaTime;
+        }
+
+
+        //å¢™å€’å¡Œåç¨‹ï¼ˆå€’å¡Œæ—¶é—´åœ¨è¿™é‡Œæ”¹ï¼‰
         yield return StartCoroutine(FallDownRotate(0.3f));
 
-        //Ç½µ¹Ëú
+        //å¢™å€’å¡Œ
         FallDown(wallDamage);
 
-        //Ïú»ÙÇ°µĞÈËÖØĞÂÒÆ¶¯
+        //é”€æ¯å‰æ•Œäººé‡æ–°ç§»åŠ¨
         List<Enemy> enemiesCopy = new List<Enemy>(blockedEnemies);
         foreach (Enemy enemy in enemiesCopy)
         {
             Move move = enemy.gameObject.GetComponent<Move>();
             if (move != null)
             {
-                move.ContinueMove(); //»Ö¸´µĞÈËÒÆ¶¯
+                move.ContinueMove(); //æ¢å¤æ•Œäººç§»åŠ¨
             }
         }
 
-        //Ïú»ÙÇ½
+        //é”€æ¯å¢™
         Destroy(gameObject);
     }
 
@@ -83,7 +105,7 @@ public class Wall : MonoBehaviour
             transform.rotation = Quaternion.Lerp(startRotation, endRotation, t);
 
             timer += Time.deltaTime;
-            yield return null; //µÈ´ıÏÂÒ»Ö¡
+            yield return null; //ç­‰å¾…ä¸‹ä¸€å¸§
         }
     }
 }

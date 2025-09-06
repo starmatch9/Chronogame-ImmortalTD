@@ -325,7 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fa6dda3265864941bc7ac5882dea448, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towerInitial: {fileID: 0}
   tower: {fileID: 2373869929402127843}
   selected: {fileID: 1877364191893515906}
   optionCanva: {fileID: 0}

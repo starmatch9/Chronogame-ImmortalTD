@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,82 +6,132 @@ using UnityEngine.UIElements;
 
 public class ZhaoTower : Tower
 {
-    //  *--   ÕÓÔóËş   --*
+    //  *--   æ²¼æ³½å¡”   --*
 
-    //ÕÓÔóËşÔÚ9¹¬¸ñµÄ·¶Î§ÄÚÉú³ÉÕÓÔóµØÃæ£¬¼ì²âµ½Â·ÃæÖ±½ÓÉú³É£¬Ã»ÓĞÆäÓà¶¯×÷
+    //æ²¼æ³½å¡”åœ¨9å®«æ ¼çš„èŒƒå›´å†…ç”Ÿæˆæ²¼æ³½åœ°é¢ï¼Œæ£€æµ‹åˆ°è·¯é¢ç›´æ¥ç”Ÿæˆï¼Œæ²¡æœ‰å…¶ä½™åŠ¨ä½œ
     [TextArea]
-    public string Tips = "×¢Òâ£ºÕÓÔóËşµÄ¡°Ë÷µĞ·¶Î§¡±ºÍ¡°¼ä¸ôÊ±¼ä¡±²»ÉúĞ§¡£";
+    public string Tips = "æ³¨æ„ï¼šæ²¼æ³½å¡”çš„â€œç´¢æ•ŒèŒƒå›´â€ä¸ç”Ÿæ•ˆã€‚";
 
-    [Header("Éú³É·½¸ñµÄ±ß³¤£¬±ÈÈç¾Å¹¬¸ñµÄ±ß³¤Îª3")]
+    [Header("ç”Ÿæˆæ–¹æ ¼çš„è¾¹é•¿ï¼Œæ¯”å¦‚ä¹å®«æ ¼çš„è¾¹é•¿ä¸º3")]
     [Range(1, 5)] public int length = 3;
 
-    [Header("¼õËÙÎªÔ­À´µÄ¶àÉÙ£¬°Ù·Ö±È")]
+    [Header("å‡é€Ÿä¸ºåŸæ¥çš„å¤šå°‘ï¼Œç™¾åˆ†æ¯”")]
     [Range(0f, 1f)] public float slowFactor = 0.3f;
 
-    //×¢Òâ£ºÂ·ÃæÁĞ±íĞèÒªµ¥¶À·ÅÔÚÂ·Ãæ¹ÜÀíÆ÷ÖĞ£¬½«ÆäÉèÖÃÎªÈ«¾Ö¾²Ì¬±äÁ¿£¬³õÊ¼»¯Ê±¸ù¾İ¹ÜÀíÆ÷ÖĞµÄÂ·Ãæ½øĞĞÌí¼Ó
-    //[Header("Â·ÃæÁĞ±í£¨×¢Òâ£ºÕâ¸ö²ÎÊıºóĞøÒª·Åµ½È«¾Ö¹ÜÀíÆ÷ÖĞÍ³Ò»¹ÜÀí£¡£¡£¡£©")]
+    //è¿™æ˜¯è¿›å…¥å—å‡»èŒƒå›´çš„æ•Œäººåˆ—è¡¨
+    [HideInInspector]
+    public List<Enemy> enemyList = new List<Enemy>();
+
+    //æ³¨æ„ï¼šè·¯é¢åˆ—è¡¨éœ€è¦å•ç‹¬æ”¾åœ¨è·¯é¢ç®¡ç†å™¨ä¸­ï¼Œå°†å…¶è®¾ç½®ä¸ºå…¨å±€é™æ€å˜é‡ï¼Œåˆå§‹åŒ–æ—¶æ ¹æ®ç®¡ç†å™¨ä¸­çš„è·¯é¢è¿›è¡Œæ·»åŠ 
+    //[Header("è·¯é¢åˆ—è¡¨ï¼ˆæ³¨æ„ï¼šè¿™ä¸ªå‚æ•°åç»­è¦æ”¾åˆ°å…¨å±€ç®¡ç†å™¨ä¸­ç»Ÿä¸€ç®¡ç†ï¼ï¼ï¼ï¼‰")]
     //public List<Tilemap> tilemaps = new List<Tilemap>();
 
-    [Header("ÄàÌ¶·½¸ñÔ¤ÖÆ¼ş")]
+    [Header("æ³¥æ½­æ–¹æ ¼é¢„åˆ¶ä»¶")]
     public GameObject mudPrefab;
 
-    public override void Update(){}
-    public override void TowerAction() { }
+    [Header("ä¼¤å®³")]
+    [Range(0f, 50f)] public float mudAttack = 20f;
+
+    public override void TowerAction() {
+
+        //åˆ·æ–°åè¿›è¡Œæ”»å‡»æ–¹æ³•
+        UpdateEnemies();
+        MudAttack();
+    }
 
     public void Start()
     {
-        //Éú³ÉÕÓÔóµØÃæ
+        //ç”Ÿæˆæ²¼æ³½åœ°é¢
         SpawnMud();
     }
 
-    //Éú³ÉÕÓÔóµØÃæ
+    //ç”Ÿæˆæ²¼æ³½åœ°é¢
     public void SpawnMud()
     {
-        //»ñÈ¡¾Å¹¬¸ñÄÚµÄËùÓĞµã
+        //è·å–ä¹å®«æ ¼å†…çš„æ‰€æœ‰ç‚¹
         List<Vector3> points = GetAllPointInGrid();
 
-        //±éÀúÃ¿¸öµã
+        //éå†æ¯ä¸ªç‚¹
         foreach (Vector3 point in points)
         {
-            //Éú³ÉÄàÌ¶·½¸ñ
+            //ç”Ÿæˆæ³¥æ½­æ–¹æ ¼
             GameObject mud = Instantiate(mudPrefab, point, Quaternion.identity);
+            mud.GetComponent<Mud>().SetTower(this);
             mud.gameObject.GetComponent<Mud>().SetSlowFactor(slowFactor);
         }
     }
 
 
-    //»ñµÃ¾Å¹¬¸ñÄÚµÄËùÓĞµã
+    //åˆ·æ–°æ•Œäººåˆ—è¡¨
+    private void UpdateEnemies()
+    {
+        foreach (Enemy enemy in enemyList)
+        {
+            //ç§»é™¤ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº
+            if (enemy.NoMoreShotsNeeded())
+            {
+                enemyList.Remove(enemy);
+                continue;
+            }
+            float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
+            //å‹¾è‚¡å®šç†
+            float range = Mathf.Sqrt(Mathf.Pow(length / 2, 2) + Mathf.Pow(length, 2));
+            if (distance > range)
+            {
+                enemyList.Remove(enemy);
+                continue;
+            }
+        }
+    }
+
+    void MudAttack()
+    {
+        //åˆ—è¡¨æœ¬ä½“æ€»æ˜¯å˜åŒ–ï¼Œæ‰€ä»¥éœ€è¦å¤åˆ¶ä¸€ä»½
+        List<Enemy> enemiesCopy = new List<Enemy>(enemyList);
+
+        foreach (Enemy enemy in enemiesCopy)
+        {
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº(ä¸€å®šä¸èƒ½å¿˜äº†è¿™æ®µ)
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            enemy.AcceptAttack(mudAttack);
+        }
+    }
+
+    //è·å¾—ä¹å®«æ ¼å†…çš„æ‰€æœ‰ç‚¹
     public List<Vector3> GetAllPointInGrid()
     {
         List<Vector3> points = new List<Vector3>();
 
-        //Ëş±¾ÉíµÄÎ»ÖÃ
+        //å¡”æœ¬èº«çš„ä½ç½®
         float x = transform.position.x;
         float y = transform.position.y;
-        //µÚÒ»¸öµãµÄÎ»ÖÃ
+        //ç¬¬ä¸€ä¸ªç‚¹çš„ä½ç½®
         float first_x = x - (length - 1) / 2;
         float first_y = y + (length - 1) / 2;
 
-        //Ò»¹²ÓĞ  ±ß³¤ * ±ß³¤  ¸öµãĞèÒª±éÀú  £¨Èç¹ûÊÇÅ¼Êı¸ö×Ô¶¯¼õÈ¥1£©
+        //ä¸€å…±æœ‰  è¾¹é•¿ * è¾¹é•¿  ä¸ªç‚¹éœ€è¦éå†  ï¼ˆå¦‚æœæ˜¯å¶æ•°ä¸ªè‡ªåŠ¨å‡å»1ï¼‰
         int l = ((length - 1) / 2) * 2 + 1;
 
-        //ÍâÃæ¾ö¶¨µÚ¼¸ĞĞ£¬ÀïÃæ¾ö¶¨µÚ¼¸ÁĞ
+        //å¤–é¢å†³å®šç¬¬å‡ è¡Œï¼Œé‡Œé¢å†³å®šç¬¬å‡ åˆ—
         for (int i = 0; i < l; ++i)
         {
             for (int j = 0; j <  l; ++j)
             {
-                //Ã¿¸öµãµÄ×ø±ê
-                //ÏÖÔÚÊÇµÚiĞĞµÚjÁĞµÄµã
+                //æ¯ä¸ªç‚¹çš„åæ ‡
+                //ç°åœ¨æ˜¯ç¬¬iè¡Œç¬¬jåˆ—çš„ç‚¹
                 float point_x = first_x + i;
-                float point_y = first_y - j; //×¢Òâ£ºYÖáÊÇÏòÏÂµÄ£¬ËùÒÔÒª¼õÈ¥j
+                float point_y = first_y - j; //æ³¨æ„ï¼šYè½´æ˜¯å‘ä¸‹çš„ï¼Œæ‰€ä»¥è¦å‡å»j
 
                 Vector3 point = new Vector3(point_x, point_y, transform.position.z);
-                //ÁĞ±í²»Îª¿ÕÊ±£¬ÅĞ¶ÏÊÇ·ñÔÚÂ·ÃæÉÏ
+                //åˆ—è¡¨ä¸ä¸ºç©ºæ—¶ï¼Œåˆ¤æ–­æ˜¯å¦åœ¨è·¯é¢ä¸Š
                 if (GlobalData.globalRoads.Count != 0)
                 {
                     foreach (Tilemap tilemap in GlobalData.globalRoads)
                     {
-                        //Èç¹ûÔÚÂ·ÃæÉÏ
+                        //å¦‚æœåœ¨è·¯é¢ä¸Š
                         if (tilemap.HasTile(tilemap.WorldToCell(point)) && !points.Contains(point))
                         {
                             points.Add(point);
@@ -93,29 +143,29 @@ public class ZhaoTower : Tower
         return points;
     }
 
-    //²»Í¬ÓÚ»ùÀàµÄÔ²ĞÎ·¶Î§£¬ÕâÀïÊÇÒ»¸öÕı·½ĞÎµÄ·¶Î§
+    //ä¸åŒäºåŸºç±»çš„åœ†å½¢èŒƒå›´ï¼Œè¿™é‡Œæ˜¯ä¸€ä¸ªæ­£æ–¹å½¢çš„èŒƒå›´
     public override void OnDrawGizmos()
     {
         float halfSize = (float)length / 2;
         Vector3 center = transform.position;
 
-        //¶¨ÒåËÄ¸ö½Ç
+        //å®šä¹‰å››ä¸ªè§’
         Vector3 topRight = center + new Vector3(halfSize, halfSize, 0);
         Vector3 topLeft = center + new Vector3(-halfSize, halfSize, 0);
         Vector3 bottomLeft = center + new Vector3(-halfSize, -halfSize, 0);
         Vector3 bottomRight = center + new Vector3(halfSize, -halfSize, 0);
 
-        //ÉèÖÃGizmosÑÕÉ«
+        //è®¾ç½®Gizmosé¢œè‰²
         Gizmos.color = Color.red;
 
-        //»æÖÆËÄÌõ±ß
+        //ç»˜åˆ¶å››æ¡è¾¹
         Gizmos.DrawLine(topRight, topLeft);
         Gizmos.DrawLine(topLeft, bottomLeft);
         Gizmos.DrawLine(bottomLeft, bottomRight);
         Gizmos.DrawLine(bottomRight, topRight);
     }
 
-    //»æÖÆË÷µĞ·¶Î§
+    //ç»˜åˆ¶ç´¢æ•ŒèŒƒå›´
     public override void DrawAttackArea()
     {
         attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);

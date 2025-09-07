@@ -1,39 +1,39 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Outline : MonoBehaviour
 {
-    //ĞüÍ£Ê±µÄËõ·Å±ÈÀı
+    //æ‚¬åœæ—¶çš„ç¼©æ”¾æ¯”ä¾‹
     float scaleFactor = 1.2f;
 
-    //ÂÖÀªÑÕÉ«
-    Color outlineColor = Color.red;
+    //è½®å»“é¢œè‰²
+    Color outlineColor = new Color(0,0,0,0);
 
     void Awake()
     {
         CreateOutline();
     }
 
-    //Í¨¹ıÍ¬¾«ÁéËõ·ÅµÄ·½Ê½´´½¨ÂÖÀª
+    //é€šè¿‡åŒç²¾çµç¼©æ”¾çš„æ–¹å¼åˆ›å»ºè½®å»“
     void CreateOutline()
     {
         SpriteRenderer spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
-        //»ñÈ¡¸¸ÎïÌå
+        //è·å–çˆ¶ç‰©ä½“
         GameObject parent = transform.parent.gameObject;
-        //»ñÈ¡¸¸ÎïÌåµÄSpriteRenderer×é¼ş
+        //è·å–çˆ¶ç‰©ä½“çš„SpriteRendererç»„ä»¶
         SpriteRenderer parentSpriteRenderer = parent.GetComponent<SpriteRenderer>();
-        //ÈÃÂÖÀªµÄ¾«ÁéÓë¸¸ÎïÌåÒ»ÖÂ
+        //è®©è½®å»“çš„ç²¾çµä¸çˆ¶ç‰©ä½“ä¸€è‡´
         spriteRenderer.sprite = parentSpriteRenderer.sprite;
-        //ÈÃÂÖÀªµÄÎ»ÖÃÓë¸¸ÎïÌåÒ»ÖÂ       (ÕâÀïÉæ¼°localÏà¶ÔµÄ¸ÅÄî)
+        //è®©è½®å»“çš„ä½ç½®ä¸çˆ¶ç‰©ä½“ä¸€è‡´       (è¿™é‡Œæ¶‰åŠlocalç›¸å¯¹çš„æ¦‚å¿µ)
         transform.localPosition = Vector3.zero;
-        //ÈÃÂÖÀªµÄ´óĞ¡Îª¸¸ÎïÌåµÄ±ÈÀı±¶Êı
+        //è®©è½®å»“çš„å¤§å°ä¸ºçˆ¶ç‰©ä½“çš„æ¯”ä¾‹å€æ•°
         transform.localScale = Vector3.one * scaleFactor;
-        //ÈÃÅÅĞòÍ¼²ãÒ»ÖÂ
+        //è®©æ’åºå›¾å±‚ä¸€è‡´
         spriteRenderer.sortingLayerName = parentSpriteRenderer.sortingLayerName;
-        //È·±£ÂÖÀªµÄÅÅĞòÔÚÖ÷ÌåÏÂÃæ
+        //ç¡®ä¿è½®å»“çš„æ’åºåœ¨ä¸»ä½“ä¸‹é¢
         spriteRenderer.sortingOrder = parentSpriteRenderer.sortingOrder - 1;
-        //ÉèÖÃÂÖÀªÑÕÉ«
+        //è®¾ç½®è½®å»“é¢œè‰²
         spriteRenderer.color = outlineColor;
     }
 }

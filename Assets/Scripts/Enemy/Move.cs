@@ -1,37 +1,39 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
 public class Move : MonoBehaviour
 {
-    //ÒÆ¶¯·½ÏòÃ¶¾Ù
+    //ç§»åŠ¨æ–¹å‘æšä¸¾
     enum arrow
     {
         UP, DOWN, LEFT, RIGHT, NONE
     }
 
-    [Range(0, 20)]public float speed = 2f; //ÒÆ¶¯ËÙ¶È
+    [Range(0, 20)]public float speed = 2f; //ç§»åŠ¨é€Ÿåº¦
 
-    //¼ÇÂ¼µ±Ç°À´µÄ·½Ïò£¬×¢Òâ£¡£¡£¡£¡ÊÇÀ´µÄ·½Ïò£¡£¡£¡µ±½ÇÉ«×ªÏòÊ±²»¿ÉÒÔÏòÀ´µÄ·½ÏòÒÆ¶¯
+    //è®°å½•å½“å‰æ¥çš„æ–¹å‘ï¼Œæ³¨æ„ï¼ï¼ï¼ï¼æ˜¯æ¥çš„æ–¹å‘ï¼ï¼ï¼å½“è§’è‰²è½¬å‘æ—¶ä¸å¯ä»¥å‘æ¥çš„æ–¹å‘ç§»åŠ¨
     arrow direction = arrow.NONE;
 
-    bool isMoving = false; //ÊÇ·ñÕıÔÚÒÆ¶¯
+    bool isMoving = false; //æ˜¯å¦æ­£åœ¨ç§»åŠ¨
 
     public Tilemap roadTilemap;
 
     public float survivalTime = 0f;
 
-    bool isStopMove = false;
+    [HideInInspector]
+    public bool isStopMove = false;
 
-    //¼ÇÂ¼µ±Ç°ÒÆ¶¯ËÙ¶È
+    //è®°å½•å½“å‰ç§»åŠ¨é€Ÿåº¦
     Vector2 currentVelocity;
 
-    /* ÒÔÏÂÁ½¸öÊÇÒ»×é */
+    /* ä»¥ä¸‹ä¸¤ä¸ªæ˜¯ä¸€ç»„ */
 
-    //¼õËÙ»ò¼ÓËÙÒÆ¶¯(²ÎÊıÎª°Ù·Ö±È)
+    //å‡é€Ÿæˆ–åŠ é€Ÿç§»åŠ¨(å‚æ•°ä¸ºç™¾åˆ†æ¯”)
     public void ChangeSpeed(float factor)
     {
         isStopMove = true;
@@ -39,45 +41,46 @@ public class Move : MonoBehaviour
         body.velocity = body.velocity * speedFactor;
         isStopMove = false;
     }
-    //ÖØÖÃËÙ¶È£¨³·ÏúËÙ¶ÈÒò×ÓµÄÓ°Ïì£©
+    //é‡ç½®é€Ÿåº¦ï¼ˆæ’¤é”€é€Ÿåº¦å› å­çš„å½±å“ï¼‰
     public void ResetSpeed()
     {
         isStopMove = true;
-        if(GetSpeed() != speed)
+        if (GetSpeed() != speed)
         {
-            body.velocity = body.velocity / speedFactor; //³·ÏúËÙ¶ÈÒò×ÓµÄÓ°Ïì
+            body.velocity = body.velocity / speedFactor; //æ’¤é”€é€Ÿåº¦å› å­çš„å½±å“
         }
-        SetSpeedFactor(1f); //ÖØÖÃËÙ¶ÈÒò×ÓÎª1
+        SetSpeedFactor(1f); //é‡ç½®é€Ÿåº¦å› å­ä¸º1
+
         isStopMove = false;
     }
 
-    float speedFactor = 1f; //ËÙ¶ÈÒò×Ó£¬Ä¬ÈÏÎª1
+    float speedFactor = 1f; //é€Ÿåº¦å› å­ï¼Œé»˜è®¤ä¸º1
 
     void SetSpeedFactor(float factor)
     {
         speedFactor = factor;
     }
 
-    //ÓÃÓÚ»ñÈ¡ËÙ¶È£¬·½±ã½øĞĞ¸ü¸Ä
+    //ç”¨äºè·å–é€Ÿåº¦ï¼Œæ–¹ä¾¿è¿›è¡Œæ›´æ”¹
     public float GetSpeed()
     {
         return speed * speedFactor;
     }
 
 
-    //ÔİÍ£ÒÆ¶¯
+    //æš‚åœç§»åŠ¨
     public void StopMove()
     {
         currentVelocity = body.velocity;
-        body.velocity = Vector2.zero; //Í£Ö¹ÒÆ¶¯
+        body.velocity = Vector2.zero; //åœæ­¢ç§»åŠ¨
 
         isStopMove = true;
     }
-    //¼ÌĞøÒÆ¶¯
+    //ç»§ç»­ç§»åŠ¨
     public void ContinueMove()
     {
         body.velocity = currentVelocity;
-        currentVelocity = Vector2.zero; //Çå¿Õµ±Ç°ËÙ¶È
+        currentVelocity = Vector2.zero; //æ¸…ç©ºå½“å‰é€Ÿåº¦
         isStopMove = false;
     }
 
@@ -86,7 +89,7 @@ public class Move : MonoBehaviour
     void Awake()
     {
         body = GetComponent<Rigidbody2D>();
-        //µ÷ÕûÎïÌåÖÁÖĞÑë
+        //è°ƒæ•´ç‰©ä½“è‡³ä¸­å¤®
         Adjust();
     }
 
@@ -103,8 +106,8 @@ public class Move : MonoBehaviour
     void OnEnable()
     {
         Adjust();
-        isMoving = false; //ÖØÖÃÒÆ¶¯×´Ì¬
-        direction = arrow.NONE; //ÖØÖÃ·½Ïò
+        isMoving = false; //é‡ç½®ç§»åŠ¨çŠ¶æ€
+        direction = arrow.NONE; //é‡ç½®æ–¹å‘
     }
     public void RunAlongRoad()
     {
@@ -115,13 +118,13 @@ public class Move : MonoBehaviour
         }
         else
         {
-            //Ê±¼äµÄÔö¼ÓĞèÒª¿¼ÂÇËÙ¶ÈÒò×Ó
-            survivalTime += Time.deltaTime * speedFactor; //Ôö¼Ó´æ»îÊ±¼ä
+            //æ—¶é—´çš„å¢åŠ éœ€è¦è€ƒè™‘é€Ÿåº¦å› å­
+            survivalTime += Time.deltaTime * speedFactor; //å¢åŠ å­˜æ´»æ—¶é—´
 
-            //°´ÕÕĞĞÊ»µÄ·½Ïò¼ì²âÓĞÂ·Ã»ÓĞ
+            //æŒ‰ç…§è¡Œé©¶çš„æ–¹å‘æ£€æµ‹æœ‰è·¯æ²¡æœ‰
             if (direction == arrow.UP)
             {
-                Vector3 explorePosition = transform.position + new Vector3(0, -0.5f, 0); //ÏÂ·½Î»ÖÃ
+                Vector3 explorePosition = transform.position + new Vector3(0, -0.5f, 0); //ä¸‹æ–¹ä½ç½®
                 if (!IsPositionOnTile(explorePosition))
                 {
                     isMoving = false;
@@ -129,7 +132,7 @@ public class Move : MonoBehaviour
             }
             else if (direction == arrow.DOWN)
             {
-                Vector3 explorePosition = transform.position + new Vector3(0, 0.5f, 0); //ÉÏ·½Î»ÖÃ
+                Vector3 explorePosition = transform.position + new Vector3(0, 0.5f, 0); //ä¸Šæ–¹ä½ç½®
                 if (!IsPositionOnTile(explorePosition))
                 {
                     isMoving = false;
@@ -137,7 +140,7 @@ public class Move : MonoBehaviour
             }
             else if (direction == arrow.LEFT)
             {
-                Vector3 explorePosition = transform.position + new Vector3(0.5f, 0, 0); //ÓÒ·½Î»ÖÃ
+                Vector3 explorePosition = transform.position + new Vector3(0.5f, 0, 0); //å³æ–¹ä½ç½®
                 if (!IsPositionOnTile(explorePosition))
                 {
                     isMoving = false;
@@ -145,7 +148,7 @@ public class Move : MonoBehaviour
             }
             else if (direction == arrow.RIGHT)
             {
-                Vector3 explorePosition = transform.position + new Vector3(-0.5f, 0, 0); //×ó·½Î»ÖÃ
+                Vector3 explorePosition = transform.position + new Vector3(-0.5f, 0, 0); //å·¦æ–¹ä½ç½®
                 if (!IsPositionOnTile(explorePosition))
                 {
                     isMoving = false;
@@ -154,64 +157,64 @@ public class Move : MonoBehaviour
         }
     }
 
-    //ÒÆ¶¯½ÇÉ«Âß¼­
+    //ç§»åŠ¨è§’è‰²é€»è¾‘
     public void MoveObject()
     {
-        //»ñÈ¡ËÄ¸öÃæµÄÎ»ÖÃ£¬¼´ÉÏÏÂ×óÓÒ
-        //ºËĞÄË¼Â·£ºÇ°Ì½1¸ñ£¬ÅĞ¶ÏÊÇ·ñÓĞÂ·
-        Vector3 currentPosition = transform.position;//µ±Ç°ÎïÌåÎ»ÖÃ
-        Vector3 upPosition = currentPosition + new Vector3(0, 1, 0); //ÉÏ·½Î»ÖÃ
-        Vector3 downPosition = currentPosition + new Vector3(0, -1, 0); //ÏÂ·½Î»ÖÃ
-        Vector3 leftPosition = currentPosition + new Vector3(-1, 0, 0); //×ó·½Î»ÖÃ
-        Vector3 rightPosition = currentPosition + new Vector3(1, 0, 0); //ÓÒ·½Î»ÖÃ
+        //è·å–å››ä¸ªé¢çš„ä½ç½®ï¼Œå³ä¸Šä¸‹å·¦å³
+        //æ ¸å¿ƒæ€è·¯ï¼šå‰æ¢1æ ¼ï¼Œåˆ¤æ–­æ˜¯å¦æœ‰è·¯
+        Vector3 currentPosition = transform.position;//å½“å‰ç‰©ä½“ä½ç½®
+        Vector3 upPosition = currentPosition + new Vector3(0, 1, 0); //ä¸Šæ–¹ä½ç½®
+        Vector3 downPosition = currentPosition + new Vector3(0, -1, 0); //ä¸‹æ–¹ä½ç½®
+        Vector3 leftPosition = currentPosition + new Vector3(-1, 0, 0); //å·¦æ–¹ä½ç½®
+        Vector3 rightPosition = currentPosition + new Vector3(1, 0, 0); //å³æ–¹ä½ç½®
         if (IsPositionOnTile(upPosition) && direction != arrow.UP)
         {
-            body.velocity = new Vector2(0, GetSpeed()); //ÏòÉÏÒÆ¶¯
+            body.velocity = new Vector2(0, GetSpeed()); //å‘ä¸Šç§»åŠ¨
             direction = arrow.DOWN;
         }
         else if (IsPositionOnTile(downPosition) && direction != arrow.DOWN)
         {
-            body.velocity = new Vector2(0, -GetSpeed()); //ÏòÏÂÒÆ¶¯
+            body.velocity = new Vector2(0, -GetSpeed()); //å‘ä¸‹ç§»åŠ¨
             direction = arrow.UP;
         }
         else if (IsPositionOnTile(leftPosition) && direction != arrow.LEFT)
         {
-            body.velocity = new Vector2(-GetSpeed(), 0); //Ïò×óÒÆ¶¯
+            body.velocity = new Vector2(-GetSpeed(), 0); //å‘å·¦ç§»åŠ¨
             direction = arrow.RIGHT;
         }
         else if (IsPositionOnTile(rightPosition) && direction != arrow.RIGHT)
         {
-            body.velocity = new Vector2(GetSpeed(), 0); //ÏòÓÒÒÆ¶¯
+            body.velocity = new Vector2(GetSpeed(), 0); //å‘å³ç§»åŠ¨
             direction = arrow.LEFT;
         }
         else
         {
-            //Èç¹ûËÄ¸ö·½Ïò¶¼Ã»ÓĞÂ·£¬Ôò²»ÒÆ¶¯
+            //å¦‚æœå››ä¸ªæ–¹å‘éƒ½æ²¡æœ‰è·¯ï¼Œåˆ™ä¸ç§»åŠ¨
             body.velocity = Vector2.zero;
         }
     }
 
-    //ÅĞ¶ÏÊÇ·ñ¿ÉÒÔÒÆ¶¯µ½Ö¸¶¨Î»ÖÃ
+    //åˆ¤æ–­æ˜¯å¦å¯ä»¥ç§»åŠ¨åˆ°æŒ‡å®šä½ç½®
     bool IsPositionOnTile(Vector3 worldPosition)
     {
-        //½«ÊÀ½ç×ø±ê×ª»»ÎªÍø¸ñ×ø±ê
+        //å°†ä¸–ç•Œåæ ‡è½¬æ¢ä¸ºç½‘æ ¼åæ ‡
         Vector3Int cellPosition = roadTilemap.WorldToCell(worldPosition);
-        //¼ì²é¸ÃÍø¸ñÎ»ÖÃÊÇ·ñÓĞÍßÆ¬
+        //æ£€æŸ¥è¯¥ç½‘æ ¼ä½ç½®æ˜¯å¦æœ‰ç“¦ç‰‡
         return roadTilemap.HasTile(cellPosition);
     }
 
-    /*³õÊ¼»¯ÓÃ·½·¨Çø*/
-    //µ÷Õû
+    /*åˆå§‹åŒ–ç”¨æ–¹æ³•åŒº*/
+    //è°ƒæ•´
     public void Adjust()
     {
-        //µ÷ÕûµÄµãÒª°üº¬ÍâÃæÄÇÒ»È¦£¡£¡
+        //è°ƒæ•´çš„ç‚¹è¦åŒ…å«å¤–é¢é‚£ä¸€åœˆï¼ï¼
 
-        //ËùÓĞµãµÄ¹«Ê½
+        //æ‰€æœ‰ç‚¹çš„å…¬å¼
         float widthStart = -8.5f;
         float widthEnd = 8.5f;
         float heightStart = -4.5f;
         float heightEnd = 5.5f;
-        //µ÷ÕûÎïÌåµÄÎ»ÖÃ
+        //è°ƒæ•´ç‰©ä½“çš„ä½ç½®
         for (float x = widthStart; x <= widthEnd; x += 1.0f)
         {
             for (float y = heightStart; y <= heightEnd; y += 1.0f)

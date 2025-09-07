@@ -1,60 +1,61 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class BranchSelect : MonoBehaviour
 {
-    [Header("Á½¸ö·ÖÖ§")]
+    [Header("ä¸¤ä¸ªåˆ†æ”¯")]
     public GameObject branch_1;
     public GameObject branch_2;
 
-    //ÓëTowerSelectÀàËÆ
+    //ä¸TowerSelectç±»ä¼¼
     void PlaceTower(GameObject tower)
     {
-        //ÕÒÊÛ¼Û
+        //æ‰¾å”®ä»·
         int price = GlobalElementPowerFunction.towerSale[tower];
         if (!GlobalElementPowerFunction.CanMinus(price))
         {
-            //Êä³ö¡°ÔªËØÁ¦ÊıÁ¿²»¹»¡±µÄ×ÖÑù
+            //è¾“å‡ºâ€œå…ƒç´ åŠ›æ•°é‡ä¸å¤Ÿâ€çš„å­—æ ·
             return;
         }
         GlobalElementPowerFunction.MinusCount(price);
 
-        //³õÊ¼»¯ÓÎÏ·¶ÔÏó
+        //åˆå§‹åŒ–æ¸¸æˆå¯¹è±¡
         GameObject newTower = Instantiate(tower, transform.parent.position, Quaternion.identity);
         Transform originalHole = transform.parent.gameObject.GetComponent<Tower>().hole;
-        // --------------------Õâ¸öºóÃæ¼ÇµÃ¸Ä³ÉTower£¬¶ş¼¶ËşµÄ»ùÀà--------------------
-        newTower.GetComponent<Tower>().SetHole(originalHole); //ÉèÖÃ¶ÔÓ¦µÄ¿Ó
+        // --------------------è¿™ä¸ªåé¢è®°å¾—æ”¹æˆTowerï¼ŒäºŒçº§å¡”çš„åŸºç±»--------------------
+        newTower.GetComponent<Tower>().SetHole(originalHole); //è®¾ç½®å¯¹åº”çš„å‘
 
         GlobalData.towers.Add(newTower.GetComponent<Tower>());
 
-        //ÕÒµ½×ÓÎïÌå£¬È»ºóÏÈ½ûÓÃËü
+        //æ‰¾åˆ°å­ç‰©ä½“ï¼Œç„¶åå…ˆç¦ç”¨å®ƒ
         Transform child = transform.Find("TwoOptionsCanva");
         child.gameObject.SetActive(false);
-        //Ïú»ÙÇ°ÖØÖÃ»æÖÆ
+        //é”€æ¯å‰é‡ç½®ç»˜åˆ¶
         MouseClickTower mouseClickTower = GetComponent<MouseClickTower>();
         if (mouseClickTower.tower != null)
         {
             mouseClickTower.tower.EraseAttackArea();
         }
-        //È»ºóÔÚ½ûÓÃ±¾Ìå
+        //ç„¶ååœ¨ç¦ç”¨æœ¬ä½“
         if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<Tower>()))
         {
             GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<Tower>());
         }
         transform.parent.gameObject.SetActive(false);
 
-        Destroy(transform.parent.gameObject); //Ïú»Ù
+        GlobalData.towers.Remove(transform.parent.gameObject.GetComponent<Tower>());
+        Destroy(transform.parent.gameObject); //é”€æ¯
     }
 
-    //Ñ¡Ôñ·ÖÖ§1
+    //é€‰æ‹©åˆ†æ”¯1
     public void Branch1Select()
     {
         PlaceTower(branch_1);
     }
 
-    //Ñ¡Ôñ·ÖÖ§2
+    //é€‰æ‹©åˆ†æ”¯2
     public void Branch2Select()
     {
         PlaceTower(branch_2);

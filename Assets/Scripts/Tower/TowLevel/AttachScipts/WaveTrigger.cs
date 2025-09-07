@@ -1,17 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class WaveTrigger : MonoBehaviour
 {
-    //ÀË´¥·¢Æ÷£¬ÓÃÀ´¼ì²âµĞÈËÀ´Ê±µÄ·½Ïò
+    //æµªè§¦å‘å™¨ï¼Œç”¨æ¥æ£€æµ‹æ•Œäººæ¥æ—¶çš„æ–¹å‘
 
-    //Á¬½ÓÀËËş
+    //è¿æ¥æµªå¡”
     LangTower langTower;
 
-    //Î¬»¤Ò»¸öVector3
-    [HideInInspector]
+    //ç»´æŠ¤ä¸€ä¸ªVector3
+    //[HideInInspector]
     public Vector3 point;
+
+    //ç»´æŠ¤è‡ªå·±æ‰€åœ¨è·¯é¢
+    //[HideInInspector]
+    public Tilemap road;
 
     public void SetTower(LangTower l)
     {
@@ -24,13 +29,13 @@ public class WaveTrigger : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
 
-            //¿´µĞÈËÁĞ±íÊÇ·ñÎª¿Õ
+            //çœ‹æ•Œäººåˆ—è¡¨æ˜¯å¦ä¸ºç©º
             if (langTower.enemies.Count == 0)
             {
-                //Èç¹ûÎª¿Õ£¬ÉèÖÃfirstPoint
+                //å¦‚æœä¸ºç©ºï¼Œè®¾ç½®firstPoint
                 //langTower.firstPoint = point;
-                //ÖØĞÂÅÅĞòpointsÁĞ±í£¬±£Ö¤Ë³ĞòÕıÈ·
-                langTower.ResortPoint(point);
+                //é‡æ–°æ’åºpointsåˆ—è¡¨ï¼Œä¿è¯é¡ºåºæ­£ç¡®
+                langTower.ResortPoint(point, road);
 
             }
 
@@ -60,7 +65,7 @@ public class WaveTrigger : MonoBehaviour
         {
             Enemy enemy = collision.GetComponent<Enemy>();
 
-            //´ÓÁĞ±íÖĞÒÆ³ıµĞÈË
+            //ä»åˆ—è¡¨ä¸­ç§»é™¤æ•Œäºº
             if (langTower.enemies.Contains(enemy))
             {
                 langTower.enemies.Remove(enemy);

@@ -7,9 +7,6 @@ public class ZuanTower : Tower
 {
     // * 钻头塔 *
 
-    //旋转偏移角度
-    float rotationOffset = 180f;
-
     [Header("造成伤害")]
     [Range(0, 100)] public float damage = 30f;
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Reflection;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
@@ -47,8 +48,10 @@ public class LangTower : Tower
     [HideInInspector]
     public List<Enemy> enemies = new List<Enemy>();
 
-    //浪塔范围内的所有点
-    List<Vector3> points = new List<Vector3>();
+    //浪塔范围内的所有点（按TileMap区分）
+    Dictionary<Tilemap, List<Vector3>> Tilemap_Points = new Dictionary<Tilemap, List<Vector3>>();
+
+    //List<Vector3> points = new List<Vector3>();
 
     //敌人来袭的点
     //[HideInInspector]
@@ -57,14 +60,19 @@ public class LangTower : Tower
     private void Start()
     {
         //初始化路面列表
-        points = GetAllPointInGrid();
+        Tilemap_Points = GetAllPointInGrid();
         //生成浪触发器
-        foreach (Vector3 point in points)
+        foreach(Tilemap t in Tilemap_Points.Keys)
         {
-            GameObject waveTrigger = Instantiate(waveTriggerPrefab, point, Quaternion.identity);
-            waveTrigger.GetComponent<WaveTrigger>().SetTower(this);
-            waveTrigger.GetComponent<WaveTrigger>().point = point;
-            waveTrigger.transform.parent = transform; //将触发器设为浪塔的子物体，方便管理
+            //在每个地图组中的点组
+            foreach (Vector3 point in Tilemap_Points[t])
+            {
+                GameObject waveTrigger = Instantiate(waveTriggerPrefab, point, Quaternion.identity);
+                waveTrigger.GetComponent<WaveTrigger>().SetTower(this);
+                waveTrigger.GetComponent<WaveTrigger>().point = point;
+                waveTrigger.GetComponent<WaveTrigger>().road = t;
+                waveTrigger.transform.parent = transform; //将触发器设为浪塔的子物体，方便管理
+            }
         }
     }
 
@@ -118,7 +126,7 @@ public class LangTower : Tower
         //}
 
         //生成浪
-        StartCoroutine(SpawnWave());
+        SpawnWave();
 
         //推
         PushEnemies();
@@ -148,24 +156,49 @@ public class LangTower : Tower
         move.ResetSpeed();
         move.ChangeSpeed(slowFactor);
 
-        yield return new WaitForSeconds(backTime);
+        float timer = 0f;
+        while (timer < backTime) {
+
+            if (move.isStopMove)
+            {
+                move.isStopMove = false;
+                move.ResetSpeed();
+                move.isStopMove = true;
+
+                yield break;
+            }
+        
+            yield return null;
+            timer += Time.deltaTime;
+        } 
 
         move.ResetSpeed();
     }
 
     //生成浪（协程）actionTime的时间从point[Count-1]到point[0]
-    public IEnumerator SpawnWave()
+    public void SpawnWave()
+    {
+        foreach (Tilemap t in Tilemap_Points.Keys)
+        {
+
+            StartCoroutine(SpawnOneWave(t));
+
+        }
+    }
+
+    public IEnumerator SpawnOneWave(Tilemap t)
     {
         //先把预制件放出了
+        List<Vector3> points = Tilemap_Points[t];
         GameObject wave = Instantiate(wavePrefab, points[points.Count - 1], Quaternion.identity);
 
         //points的数量代表point-1的线段，每个线段的用时为actionTime / point - 1
         float partTime = actionTime / (points.Count - 1);
         int index = points.Count - 1;
-        while(index > 0)
+        while (index > 0)
         {
             float timer = 0;
-            while(timer < partTime)
+            while (timer < partTime)
             {
                 wave.transform.position = Vector3.Lerp(points[index], points[index - 1], timer / partTime);
 
@@ -180,7 +213,7 @@ public class LangTower : Tower
 
     //确保从0到length-1的顺序就是浪的移动顺序
     //firstPoint是敌人来袭的第一个点，是浪的终点（所以浪生成要反着来）
-    public void ResortPoint(Vector3 firstPoint)
+    public void ResortPoint(Vector3 firstPoint, Tilemap t)
     {
         List<Vector3> newPoints = new List<Vector3>();
 
@@ -189,9 +222,9 @@ public class LangTower : Tower
         newPoints.Add(firstPoint);
 
         //在到达数量前，往里面加
-        while (newPoints.Count < points.Count)
+        while (newPoints.Count < Tilemap_Points[t].Count)
         {
-            foreach (Vector3 point in points)
+            foreach (Vector3 point in Tilemap_Points[t])
             {
                 if (newPoints.Contains(point))
                 {
@@ -225,7 +258,7 @@ public class LangTower : Tower
             }
         }
         //更新顺序
-        points = newPoints;
+        Tilemap_Points[t] = newPoints;
     }
 
     //刷新敌人列表
@@ -250,9 +283,9 @@ public class LangTower : Tower
     }
 
     //获得所有在路面上的点
-    public List<Vector3> GetAllPointInGrid()
+    public Dictionary<Tilemap, List<Vector3>> GetAllPointInGrid()
     {
-        List<Vector3> points = new List<Vector3>();
+        Dictionary<Tilemap, List<Vector3>> points = new Dictionary<Tilemap, List<Vector3>>();
 
         //塔本身的位置
         float x = transform.position.x;
@@ -280,9 +313,18 @@ public class LangTower : Tower
                     foreach (Tilemap tilemap in GlobalData.globalRoads)
                     {
                         //如果在路面上
-                        if (tilemap.HasTile(tilemap.WorldToCell(point)) && !points.Contains(point))
+                        if (tilemap.HasTile(tilemap.WorldToCell(point)))
                         {
-                            points.Add(point);
+                            //确保有这个路面的键
+                            if (!points.ContainsKey(tilemap))
+                            {
+                                points[tilemap] = new List<Vector3>();
+                            }
+                            //然后再加
+                            if (!points[tilemap].Contains(point))
+                            {
+                                points[tilemap].Add(point);
+                            }
                         }
                     }
                 }

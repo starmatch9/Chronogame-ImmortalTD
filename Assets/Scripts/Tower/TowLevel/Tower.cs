@@ -140,6 +140,11 @@ public abstract class Tower : MonoBehaviour
         hole.gameObject.SetActive(true);
         hole.GetComponent<MouseClick>().MouseReset();
 
+        if (GlobalData.towers.Contains(this))
+        {
+            GlobalData.towers.Remove(this);
+        }
+
         //xiaohui
         Destroy(gameObject);
     }

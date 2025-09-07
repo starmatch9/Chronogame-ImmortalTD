@@ -326,11 +326,11 @@ MonoBehaviour:
   length: 3
   bulletPref: {fileID: 8398063658739505127, guid: 57654c8581739c2448307f71d5e45bb2, type: 3}
   waveTriggerPrefab: {fileID: 3889674977943464796, guid: c4b572686f82cbb419932ddcb3cae9ef, type: 3}
-  waveDuration: 0
+  waveDuration: 3
   wavePrefab: {fileID: 2763498896469773122, guid: 07124efd733751c4e83d2e6d86e8c175, type: 3}
-  waveAttack: 15
+  waveAttack: 0
   backSpeed: 1
-  backTime: 0.4
+  backTime: 1
   enemies: []
 --- !u!1 &9186323152650669390
 GameObject:

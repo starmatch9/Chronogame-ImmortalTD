@@ -90,7 +90,7 @@ public abstract class Enemy : MonoBehaviour
     public void GameObjectReset()
     {
         GetComponent<Move>().survivalTime = 0f; //重置存活时间
-        GetComponent<Move>().ResetSpeed(); //重置速度因子为1
+        GetComponent<Move>().SetSpeedFactor(1f); ; //重置速度因子为1
         health = maxHealth; //重置血量
         healthBar.SetHealth(health / maxHealth); //更新血条显示
 

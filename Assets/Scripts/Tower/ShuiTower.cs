@@ -56,7 +56,6 @@ public class ShuiTower : Tower
 
         Move move = enemy.gameObject.GetComponent<Move>();
         //减速
-        move.ResetSpeed();
         move.ChangeSpeed(slowFactor);
 
         yield return new WaitForSeconds(slowTime);

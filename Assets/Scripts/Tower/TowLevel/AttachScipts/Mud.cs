@@ -35,8 +35,6 @@ public class Mud : MonoBehaviour
             Move move = collision.GetComponent<Move>();
             if (move != null)
             {
-                //防止重复减速，先重置速度
-                move.ResetSpeed();
                 move.ChangeSpeed(slowFactor);
 
             }
@@ -59,7 +57,6 @@ public class Mud : MonoBehaviour
             //如果恢复了原速，继续减速
             if(move.GetSpeed() == move.speed)
             {
-                move.ResetSpeed();
                 move.ChangeSpeed(slowFactor);
             }
         }

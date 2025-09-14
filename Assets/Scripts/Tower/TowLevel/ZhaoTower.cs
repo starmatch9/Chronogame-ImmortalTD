@@ -165,12 +165,12 @@ public class ZhaoTower : Tower
         Gizmos.DrawLine(bottomRight, topRight);
     }
 
-    //绘制索敌范围
-    public override void DrawAttackArea()
-    {
-        attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);
+    ////绘制索敌范围
+    //public override void DrawAttackArea()
+    //{
+    //    attackObject = Instantiate(GlobalTowerFunction.SquareArea, transform.position, Quaternion.identity);
 
-        attackObject.transform.localScale = Vector3.one * length;
-    }
+    //    attackObject.transform.localScale = Vector3.one * length;
+    //}
 
 }

@@ -144,16 +144,24 @@ public class LangTower : Tower
             //敌人接受伤害
             enemy.AcceptAttack(waveAttack);
 
-            StartCoroutine(EnemyBack(enemy));
+            Move move = enemy.gameObject.GetComponent<Move>();
+            if (!move.isStopMove)
+            {
+                StartCoroutine(EnemyBack(enemy));
+            }
         }
     }
 
     IEnumerator EnemyBack(Enemy enemy) {
+
+        //及时止损
+        Move move = enemy.gameObject.GetComponent<Move>();
+        if (move.isStopMove)
+        {
+            yield break;
+        }
         //减速因子
         float slowFactor = -backSpeed;
-
-        Move move = enemy.gameObject.GetComponent<Move>();
-        move.ResetSpeed();
         move.ChangeSpeed(slowFactor);
 
         float timer = 0f;
@@ -161,11 +169,14 @@ public class LangTower : Tower
 
             if (move.isStopMove)
             {
-                move.isStopMove = false;
-                move.ResetSpeed();
-                move.isStopMove = true;
-
+                move.SetSpeedFactor(1f);
                 yield break;
+            }
+
+            //推的过程中发现推出路面了
+            if (move.noBackRoad())
+            {
+                move.ChangeSpeed(0f);
             }
         
             yield return null;
@@ -180,7 +191,10 @@ public class LangTower : Tower
     {
         foreach (Tilemap t in Tilemap_Points.Keys)
         {
-
+            if (BeIncluded(t))
+            {
+                continue;
+            }
             StartCoroutine(SpawnOneWave(t));
 
         }
@@ -354,6 +368,40 @@ public class LangTower : Tower
         Gizmos.DrawLine(bottomRight, topRight);
 
         base.OnDrawGizmos();
+    }
+
+    public bool BeIncluded(Tilemap currentTilemap)
+    {
+        foreach (Tilemap t in Tilemap_Points.Keys)
+        {
+            //跳过一样的
+            if (t != currentTilemap)
+            {
+                //防止修改，采用复制
+                List<Vector3> pointsA = new List<Vector3>(Tilemap_Points[currentTilemap]);
+                List<Vector3> pointsB = new List<Vector3>(Tilemap_Points[t]);
+
+                List<Vector3> pointsHave = new List<Vector3>();
+                foreach (Vector3 pA in pointsA)
+                {
+                    //如果每个点都存在，那就被包含了
+                    foreach(Vector3 pB in pointsB)
+                    {
+                        if(pA == pB)
+                        {
+                            pointsHave.Add(pA);
+                            break;
+                        }
+
+                    }
+                }
+                if(pointsA.Count == pointsHave.Count)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 

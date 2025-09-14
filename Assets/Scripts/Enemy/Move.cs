@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Overlays;
 using UnityEngine;
@@ -36,27 +37,45 @@ public class Move : MonoBehaviour
     //减速或加速移动(参数为百分比)
     public void ChangeSpeed(float factor)
     {
-        isStopMove = true;
+        if (isStopMove)
+        {
+            return;
+        }
+
         SetSpeedFactor(factor);
-        body.velocity = body.velocity * speedFactor;
-        isStopMove = false;
+        Re_Move();
     }
     //重置速度（撤销速度因子的影响）
     public void ResetSpeed()
     {
-        isStopMove = true;
-        if (GetSpeed() != speed)
-        {
-            body.velocity = body.velocity / speedFactor; //撤销速度因子的影响
-        }
         SetSpeedFactor(1f); //重置速度因子为1
+        Re_Move();
+    }
 
-        isStopMove = false;
+    void Re_Move()
+    {
+        //按照行驶的方向重新移动
+        if (direction == arrow.UP)
+        {
+            body.velocity = new Vector2(0, -GetSpeed()); //向下移动
+        }
+        else if (direction == arrow.DOWN)
+        {
+            body.velocity = new Vector2(0, GetSpeed()); //向上移动
+        }
+        else if (direction == arrow.LEFT)
+        {
+            body.velocity = new Vector2(GetSpeed(), 0); //向右移动
+        }
+        else if (direction == arrow.RIGHT)
+        {
+            body.velocity = new Vector2(-GetSpeed(), 0); //向左移动
+        }
     }
 
     float speedFactor = 1f; //速度因子，默认为1
 
-    void SetSpeedFactor(float factor)
+    public void SetSpeedFactor(float factor)
     {
         speedFactor = factor;
     }
@@ -81,6 +100,11 @@ public class Move : MonoBehaviour
     {
         body.velocity = currentVelocity;
         currentVelocity = Vector2.zero; //清空当前速度
+
+        //继续移动时,重新计算移动方向
+        SetSpeedFactor(1f);
+        Re_Move();
+
         isStopMove = false;
     }
 
@@ -226,5 +250,47 @@ public class Move : MonoBehaviour
                 }
             }
         }
+    }
+
+
+    //没有退路了
+    public bool noBackRoad()
+    {
+        //从上面来的就检测上方位置，以此类推
+        if (direction == arrow.UP)
+        {
+            Vector3 explorePosition = transform.position + new Vector3(0, 0.5f, 0);
+            if (!IsPositionOnTile(explorePosition))
+            {
+                return true;
+            }
+        }
+        else if (direction == arrow.DOWN)
+        {
+            Vector3 explorePosition = transform.position + new Vector3(0, -0.5f, 0); 
+            if (!IsPositionOnTile(explorePosition))
+            {
+                return true;
+            }
+        }
+        else if (direction == arrow.LEFT)
+        {
+            Vector3 explorePosition = transform.position + new Vector3(-0.5f, 0, 0);
+            if (!IsPositionOnTile(explorePosition))
+            {
+                return true;
+            }
+        }
+        else if (direction == arrow.RIGHT)
+        {
+            Vector3 explorePosition = transform.position + new Vector3(0.5f, 0, 0);
+            if (!IsPositionOnTile(explorePosition))
+            {
+                return true;
+            }
+        }
+
+
+        return false;
     }
 }

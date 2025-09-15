@@ -8,16 +8,12 @@
 
 public abstract class Enemy : MonoBehaviour
 {
-    EnemySpawn enemySpawn; //敌人生成器
+    EnemySpawn enemySpawn = null; //敌人生成器
 
     HealthBar healthBar; //血条
 
     [Header("血量")]
     public float maxHealth = 100f; //最大血量
-
-    //移动速度
-    [Header("移动速度")]
-    public float speed = 2f;
 
     [Header("受伤害倍率（用于增伤减伤）")]
     float hurtRate = 1f;  //收到伤害的倍率，用来增伤
@@ -86,17 +82,17 @@ public abstract class Enemy : MonoBehaviour
     //传入攻击属性和元素属性
     public void AcceptAttack(float attack, GlobalData.AttackAttribute attackAttribute, GlobalData.ElementAttribute elementAttribute)
     {
-        //敌人处于此状态时，无法受到伤害（无敌状态）
-        if (unbeatable)
-        {
-            return;
-        }
-
         //受到伤害前可能进行的行为
         ActionBeforeAttack();
 
         //根据元素属性条用特殊机制
         ElementFunction(elementAttribute);
+
+        //敌人处于此状态时，无法受到伤害（无敌状态），行为机制不受影响
+        if (unbeatable)
+        {
+            return;
+        }
 
         //根据魔法或物理属性计算伤害
         float value = 0;
@@ -135,8 +131,25 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
-    //一些由子类衍生出的需要重置的条目
+    //一些由子类衍生出的需要重置的条目,也是敌人死亡时的动作
     public virtual void OtherReset()
+    {
+
+    }
+
+    //一些由子类衍生出的生成时需要执行的其他行为
+    public virtual void OtherSpawn()
+    {
+
+    }
+
+    //游戏暂停时需要停止的行为
+    public virtual void StopAction() 
+    { 
+    
+    }
+    //游戏继续时需要停止的行为
+    public virtual void ContinueAction()
     {
 
     }
@@ -152,6 +165,8 @@ public abstract class Enemy : MonoBehaviour
     public void GameObjectSpawn()
     {
         isDead = false;
+
+        OtherSpawn();
     }
 
     //重置敌人状态（在对象池中用的到）
@@ -167,11 +182,13 @@ public abstract class Enemy : MonoBehaviour
         {
             Freeze.enemyHitCount.Remove(this); //移除敌人冻结状态
         }
+        //重置状态时，进行对象回收
+        if(enemySpawn != null)
+        {
+            enemySpawn.ReturnEnemy(gameObject);
+        }
 
         OtherReset();
-
-        //重置状态时，进行对象回收
-        enemySpawn.ReturnEnemy(gameObject);
     }
 
     //获取血量值

@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -6,62 +6,62 @@ using static GlobalData;
 
 public class EnemySpawn : MonoBehaviour
 {
-    float timer = 0f; //¼ÆÊ±Æ÷
+    float timer = 0f; //è®¡æ—¶å™¨
 
-    int spawnedEnemyCount = 0; //ÒÑÉú³ÉµÄµĞÈËÊıÁ¿
+    int spawnedEnemyCount = 0; //å·²ç”Ÿæˆçš„æ•Œäººæ•°é‡
 
-    public GameObject enemyPrefab; //µĞÈËÔ¤ÖÆÌå
+    public GameObject enemyPrefab; //æ•Œäººé¢„åˆ¶ä½“
 
-    public int enemyNumber = 20; //×î´óµĞÈËÊıÁ¿
+    public int enemyNumber = 20; //æœ€å¤§æ•Œäººæ•°é‡
 
-    int poolSize = 10;   //¶ÔÏó³ØµÄÈİÁ¿
+    int poolSize = 10;   //å¯¹è±¡æ± çš„å®¹é‡
 
     public Tilemap roadTilemap;
 
-    private Queue<GameObject> enemyPool; //µĞÈË¶ÔÏó³Ø
+    private Queue<GameObject> enemyPool; //æ•Œäººå¯¹è±¡æ± 
 
-    [Range(0f, 5f)]public float spawnInterval = 1f; //Éú³É¼ä¸ôÊ±¼ä
+    [Range(0f, 5f)]public float spawnInterval = 1f; //ç”Ÿæˆé—´éš”æ—¶é—´
 
     bool isSpawning = false;
 
     void Start()
     {
-        // ³õÊ¼»¯¶ÔÏó
+        // åˆå§‹åŒ–å¯¹è±¡
         enemyPool = new Queue<GameObject>();
         for (int i = 0; i < poolSize; i++)
         {
             GameObject enemy = Instantiate(enemyPrefab);
             Enemy enemyScript = enemy.GetComponent<Enemy>();
 
-            //ÕâÒ»²½ºÜÖØÒª
-            enemy.GetComponent<Move>().roadTilemap = roadTilemap; //ÉèÖÃÂ·¾¶
-            enemy.SetActive(false); //³õÊ¼Ê±²»¼¤»î
-            enemyScript.SetEnemySpawn(this); //ÉèÖÃÉú³ÉÆ÷
-            //ÒÀ´Î¼ÓÈë¶ÔÓ¦ÊıÁ¿µÄµĞÈË
+            //è¿™ä¸€æ­¥å¾ˆé‡è¦
+            enemy.GetComponent<Move>().roadTilemap = roadTilemap; //è®¾ç½®è·¯å¾„
+            enemy.SetActive(false); //åˆå§‹æ—¶ä¸æ¿€æ´»
+            enemyScript.SetEnemySpawn(this); //è®¾ç½®ç”Ÿæˆå™¨
+            //ä¾æ¬¡åŠ å…¥å¯¹åº”æ•°é‡çš„æ•Œäºº
             enemyPool.Enqueue(enemy);
         }
     }
 
-    //¿ª¹Ø
+    //å¼€å…³
     public void Switch()
     {
         isSpawning = true;
     }
 
 
-    //ÕâÖÖ¼ÆÊ±·½·¨¿ÉÒÔºóĞø¸Ä½ø
+    //è¿™ç§è®¡æ—¶æ–¹æ³•å¯ä»¥åç»­æ”¹è¿›
     void Update()
     {
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
-        //    //×¢Òâ£º´Ë²¼¶û±äÁ¿¼´µĞÈËÉú³ÉµÄ¿ª¹Ø
+        //    //æ³¨æ„ï¼šæ­¤å¸ƒå°”å˜é‡å³æ•Œäººç”Ÿæˆçš„å¼€å…³
         //    isSpawning = true;
         //}
 
         if (isSpawning)
         {
             timer += Time.deltaTime;
-            //Ä¿Ç°Ã¿ÃëÉú³ÉÒ»¸öµĞÈË
+            //ç›®å‰æ¯ç§’ç”Ÿæˆä¸€ä¸ªæ•Œäºº
             if (timer <= spawnInterval) 
             {
                 return;
@@ -73,65 +73,66 @@ public class EnemySpawn : MonoBehaviour
             }
             else
             {
-                //ÖØÖÃ×´Ì¬
+                //é‡ç½®çŠ¶æ€
                 isSpawning = false;
                 spawnedEnemyCount = 0;
             }
-            timer = 0f; //ÖØÖÃ¼ÆÊ±Æ÷
+            timer = 0f; //é‡ç½®è®¡æ—¶å™¨
         }
     }
-    //»ñÈ¡¶ÔÏó
+    //è·å–å¯¹è±¡
     public GameObject GetEnemy()
     {
         if(enemyPool.Count <= 0)
         {
-            /*Ä¿Ç°Ã¿´ÎÀ©Èİ5¸ö*/
+            /*ç›®å‰æ¯æ¬¡æ‰©å®¹5ä¸ª*/
             ExpandPool(5);
         }
-        //È¡µĞÈË
+        //å–æ•Œäºº
         return enemyPool.Dequeue();
     }
 
-    //¶ÔÏó³ØÀ©Èİ
+    //å¯¹è±¡æ± æ‰©å®¹
     void ExpandPool(int additionalSize)
     {
         for (int i = 0; i < additionalSize; i++)
         {
-            //ÒªºÍ³õÊ¼»¯Ê±Ò»Ä£Ò»Ñù
+            //è¦å’Œåˆå§‹åŒ–æ—¶ä¸€æ¨¡ä¸€æ ·
             GameObject enemy = Instantiate(enemyPrefab);
             Enemy enemyScript = enemy.GetComponent<Enemy>();
-            enemy.GetComponent<Move>().roadTilemap = roadTilemap; //ÉèÖÃÂ·¾¶
-            enemy.SetActive(false); //³õÊ¼Ê±²»¼¤»î
-            enemyScript.SetEnemySpawn(this); //ÉèÖÃÉú³ÉÆ÷
+            enemy.GetComponent<Move>().roadTilemap = roadTilemap; //è®¾ç½®è·¯å¾„
+            enemy.SetActive(false); //åˆå§‹æ—¶ä¸æ¿€æ´»
+            enemyScript.SetEnemySpawn(this); //è®¾ç½®ç”Ÿæˆå™¨
             enemyPool.Enqueue(enemy);
         }
     }
 
-    //»ØÊÕ¶ÔÏó
+    //å›æ”¶å¯¹è±¡
     public void ReturnEnemy(GameObject enemy)
     {
-        enemy.SetActive(false); //½ûÓÃµĞÈË
-        enemyPool.Enqueue(enemy); //ÖØĞÂ¼ÓÈë¶ÓÁĞ
+        enemy.SetActive(false); //ç¦ç”¨æ•Œäºº
+        enemyPool.Enqueue(enemy); //é‡æ–°åŠ å…¥é˜Ÿåˆ—
     }
 
-    //Éú³ÉµĞÈË£¬Í¬Ê±ÊÇÊ¹ÓÃ¶ÔÏó³ØµÄÉÏÏÂÎÄ
+    //ç”Ÿæˆæ•Œäººï¼ŒåŒæ—¶æ˜¯ä½¿ç”¨å¯¹è±¡æ± çš„ä¸Šä¸‹æ–‡
     void SpawnEnemy()
     {
-        //´Ó¶ÔÏó³Ø»ñÈ¡Ò»¸öµĞÈË
+        //ä»å¯¹è±¡æ± è·å–ä¸€ä¸ªæ•Œäºº
         GameObject oneEnemy = GetEnemy(); 
-        //ÉèÖÃÉú³ÉÎ»ÖÃ
+        //è®¾ç½®ç”Ÿæˆä½ç½®
         oneEnemy.transform.position = transform.position; 
-        //¼¤»îµĞÈË
+        //æ¿€æ´»æ•Œäºº
         oneEnemy.SetActive(true);
-        //¼¤»îµÄÍ¬Ê±µ÷ÓÃÏë¹ı·½·¨
+        //æ¿€æ´»çš„åŒæ—¶è°ƒç”¨æƒ³è¿‡æ–¹æ³•
         oneEnemy.GetComponent<Enemy>().GameObjectSpawn();
 
         Enemy enemyScript = oneEnemy.GetComponent<Enemy>();
 
         if (!globalEnemies.Contains(enemyScript))
         {
-            //Ìí¼Óµ½È«¾ÖµĞÈËÁĞ±í
+            //æ·»åŠ åˆ°å…¨å±€æ•Œäººåˆ—è¡¨
             globalEnemies.Add(enemyScript);
         }
+
     }
 }

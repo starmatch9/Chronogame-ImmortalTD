@@ -10,20 +10,25 @@ using UnityEngine.UIElements;
 public class Move : MonoBehaviour
 {
     //移动方向枚举
-    enum arrow
+    public enum arrow
     {
         UP, DOWN, LEFT, RIGHT, NONE
     }
 
+    [Header("移动速度")]
     [Range(0, 20)]public float speed = 2f; //移动速度
 
     //记录当前来的方向，注意！！！！是来的方向！！！当角色转向时不可以向来的方向移动
-    arrow direction = arrow.NONE;
+    //[HideInInspector]
+    public arrow direction = arrow.NONE;
 
     bool isMoving = false; //是否正在移动
 
+    [HideInInspector]
     public Tilemap roadTilemap;
 
+    //虽然变量名说是时间，实际上是时间乘以速度，即路程，改名很麻烦（
+    [HideInInspector]
     public float survivalTime = 0f;
 
     [HideInInspector]
@@ -52,7 +57,7 @@ public class Move : MonoBehaviour
         Re_Move();
     }
 
-    void Re_Move()
+    public void Re_Move()
     {
         //按照行驶的方向重新移动
         if (direction == arrow.UP)
@@ -143,7 +148,7 @@ public class Move : MonoBehaviour
         else
         {
             //时间的增加需要考虑速度因子
-            survivalTime += Time.deltaTime * speedFactor; //增加存活时间
+            survivalTime += Time.deltaTime * speed * speedFactor; //增加存活时间
 
             //按照行驶的方向检测有路没有
             if (direction == arrow.UP)

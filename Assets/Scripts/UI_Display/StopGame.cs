@@ -1,14 +1,14 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class StopGame : MonoBehaviour
 {
-    //Õ¦ÍßÂ³¶à£¡£¡£¡£¡£¡£¡
+    //å’‹ç“¦é²å¤šï¼ï¼ï¼ï¼ï¼ï¼
     public void TheWorld()
     {
-        //ËùÓĞÉú³ÉÆ÷Í£Ö¹Éú³É£¡£¡
+        //æ‰€æœ‰ç”Ÿæˆå™¨åœæ­¢ç”Ÿæˆï¼ï¼
         if(GlobalEnemyGroupFunction.item != null)
         {
             foreach(EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
@@ -17,7 +17,7 @@ public class StopGame : MonoBehaviour
             }
         }
 
-        //ËùÓĞµĞÈËÍ£Ö¹ÒÆ¶¯£¡£¡£¡
+        //æ‰€æœ‰æ•Œäººåœæ­¢ç§»åŠ¨ï¼ï¼ï¼
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
             if (enemy.NoMoreShotsNeeded())
@@ -27,14 +27,24 @@ public class StopGame : MonoBehaviour
             Move move = enemy.gameObject.GetComponent<Move>();
             move.StopMove();
         }
-        
-        //ËùÓĞ»ù´¡ËşÔİÍ££¡£¡£¡
-        foreach(Tower towerInitial in GlobalData.towersInitial)
+
+        //æ‰€æœ‰æ•Œäººåœæ­¢è¡Œä¸ºï¼ï¼ï¼
+        foreach (Enemy enemy in GlobalData.globalEnemies)
+        {
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            enemy.StopAction();
+        }
+
+        //æ‰€æœ‰åŸºç¡€å¡”æš‚åœï¼ï¼ï¼
+        foreach (Tower towerInitial in GlobalData.towersInitial)
         {
             towerInitial.enabled = false;
         }
 
-        //ËùÓĞ¶ş¼¶ËşÔİÍ££¡£¡£¡
+        //æ‰€æœ‰äºŒçº§å¡”æš‚åœï¼ï¼ï¼
         foreach(Tower tower in GlobalData.towers)
         {
             tower.enabled = false;
@@ -43,7 +53,7 @@ public class StopGame : MonoBehaviour
     
     public void BackGame()
     {
-        //ËùÓĞÉú³ÉÆ÷Æô¶¯£¡£¡
+        //æ‰€æœ‰ç”Ÿæˆå™¨å¯åŠ¨ï¼ï¼
         if (GlobalEnemyGroupFunction.item != null)
         {
             foreach (EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
@@ -54,7 +64,7 @@ public class StopGame : MonoBehaviour
             //GlobalEnemyGroupFunction.item.enemySpawn.enabled = true;
         }
 
-        //ËùÓĞµĞÈËj¼ÌĞøÒÆ¶¯£¡£¡£¡
+        //æ‰€æœ‰æ•Œäººjç»§ç»­ç§»åŠ¨ï¼ï¼ï¼
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
             if (enemy.NoMoreShotsNeeded())
@@ -65,13 +75,23 @@ public class StopGame : MonoBehaviour
             move.ContinueMove();
         }
 
-        //ËùÓĞ»ù´¡ËşÆô¶¯£¡£¡£¡
+        //æ‰€æœ‰æ•Œäººç»§ç»­è¡Œä¸ºï¼ï¼ï¼
+        foreach (Enemy enemy in GlobalData.globalEnemies)
+        {
+            if (enemy.NoMoreShotsNeeded())
+            {
+                continue;
+            }
+            enemy.ContinueAction();
+        }
+
+        //æ‰€æœ‰åŸºç¡€å¡”å¯åŠ¨ï¼ï¼ï¼
         foreach (Tower towerInitial in GlobalData.towersInitial)
         {
             towerInitial.enabled = true;
         }
 
-        //ËùÓĞ¶ş¼¶ËşÆô¶¯£¡£¡£¡
+        //æ‰€æœ‰äºŒçº§å¡”å¯åŠ¨ï¼ï¼ï¼
         foreach (Tower tower in GlobalData.towers)
         {
             tower.enabled = true;
@@ -79,11 +99,11 @@ public class StopGame : MonoBehaviour
     }
 
     //
-    //ÖØÒª£º³¡¾°·¢Éú±ä»¯Ê±£¬¾²Ì¬±äÁ¿²»ÊÜÓ°Ïì£¬ËùÒÔÃ¿´ÎĞèÒªÖØÖÃ£¡£¡£¡£¡£¡£¡²»¹ÜÊÇÏÂÒ»¹Ø»¹ÊÇÖØĞÂ¼ÓÔØÊ²Ã´µÄ£¡£¡£¡
+    //é‡è¦ï¼šåœºæ™¯å‘ç”Ÿå˜åŒ–æ—¶ï¼Œé™æ€å˜é‡ä¸å—å½±å“ï¼Œæ‰€ä»¥æ¯æ¬¡éœ€è¦é‡ç½®ï¼ï¼ï¼ï¼ï¼ï¼ä¸ç®¡æ˜¯ä¸‹ä¸€å…³è¿˜æ˜¯é‡æ–°åŠ è½½ä»€ä¹ˆçš„ï¼ï¼ï¼
     //
     public void ReStartGame()
     {
-        //ÖØÖÃËùÓĞ¾²Ì¬±äÁ¿
+        //é‡ç½®æ‰€æœ‰é™æ€å˜é‡
         GlobalData.ResetAllData();
         GlobalElementPowerFunction.ResetAllData();
         GlobalEnemyGroupFunction.ResetAllData();
@@ -92,7 +112,7 @@ public class StopGame : MonoBehaviour
         SceneManager.LoadScene(currentSceneIndex);
     }
 
-    //ÕâÀïÊÇ·µ»Ø±êÌâ£¬ÕâÀïÏÈÍË³ö
+    //è¿™é‡Œæ˜¯è¿”å›æ ‡é¢˜ï¼Œè¿™é‡Œå…ˆé€€å‡º
     public void BackToTitle()
     {
         Application.Quit();

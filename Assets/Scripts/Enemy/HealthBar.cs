@@ -1,17 +1,18 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HealthBar : MonoBehaviour
 {
+    [Header("è¡€æ¡ç»„ä»¶")]
     public Image fillImage;
 
     public void SetHealth(float healthPercentage)
     {
-        //´Ë·½·¨½«Öµ¿ØÖÆÔÚ0µ½1Ö®¼ä£¬¶Å¾ø¸ºÖµºÍ³¬¹ı1µÄÇé¿ö
+        //æ­¤æ–¹æ³•å°†å€¼æ§åˆ¶åœ¨0åˆ°1ä¹‹é—´ï¼Œæœç»è´Ÿå€¼å’Œè¶…è¿‡1çš„æƒ…å†µ
         healthPercentage = Mathf.Clamp01(healthPercentage);
-        //ÉèÖÃÌî³äÍ¼ÏñµÄÌî³äÁ¿
+        //è®¾ç½®å¡«å……å›¾åƒçš„å¡«å……é‡
         fillImage.fillAmount = healthPercentage;
     }
 

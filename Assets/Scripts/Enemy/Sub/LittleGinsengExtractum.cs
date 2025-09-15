@@ -17,6 +17,7 @@ public class LittleGinsengExtractum : Enemy
         {
             GlobalData.globalEnemies.Remove(this);
         }
+
         Destroy(gameObject);
     }
 

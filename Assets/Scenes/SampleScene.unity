@@ -6187,7 +6187,7 @@ PrefabInstance:
     - target: {fileID: 358675734319646389, guid: 11243f7dc75b88a42b0cd36e9655c62c, type: 3}
       propertyPath: enemyPrefab
       value: 
-      objectReference: {fileID: 4289027272426072319, guid: 42418f58c1d02ef4b9ee11fe6c85cba7, type: 3}
+      objectReference: {fileID: 6323495022340598947, guid: e78c37ed1b3e13e42a624c4522f42879, type: 3}
     - target: {fileID: 358675734319646389, guid: 11243f7dc75b88a42b0cd36e9655c62c, type: 3}
       propertyPath: roadTilemap
       value: 
@@ -7206,7 +7206,7 @@ PrefabInstance:
     - target: {fileID: 358675734319646389, guid: 11243f7dc75b88a42b0cd36e9655c62c, type: 3}
       propertyPath: enemyPrefab
       value: 
-      objectReference: {fileID: 4289027272426072319, guid: 42418f58c1d02ef4b9ee11fe6c85cba7, type: 3}
+      objectReference: {fileID: 6323495022340598947, guid: e78c37ed1b3e13e42a624c4522f42879, type: 3}
     - target: {fileID: 358675734319646389, guid: 11243f7dc75b88a42b0cd36e9655c62c, type: 3}
       propertyPath: roadTilemap
       value: 

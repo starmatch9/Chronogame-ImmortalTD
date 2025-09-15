@@ -34,6 +34,7 @@ public class PaoBullet : Bullet
         StopMove();
 
         Explode(); //爆炸
+
         yield return StartCoroutine(Dash());
 
         yield return base.DieAction(); //调用基类的死亡逻辑
@@ -61,21 +62,26 @@ public class PaoBullet : Bullet
 
     void Explode()
     {
-        foreach (Enemy enemy in GlobalData.globalEnemies)
+        //复制一份
+        List<Enemy> temp = new List<Enemy>(GlobalData.globalEnemies);
+        foreach (Enemy enemy in temp)
         {
-            //跳过不需要攻击的敌人(一定不能忘了这段)
-            if (enemy.NoMoreShotsNeeded())
-            {
-                continue;
-            }
+            if (enemy != null) {
+                //跳过不需要攻击的敌人(一定不能忘了这段)
+                if (enemy.NoMoreShotsNeeded())
+                {
+                    continue;
+                }
 
-            //计算与每个敌人的距离
-            float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            //如果在爆炸范围内
-            if (distance <= explosionRange)
-            {
-                //对敌人造成伤害
-                enemy.AcceptAttack(explosionAttack, PattackAttribute, PelementAttribute);
+                //计算与每个敌人的距离
+                float distance = Vector3.Distance(transform.position, enemy.transform.position);
+                //如果在爆炸范围内
+                if (distance <= explosionRange)
+                {
+                    //对敌人造成伤害
+                    enemy.AcceptAttack(explosionAttack, PattackAttribute, PelementAttribute);
+                }
+
             }
         }
     }

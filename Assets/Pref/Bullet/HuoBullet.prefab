@@ -167,12 +167,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  penetrate: 0
   baseAttack: 5
   moveSpeed: 5
+  attackAttribute: 0
+  elementAttribute: 3
   explosionAttack: 5
   explosionRange: 1.15
   bulletRenderer: {fileID: 2074054901169582920}
   dash: {fileID: 7036875721465653985}
+  PattackAttribute: 0
+  PelementAttribute: 3
 --- !u!1 &7956450464194165699
 GameObject:
   m_ObjectHideFlags: 0

@@ -49,7 +49,10 @@ public class ShuiTower : Tower
 
     public void startSlow(Enemy enemy)
     {
-        StartCoroutine(slowEnemy(enemy));
+        if(enemy != null)
+        {
+            StartCoroutine(slowEnemy(enemy));
+        }
     }
 
     IEnumerator slowEnemy(Enemy enemy) {
@@ -58,7 +61,19 @@ public class ShuiTower : Tower
         //减速
         move.ChangeSpeed(slowFactor);
 
-        yield return new WaitForSeconds(slowTime);
+        float timer = 0;
+        while (timer < slowTime) {
+
+            if(enemy == null)
+            {
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(slowTime);
 
         //重置速度
         move.ResetSpeed();

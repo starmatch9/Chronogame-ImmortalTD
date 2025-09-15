@@ -1,73 +1,81 @@
-using System.Collections.Generic;
+ï»¿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class GlobalData
 {
-    //µĞÈËÁĞ±í
+    //æ•Œäººåˆ—è¡¨
     public static List<Enemy> globalEnemies = new List<Enemy>();
 
-    //ËşÁĞ±í
+    //å¡”åˆ—è¡¨
     public static List<Tower> towers = new List<Tower>();
 
-    //»ù´¡ËşÁĞ±í
+    //åŸºç¡€å¡”åˆ—è¡¨
     public static List<Tower> towersInitial = new List<Tower>();
 
-    //Â·¾¶ÁĞ±í
+    //è·¯å¾„åˆ—è¡¨
     public static List<Tilemap> globalRoads = new List<Tilemap>();
 
-    //ËşÔ¤ÖÆ¼şÁĞ±í
+    //å¡”é¢„åˆ¶ä»¶åˆ—è¡¨
     public static List<GameObject> globalTowerPrefabs = new List<GameObject>();
 
-    //´ïµ½ÖÕµãµÄµĞÈËÊıÁ¿
+    //è¾¾åˆ°ç»ˆç‚¹çš„æ•Œäººæ•°é‡
     public static int FinalEnemyNumber = 0;
 
-    //ÓÎÏ·Ê§°ÜÊ±£¬µ½´ïÖÕµãµÄµĞÈËÊıÁ¿
+    //æ¸¸æˆå¤±è´¥æ—¶ï¼Œåˆ°è¾¾ç»ˆç‚¹çš„æ•Œäººæ•°é‡
     public static int maxNumber = 5;
 
-    //Ã¶¾Ù±¾Éí¼´Îª¾²Ì¬ÀàĞÍ
-    //ÔÚºóĞø¿ª·¢ÖĞ£¬µĞÈËµÄ½ÓÊÜ¹¥»÷º¯Êı£¬´«Èë´Ë¹¥»÷ÊôĞÔ×÷Îª²ÎÊı£¬´ïµ½¿¹ĞÔĞ§¹û
-    public enum AttackAttribute
+    //æšä¸¾æœ¬èº«å³ä¸ºé™æ€ç±»å‹
+    //åœ¨åç»­å¼€å‘ä¸­ï¼Œæ•Œäººçš„æ¥å—æ”»å‡»å‡½æ•°ï¼Œä¼ å…¥æ­¤æ”»å‡»å±æ€§ä½œä¸ºå‚æ•°ï¼Œè¾¾åˆ°æŠ—æ€§æ•ˆæœ
+    
+    //äº”å¤§å…ƒç´ å±æ€§
+    public enum ElementAttribute
     {
-        JIN, MU, SHUI, HUO, TU
+        JIN, MU, SHUI, HUO, TU, NONE
     }
 
-    //×î´óÊıÁ¿ÊÇmaxNumber£¬³¬¹ıÕâ¸öÊıÓÎÏ·½áÊø
+    //é­”æ³•æ”»å‡»ï¼Œç‰©ç†æ”»å‡»ï¼ŒçœŸä¼¤ï¼ˆNoneï¼‰
+    public enum AttackAttribute
+    {
+        Magic, Physics, None
+    }
+
+    //æœ€å¤§æ•°é‡æ˜¯maxNumberï¼Œè¶…è¿‡è¿™ä¸ªæ•°æ¸¸æˆç»“æŸ
     public static void CheckFinalEnemy()
     {
         if( FinalEnemyNumber < maxNumber)
         {
             return;
         }
-        //Ğû¸æÓÎÏ·½áÊø
+        //å®£å‘Šæ¸¸æˆç»“æŸ
         //
         //
-        Debug.Log("ÄãÊ§°ÜÁË");
+        Debug.Log("ä½ å¤±è´¥äº†");
 
     }
 
-    //ÖØÖÃËùÓĞ¾²Ì¬±äÁ¿
+    //é‡ç½®æ‰€æœ‰é™æ€å˜é‡
     public static void ResetAllData()
     {
-        //µĞÈËÁĞ±í
+        //æ•Œäººåˆ—è¡¨
         globalEnemies = new List<Enemy>();
 
-        //ËşÁĞ±í
+        //å¡”åˆ—è¡¨
         towers = new List<Tower>();
 
-        //»ù´¡ËşÁĞ±í
+        //åŸºç¡€å¡”åˆ—è¡¨
         towersInitial = new List<Tower>();
 
-        //Â·¾¶ÁĞ±í
+        //è·¯å¾„åˆ—è¡¨
         globalRoads = new List<Tilemap>();
 
-        //ËşÔ¤ÖÆ¼şÁĞ±í
+        //å¡”é¢„åˆ¶ä»¶åˆ—è¡¨
         globalTowerPrefabs = new List<GameObject>();
 
-        //´ïµ½ÖÕµãµÄµĞÈËÊıÁ¿
+        //è¾¾åˆ°ç»ˆç‚¹çš„æ•Œäººæ•°é‡
         FinalEnemyNumber = 0;
 
-        //ÓÎÏ·Ê§°ÜÊ±£¬µ½´ïÖÕµãµÄµĞÈËÊıÁ¿
+        //æ¸¸æˆå¤±è´¥æ—¶ï¼Œåˆ°è¾¾ç»ˆç‚¹çš„æ•Œäººæ•°é‡
         maxNumber = 5;
     }
 }

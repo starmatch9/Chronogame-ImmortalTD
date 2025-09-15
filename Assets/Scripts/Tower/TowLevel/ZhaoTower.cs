@@ -32,6 +32,12 @@ public class ZhaoTower : Tower
     [Header("伤害")]
     [Range(0f, 50f)] public float mudAttack = 20f;
 
+    [Header("沼泽的攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("沼泽的元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
     public override void TowerAction() {
 
         //刷新后进行攻击方法
@@ -96,7 +102,7 @@ public class ZhaoTower : Tower
             {
                 continue;
             }
-            enemy.AcceptAttack(mudAttack);
+            enemy.AcceptAttack(mudAttack, attackAttribute, elementAttribute);
         }
     }
 

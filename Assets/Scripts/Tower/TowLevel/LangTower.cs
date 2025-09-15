@@ -43,6 +43,12 @@ public class LangTower : Tower
     [Header("回退时间")]
     [Range(0, 2f)] public float backTime = 0.4f;
 
+    [Header("浪的攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("浪的元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
     //维护所有进入浪塔范围的敌人列表
     //敌人列表不为空时，不能修改firstPoint。敌人列表为空时，可以修改firstPoint。
     [HideInInspector]
@@ -142,7 +148,7 @@ public class LangTower : Tower
         foreach (Enemy enemy in enemiesCopy)
         {
             //敌人接受伤害
-            enemy.AcceptAttack(waveAttack);
+            enemy.AcceptAttack(waveAttack, attackAttribute, elementAttribute);
 
             Move move = enemy.gameObject.GetComponent<Move>();
             if (!move.isStopMove)

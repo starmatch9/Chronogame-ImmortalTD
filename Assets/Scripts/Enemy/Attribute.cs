@@ -1,14 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//¾Íµ±×÷ÊÇÒ»¸öµĞÈËÀàµÄÄ£°å
-//ËäÈ»Ò»¿ªÊ¼ÓÃÁËÊôĞÔÕâ¸öµ¥´Ê£¬Êµ¼ÊÉÏÓÃ¡°ÆÕÍ¨µĞÈË¡±±È½ÏºÏÊÊ
+//å°±å½“ä½œæ˜¯ä¸€ä¸ªæ•Œäººç±»çš„æ¨¡æ¿
+//è™½ç„¶ä¸€å¼€å§‹ç”¨äº†å±æ€§è¿™ä¸ªå•è¯ï¼Œå®é™…ä¸Šç”¨â€œæ™®é€šæ•Œäººâ€æ¯”è¾ƒåˆé€‚
 public class Attribute : Enemy
 {
-    public override float GetAttack(Bullet bullet)
-    {
-        return bullet.GetBaseAttack();
-    }
 
 }

@@ -1,45 +1,51 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PaoBullet : Bullet
 {
-    [Header("±¬Õ¨³å»÷²¨ÉËº¦")]
+    [Header("çˆ†ç‚¸å†²å‡»æ³¢ä¼¤å®³")]
     [Range(0f, 100f)] public float explosionAttack = 30f;
 
-    [Header("±¬Õ¨°ë¾¶")]
+    [Header("çˆ†ç‚¸åŠå¾„")]
     [Range(0f, 10f)] public float explosionRange = 2f;
 
-    [Header("×Óµ¯±¾ÌåÌùÍ¼")]
+    [Header("å­å¼¹æœ¬ä½“è´´å›¾")]
     public Renderer bulletRenderer;
 
-    [Header("³å»÷²¨ÌùÍ¼¶ÔÏó")]
+    [Header("å†²å‡»æ³¢è´´å›¾å¯¹è±¡")]
     public Transform dash;
+
+    [Header("çˆ†ç‚¸çš„æ”»å‡»å±æ€§")]
+    public GlobalData.AttackAttribute PattackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("çˆ†ç‚¸çš„å…ƒç´ å±æ€§")]
+    public GlobalData.ElementAttribute PelementAttribute = GlobalData.ElementAttribute.NONE;
 
     public override IEnumerator DieAction()
     {
-        //ÌùÍ¼½ûÓÃ
+        //è´´å›¾ç¦ç”¨
         bulletRenderer.enabled = false;
 
-        //Åö×²Æ÷½ûÓÃ
+        //ç¢°æ’å™¨ç¦ç”¨
         GetComponent<Collider2D>().enabled = false;
 
-        //Í£Ö¹ÒÆ¶¯
+        //åœæ­¢ç§»åŠ¨
         StopMove();
 
-        Explode(); //±¬Õ¨
+        Explode(); //çˆ†ç‚¸
         yield return StartCoroutine(Dash());
 
-        yield return base.DieAction(); //µ÷ÓÃ»ùÀàµÄËÀÍöÂß¼­
+        yield return base.DieAction(); //è°ƒç”¨åŸºç±»çš„æ­»äº¡é€»è¾‘
     }
 
     IEnumerator Dash()
     {
-        //0.25ÃëÄÚ½«dashËõ·ÅÎª±¬Õ¨°ë¾¶µÄ´óĞ¡
+        //0.25ç§’å†…å°†dashç¼©æ”¾ä¸ºçˆ†ç‚¸åŠå¾„çš„å¤§å°
         float timer = 0f;
-        Vector3 targetScale = Vector3.one * explosionRange * explosionRange;//Ó¦¸ÃÊÇÆ½·½£¬ĞèÒª²âÊÔ
+        Vector3 targetScale = Vector3.one * explosionRange * explosionRange;//åº”è¯¥æ˜¯å¹³æ–¹ï¼Œéœ€è¦æµ‹è¯•
 
-        //Ê±³¤
+        //æ—¶é•¿
         float timeLength = 0.2f;
 
         while (timer < timeLength)
@@ -49,7 +55,7 @@ public class PaoBullet : Bullet
             yield return null;
         }
 
-        yield return new WaitForSeconds(0.1f); //µÈ´ı0.1Ãë£¬Ä£Äâ±¬Õ¨ÑÓ³Ù
+        yield return new WaitForSeconds(0.1f); //ç­‰å¾…0.1ç§’ï¼Œæ¨¡æ‹Ÿçˆ†ç‚¸å»¶è¿Ÿ
     }
 
 
@@ -57,19 +63,19 @@ public class PaoBullet : Bullet
     {
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
-            //Ìø¹ı²»ĞèÒª¹¥»÷µÄµĞÈË(Ò»¶¨²»ÄÜÍüÁËÕâ¶Î)
+            //è·³è¿‡ä¸éœ€è¦æ”»å‡»çš„æ•Œäºº(ä¸€å®šä¸èƒ½å¿˜äº†è¿™æ®µ)
             if (enemy.NoMoreShotsNeeded())
             {
                 continue;
             }
 
-            //¼ÆËãÓëÃ¿¸öµĞÈËµÄ¾àÀë
+            //è®¡ç®—ä¸æ¯ä¸ªæ•Œäººçš„è·ç¦»
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            //Èç¹ûÔÚ±¬Õ¨·¶Î§ÄÚ
+            //å¦‚æœåœ¨çˆ†ç‚¸èŒƒå›´å†…
             if (distance <= explosionRange)
             {
-                //¶ÔµĞÈËÔì³ÉÉËº¦
-                enemy.AcceptAttack(explosionAttack);
+                //å¯¹æ•Œäººé€ æˆä¼¤å®³
+                enemy.AcceptAttack(explosionAttack, PattackAttribute, PelementAttribute);
             }
         }
     }
@@ -78,9 +84,9 @@ public class PaoBullet : Bullet
 
     void OnDrawGizmos()
     {
-        // ÉèÖÃGizmoÑÕÉ«
+        // è®¾ç½®Gizmoé¢œè‰²
         Gizmos.color = Color.red;
-        // »æÖÆÎŞÌî³äÔ²È¦
+        // ç»˜åˆ¶æ— å¡«å……åœ†åœˆ
         Gizmos.DrawWireSphere(transform.position, explosionRange);
     }
 }

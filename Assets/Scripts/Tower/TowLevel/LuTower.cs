@@ -96,7 +96,7 @@ public class LuTower : Tower
         yield return new WaitForSeconds(0.2f);
 
         //敌人收到极大伤害
-        enemy.GetComponent<Enemy>().AcceptAttack(99999f);
+        enemy.GetComponent<Enemy>().AcceptAttack(999999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
 
         //激活图标
         icon.SetActive(true);

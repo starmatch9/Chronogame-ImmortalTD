@@ -30,6 +30,12 @@ public class RongTower : Tower
     [Header("熔岩烫脚伤害")]
     [Range(0, 100f)] public float lavaAttack = 0.75f;
 
+    [Header("熔岩的攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("熔岩的元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
 
     //管理所有踩在熔岩上的敌人
     [HideInInspector]
@@ -59,7 +65,7 @@ public class RongTower : Tower
             {
                 continue;
             }
-            enemy.AcceptAttack(lavaAttack);
+            enemy.AcceptAttack(lavaAttack, attackAttribute, elementAttribute);
         }
     }
 

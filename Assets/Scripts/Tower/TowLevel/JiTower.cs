@@ -35,6 +35,12 @@ public class JiTower : Tower
     [Header("最多缠绕几个敌人")]
     [Range(0, 20)] public int maxNumber = 4;
 
+    [Header("荆棘的攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("荆棘的元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
     //维护一个荆棘生命周期中需要攻击的敌人列表
     List<Enemy> enemies = new List<Enemy>();
 
@@ -125,7 +131,7 @@ public class JiTower : Tower
                 //跳过不需要攻击的敌人
                 if (!target.NoMoreShotsNeeded())
                 {
-                    target.AcceptAttack(thornsAttackDamage);
+                    target.AcceptAttack(thornsAttackDamage, attackAttribute, elementAttribute);
                 }
                 smallTimer = 0f; //重置小计时器
             }

@@ -10,6 +10,12 @@ public class Wall : MonoBehaviour
     //每次生成一堵墙，所以可以在脚本里维护挡住的敌人列表
     List<Enemy> blockedEnemies = new List<Enemy>();
 
+    [HideInInspector]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [HideInInspector]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
     public void SetMaxEnemy(int m)
     {
         maxEnemy = m;
@@ -47,7 +53,7 @@ public class Wall : MonoBehaviour
             {
                 continue;
             }
-            enemy.AcceptAttack(damage);
+            enemy.AcceptAttack(damage, attackAttribute, elementAttribute);
         }
     }
 

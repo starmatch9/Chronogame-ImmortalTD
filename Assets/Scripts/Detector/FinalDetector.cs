@@ -1,38 +1,38 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ÖÕµãÌ½²âÆ÷
+//ç»ˆç‚¹æ¢æµ‹å™¨
 public class FinalDetector : MonoBehaviour
 {
 
 
-    //µĞÈË½øÈë£¬¾ÍÈÃÈ«¾Öµ½´ïÖÕµãµÄµĞÈËµĞÈË¼ÓÒ»
+    //æ•Œäººè¿›å…¥ï¼Œå°±è®©å…¨å±€åˆ°è¾¾ç»ˆç‚¹çš„æ•Œäººæ•ŒäººåŠ ä¸€
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            //´ÍËÀ
-            enemy.AcceptAttack(99999f);
+            //èµæ­»
+            enemy.AcceptAttack(999999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
             CheckNumber();
         }
     }
 
 
-    //----------------------×¢Òâ£º
+    //----------------------æ³¨æ„ï¼š
     //
-    //ÕâÀïÉèÖÃµÄÈ«¾Ö×î´óÊıÁ¿Îª5£¬ºóĞøÕâ¸ö±äÁ¿·ÅÔÚÓÎÏ·È«¾Ö¹ÜÀíÆ÷ÖĞ¿ØÖÆ
+    //è¿™é‡Œè®¾ç½®çš„å…¨å±€æœ€å¤§æ•°é‡ä¸º5ï¼Œåç»­è¿™ä¸ªå˜é‡æ”¾åœ¨æ¸¸æˆå…¨å±€ç®¡ç†å™¨ä¸­æ§åˆ¶
     //
     //
 
-    //¼ì²âµ½µ½´ïÖÕµãµÄµĞÈËÊıÁ¿
+    //æ£€æµ‹åˆ°åˆ°è¾¾ç»ˆç‚¹çš„æ•Œäººæ•°é‡
     public void CheckNumber()
     {
-        //ÊıÁ¿¼ÓÒÔ
+        //æ•°é‡åŠ ä»¥
         ++GlobalData.FinalEnemyNumber;
 
-        //¼ì²âÊÇ·ñÊ§°Ü
+        //æ£€æµ‹æ˜¯å¦å¤±è´¥
         GlobalData.CheckFinalEnemy();
     }
 }

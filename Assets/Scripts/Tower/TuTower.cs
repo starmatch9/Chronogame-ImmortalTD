@@ -18,6 +18,13 @@ public class TuTower : Tower
     [Header("墙的预制件")]  //墙的预制件要在y轴向下偏移0.2
     public GameObject wallPrefab;
 
+    [Header("墙倒塌的攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("墙倒塌的元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
+
     private void Start()
     {
         TowerAction(); //在开始时执行一次塔的行为
@@ -38,6 +45,8 @@ public class TuTower : Tower
 
         //开始墙的生命周期
         Wall w = wall.GetComponent<Wall>();
+        w.elementAttribute = elementAttribute;
+        w.attackAttribute = attackAttribute;
         //最大阻挡数量
         w.SetMaxEnemy(maxNumber);
         StartCoroutine(w.WallLife(wallDuration, wallDamage));

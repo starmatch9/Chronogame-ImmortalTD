@@ -12,35 +12,49 @@ public abstract class Enemy : MonoBehaviour
 
     HealthBar healthBar; //血条
 
-    float maxHealth = 100f; //最大血量
-
-    bool isDead = false; //是否死亡
-
-    float defense = 0;  //防御系数，为0即没有防御系数
-
-    //血量值
-    public float health = 100;
+    [Header("血量")]
+    public float maxHealth = 100f; //最大血量
 
     //移动速度
+    [Header("移动速度")]
     public float speed = 2f;
+
+    [Header("受伤害倍率（用于增伤减伤）")]
+    float hurtRate = 1f;  //收到伤害的倍率，用来增伤
+
+    [Header("元素属性")]  //默认为无属性
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
+    [Header("物理防御值")]
+    public float physicsDefense = 0f;
+
+    [Header("魔法防御值")]
+    public float magicDefense = 0f;
+
+    [Header("是否无敌")]
+    public bool unbeatable = false;
+
+    //血量值，用于计算与显示的值
+    float health = 100f;
+
+    bool isDead = false; //是否死亡
 
     private void Awake()
     {
         //获取血条组件
         healthBar = GetComponentInChildren<HealthBar>();
+        health = maxHealth;
     }
 
-    float currentDefense;
-    //设置防御系数
-    public void SetDefense(float defenseFactor)
+    //设置伤害倍率
+    public void SetHurtRate(float defenseFactor)
     {
-        currentDefense = defense;
-        defense = defenseFactor;
+        hurtRate = defenseFactor;
     }
-    //重置防御系数
-    public void ResetDefense()
+    //重置伤害倍率
+    public void ResetHurtRate()
     {
-        defense = currentDefense;
+        hurtRate = 1f;
     }
 
     /*注意：这里检测的是子弹！！！*/
@@ -54,7 +68,7 @@ public abstract class Enemy : MonoBehaviour
             Bullet bullet = collision.GetComponent<Bullet>();
 
             //测试
-            AcceptAttack(GetAttack(bullet));
+            AcceptAttack(GetAttack(bullet), bullet.attackAttribute, bullet.elementAttribute);
 
             //销毁子弹前调用“死”
             //包括死前的逻辑以及销毁本身
@@ -63,21 +77,75 @@ public abstract class Enemy : MonoBehaviour
         }
     }
 
-    //注意：获取子弹的攻击力（子类必须实现）！！！！！其必须传入子弹脚本作为参数！！虽然现在没有写
-    //
-    //这个只用于实现不同敌人对不同子弹的抗性！！注意，只是子弹！！
-    //
-    //子类中，方法的逻辑可能随着敌人抗性、子弹类型等不同而不同！！！！！
-    public abstract float GetAttack(Bullet bullet);
-
-    //
-    //重要：承受攻击！！！！可能需要子类重写！！！！让MinusHealth方法不对外暴露！！！
-    //
-    //用此方法区分与子弹的统一管理，这个方法用于连接其他类，造成荆棘等特殊伤害
-    //
-    public virtual void AcceptAttack(float attack)
+    public float GetAttack(Bullet bullet)
     {
-        MinusHealth(attack);
+        return bullet.GetBaseAttack();
+    }
+
+    //重要：承受攻击！！！！可能需要子类重写！！！！让MinusHealth方法不对外暴露！！！
+    //传入攻击属性和元素属性
+    public void AcceptAttack(float attack, GlobalData.AttackAttribute attackAttribute, GlobalData.ElementAttribute elementAttribute)
+    {
+        //敌人处于此状态时，无法受到伤害（无敌状态）
+        if (unbeatable)
+        {
+            return;
+        }
+
+        //受到伤害前可能进行的行为
+        ActionBeforeAttack();
+
+        //根据元素属性条用特殊机制
+        ElementFunction(elementAttribute);
+
+        //根据魔法或物理属性计算伤害
+        float value = 0;
+        if(attackAttribute == GlobalData.AttackAttribute.Magic)
+        {
+            //魔攻
+            value = attack - magicDefense;
+        }
+        else if (attackAttribute == GlobalData.AttackAttribute.Physics)
+        {
+            //物攻
+            value = attack - physicsDefense;
+        }
+        else
+        {
+            //真伤
+            value = attack;
+        }
+        //在属性伤害计算完成后乘以倍率（目前只有冰冻子弹用到了）
+        value *= hurtRate;
+       
+        MinusHealth(value);
+    }
+
+    /*下面是几个可能需要重写的函数*/
+
+    //受到伤害前进行的行为
+    public virtual void ActionBeforeAttack()
+    {
+
+    }
+
+    //实现元素机制的行为
+    public virtual void ElementFunction(GlobalData.ElementAttribute elementAttribute)
+    {
+
+    }
+
+    //一些由子类衍生出的需要重置的条目
+    public virtual void OtherReset()
+    {
+
+    }
+
+    //判断的依据可以在子类中重写
+    //是否不再需要攻击
+    public virtual bool NoMoreShotsNeeded()
+    {
+        return isDead; //如果血量小于等于0，则不再需要攻击
     }
 
     //游戏对象生成时需要调整的功能
@@ -100,6 +168,8 @@ public abstract class Enemy : MonoBehaviour
             Freeze.enemyHitCount.Remove(this); //移除敌人冻结状态
         }
 
+        OtherReset();
+
         //重置状态时，进行对象回收
         enemySpawn.ReturnEnemy(gameObject);
     }
@@ -111,7 +181,7 @@ public abstract class Enemy : MonoBehaviour
 
     //扣除血量值
     void MinusHealth(float attack) {
-        health -= attack * (1 - defense);
+        health -= attack;
 
         healthBar.SetHealth(health / maxHealth); //更新血条显示
 
@@ -126,12 +196,6 @@ public abstract class Enemy : MonoBehaviour
             GameObjectReset(); //重置敌人状态
         }
     }
-
-    //判断的依据可以在子类中重写
-    //是否不再需要攻击
-    public virtual bool NoMoreShotsNeeded() {
-        return isDead; //如果血量小于等于0，则不再需要攻击
-    }    
 
     //获取敌人游戏对象（……好像有点多此一举了）
     public GameObject GetGameObject()

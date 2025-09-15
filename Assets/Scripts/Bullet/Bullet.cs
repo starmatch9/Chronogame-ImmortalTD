@@ -19,6 +19,12 @@ public class Bullet : MonoBehaviour
     [Header("移动速度")]
     [Range(0f, 20f)]public float moveSpeed = 5f;
 
+    [Header("子弹攻击属性")]
+    public GlobalData.AttackAttribute attackAttribute = GlobalData.AttackAttribute.None;
+
+    [Header("子弹元素属性")]
+    public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
     protected Vector3 direction = new Vector3(0, 1, 0);
 
     //防止子弹飞出地图后不销毁

@@ -73,14 +73,17 @@ public class BingBullet : Bullet
     {
         enemy.gameObject.GetComponent<Move>().StopMove();
         //加伤
-        enemy.SetDefense(1f - mul);
+        //enemy.SetDefense(1f - mul);
+        enemy.SetHurtRate(mul);
 
         yield return new WaitForSeconds(freezeTime); //等待冻结时间
 
         Destroy(snow);
 
         //时间到，解除冻结
-        enemy.ResetDefense();
+        //enemy.ResetDefense();
+        enemy.ResetHurtRate();
+
         enemy.gameObject.GetComponent<Move>().ContinueMove();
     }
 

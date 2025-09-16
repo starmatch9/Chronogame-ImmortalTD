@@ -1,10 +1,10 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerSelect : MonoBehaviour
 {
-    [Header("Îå´ó»ù´¡Ëş£º½ğ-Ä¾-Ë®-»ğ-ÍÁ")]
+    [Header("äº”å¤§åŸºç¡€å¡”ï¼šé‡‘-æœ¨-æ°´-ç«-åœŸ")]
     public GameObject towerJin;
     public GameObject towerMu;
     public GameObject towerShui;
@@ -13,62 +13,62 @@ public class TowerSelect : MonoBehaviour
 
     private void Awake()
     {
-        //µ÷ÕûÎïÌåÎ»ÖÃ
+        //è°ƒæ•´ç‰©ä½“ä½ç½®
         Adjust();
     }
 
-    //Ò»¸ö¹«ÓÃ·½·¨£¬ÔÚµ±Ç°Î»ÖÃ·ÅÖÃËş
+    //ä¸€ä¸ªå…¬ç”¨æ–¹æ³•ï¼Œåœ¨å½“å‰ä½ç½®æ”¾ç½®å¡”
     void PlaceTower(GameObject tower)
     {
-        //ÕÒÊÛ¼Û
+        //æ‰¾å”®ä»·
         int price = GlobalElementPowerFunction.towerSale[tower];
 
         if (!GlobalElementPowerFunction.CanMinus(price))
         {
-            //Êä³ö¡°ÔªËØÁ¦ÊıÁ¿²»¹»¡±µÄ×ÖÑù
+            //è¾“å‡ºâ€œå…ƒç´ åŠ›æ•°é‡ä¸å¤Ÿâ€çš„å­—æ ·
             return;
         }
         GlobalElementPowerFunction.MinusCount(price);
 
-        //³õÊ¼»¯ÓÎÏ·¶ÔÏó
+        //åˆå§‹åŒ–æ¸¸æˆå¯¹è±¡
         GameObject newTower = Instantiate(tower, transform.position, Quaternion.identity);
-        newTower.GetComponent<Tower>().SetHole(transform); //ÉèÖÃ¶ÔÓ¦µÄ¿Ó
+        newTower.GetComponent<Tower>().SetHole(transform); //è®¾ç½®å¯¹åº”çš„å‘
 
-        //Ìí¼Óµ½»ù´¡ËşÁĞ±í
-        GlobalData.towersInitial.Add(newTower.GetComponent<Tower>());
+        //æ·»åŠ åˆ°åŸºç¡€å¡”åˆ—è¡¨
+        GlobalData.towers.Add(newTower.GetComponent<Tower>());
 
-        //ÕÒµ½×ÓÎïÌå£¬È»ºóÏÈ½ûÓÃËü
+        //æ‰¾åˆ°å­ç‰©ä½“ï¼Œç„¶åå…ˆç¦ç”¨å®ƒ
         Transform child = transform.Find("FiveOptionsCanva");
         child.gameObject.SetActive(false);
-        //È»ºóÔÚ½ûÓÃ¿Ó
+        //ç„¶ååœ¨ç¦ç”¨å‘
         gameObject.SetActive(false);
     }
 
-    //Èç¹ûÑ¡Ôñ½ğËş
+    //å¦‚æœé€‰æ‹©é‡‘å¡”
     public void JinSelect()
     {
         PlaceTower(towerJin);
     }
 
-    //Èç¹ûÑ¡ÔñÄ¾Ëş
+    //å¦‚æœé€‰æ‹©æœ¨å¡”
     public void MuSelect()
     {
         PlaceTower(towerMu);
     }
 
-    //Èç¹ûÑ¡ÔñË®Ëş
+    //å¦‚æœé€‰æ‹©æ°´å¡”
     public void ShuiSelect()
     {
         PlaceTower(towerShui);
     }
     
-    //Èç¹ûÑ¡Ôñ»ğËş
+    //å¦‚æœé€‰æ‹©ç«å¡”
     public void HuoSelect()
     {
         PlaceTower(towerHuo);
     }
 
-    //Èç¹ûÑ¡ÔñÍÁËş
+    //å¦‚æœé€‰æ‹©åœŸå¡”
     public void TuSelect()
     {
         PlaceTower(towerTu);
@@ -77,12 +77,12 @@ public class TowerSelect : MonoBehaviour
 
     public void Adjust()
     {
-        //ËùÓĞµãµÄ¹«Ê½
+        //æ‰€æœ‰ç‚¹çš„å…¬å¼
         float widthStart = -7.5f;
         float widthEnd = 7.5f;
         float heightStart = -3.5f;
         float heightEnd = 4.5f;
-        //µ÷ÕûÎïÌåµÄÎ»ÖÃ
+        //è°ƒæ•´ç‰©ä½“çš„ä½ç½®
         for (float x = widthStart; x <= widthEnd; x += 1.0f)
         {
             for (float y = heightStart; y <= heightEnd; y += 1.0f)

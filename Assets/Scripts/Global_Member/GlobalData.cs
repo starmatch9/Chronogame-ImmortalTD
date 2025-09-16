@@ -11,7 +11,7 @@ public static class GlobalData
     public static List<Tower> towers = new List<Tower>();
 
     //基础塔列表
-    public static List<Tower> towersInitial = new List<Tower>();
+    //public static List<Tower> towersInitial = new List<Tower>();
 
     //路径列表
     public static List<Tilemap> globalRoads = new List<Tilemap>();
@@ -77,7 +77,7 @@ public static class GlobalData
         towers = new List<Tower>();
 
         //基础塔列表
-        towersInitial = new List<Tower>();
+        //towersInitial = new List<Tower>();
 
         //路径列表
         globalRoads = new List<Tilemap>();

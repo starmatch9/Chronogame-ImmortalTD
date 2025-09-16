@@ -38,13 +38,13 @@ public class TowerLevelUp : MonoBehaviour
             mouseClickTower.tower.EraseAttackArea();
         }
         //然后在禁用本体
-        if (GlobalData.towersInitial.Contains(transform.parent.gameObject.GetComponent<Tower>()))
+        if (GlobalData.towers.Contains(transform.parent.gameObject.GetComponent<Tower>()))
         {
-            GlobalData.towersInitial.Remove(transform.parent.gameObject.GetComponent<Tower>());
+            GlobalData.towers.Remove(transform.parent.gameObject.GetComponent<Tower>());
         }
         transform.parent.gameObject.SetActive(false);
 
-        GlobalData.towers.Remove(transform.parent.gameObject.GetComponent<Tower>());
+        //GlobalData.towers.Remove(transform.parent.gameObject.GetComponent<Tower>());
         //销毁
         transform.parent.gameObject.GetComponent<Tower>().TowerDie();
         //Destroy(transform.parent.gameObject); //销毁

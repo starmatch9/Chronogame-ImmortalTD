@@ -24,7 +24,14 @@ public class BingBullet : Bullet
     //子弹死亡前累计冻结
     public override IEnumerator DieAction()
     {
+        if (target== null)
+        {
+            yield return base.DieAction();
+            yield break;
+        }
+
         Enemy targetEnemy = target.GetComponent<Enemy>();
+
         //打击敌人前累计次数
         if (!Freeze.enemyHitCount.ContainsKey(targetEnemy))
         {
@@ -75,6 +82,20 @@ public class BingBullet : Bullet
         //加伤
         //enemy.SetDefense(1f - mul);
         enemy.SetHurtRate(mul);
+
+        float timer = 0;
+        while (timer < freezeTime)
+        {
+
+            if (enemy == null)
+            {
+                Destroy(snow);
+                yield break;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
 
         yield return new WaitForSeconds(freezeTime); //等待冻结时间
 

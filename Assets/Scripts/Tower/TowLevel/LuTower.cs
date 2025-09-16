@@ -82,18 +82,38 @@ public class LuTower : Tower
     {
         //把敌人吸过来
         GameObject enemy = FindClosestToFinishEnemy().gameObject;
+        if (enemy == null)
+        {
+            yield break;
+        }
 
         float absorbDuration = 0.8f;
         float absorbTimer = 0f; //吸收速度
         while (absorbTimer < absorbDuration)
         {
+            if (enemy == null)
+            {
+                yield break;
+            }
+
             enemy.transform.position = Vector2.Lerp(enemy.transform.position, transform.position, absorbTimer / absorbDuration);
 
             absorbTimer += Time.deltaTime;
             yield return null;
         }
         //停顿一下
-        yield return new WaitForSeconds(0.2f);
+        float stopTimer = 0f;
+        while(stopTimer < 0.2f)
+        {
+            if (enemy == null)
+            {
+                yield break;
+            }
+            stopTimer += Time.deltaTime;
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(0.2f);
 
         //敌人收到极大伤害
         enemy.GetComponent<Enemy>().AcceptAttack(999999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);

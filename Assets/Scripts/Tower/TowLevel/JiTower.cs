@@ -126,6 +126,12 @@ public class JiTower : Tower
 
         while (bigTimer < thornsDuration)
         {
+            if(target == null)
+            {
+                Destroy(thorns);
+                yield break;
+            }
+
             if (smallTimer >= thornsAttackInterval)
             {
                 //跳过不需要攻击的敌人

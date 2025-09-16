@@ -147,6 +147,11 @@ public class LangTower : Tower
 
         foreach (Enemy enemy in enemiesCopy)
         {
+            if (enemy == null)
+            {
+                continue;
+            }
+
             //敌人接受伤害
             enemy.AcceptAttack(waveAttack, attackAttribute, elementAttribute);
 
@@ -172,6 +177,11 @@ public class LangTower : Tower
 
         float timer = 0f;
         while (timer < backTime) {
+
+            if (enemy == null)
+            {
+                yield break;
+            }
 
             if (move.isStopMove)
             {
@@ -284,22 +294,49 @@ public class LangTower : Tower
     //刷新敌人列表
     private void UpdateEnemies()
     {
-        foreach (Enemy enemy in enemies)
-        {
-            //移除不需要攻击的敌人
-            if (enemy.NoMoreShotsNeeded())
-            {
+        //避免“遍历时修改数组”的两种解决办法
+        //1、倒叙遍历。因为报错的本质是数组的索引发生了变化
+        //2、复制数组。
 
+        for (int i = enemies.Count - 1; i >= 0; i--)
+        {
+            Enemy enemy = enemies[i];
+
+            // 移除不需要攻击的敌人
+            if (enemy == null || enemy.NoMoreShotsNeeded())
+            {
+                enemies.RemoveAt(i);
+                continue;
             }
+
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
-            //勾股定理
             float range = Mathf.Sqrt(Mathf.Pow(length / 2, 2) + Mathf.Pow(length, 2));
+
             if (distance > range)
             {
-                enemies.Remove(enemy);
+                enemies.RemoveAt(i);
                 continue;
             }
         }
+        //List<Enemy> enemiesCopy = new List<Enemy>(enemies);
+        //foreach (Enemy enemy in enemiesCopy)
+        //{
+        //    //移除不需要攻击的敌人
+        //    if (enemy == null || enemy.NoMoreShotsNeeded())
+        //    {
+        //        enemiesCopy.Remove(enemy);
+        //        continue;
+        //    }
+        //    float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
+        //    //勾股定理
+        //    float range = Mathf.Sqrt(Mathf.Pow(length / 2, 2) + Mathf.Pow(length, 2));
+        //    if (distance > range)
+        //    {
+        //        enemiesCopy.Remove(enemy);
+        //        continue;
+        //    }
+        //}
+        //enemies = new List<Enemy>(enemiesCopy);
     }
 
     //获得所有在路面上的点

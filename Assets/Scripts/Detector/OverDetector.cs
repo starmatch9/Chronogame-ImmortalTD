@@ -1,22 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class OverDetector : MonoBehaviour
 {
-    //·ÀÖ¹×Óµ¯ÓëµĞÈËÔ½½ç
+    //é˜²æ­¢å­å¼¹ä¸æ•Œäººè¶Šç•Œ
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Enemy"))
         {
             Enemy enemy = collision.GetComponent<Enemy>();
-            //´ÍËÀ
+            //èµæ­»
             enemy.AcceptAttack(999999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
         }
 
         if (collision.CompareTag("Bullet"))
         {
-            //Ö±½ÓÏú»Ù
+            //ç›´æ¥é”€æ¯
             Destroy(collision.gameObject);
         }
     }

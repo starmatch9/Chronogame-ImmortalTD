@@ -1,26 +1,26 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public static class GlobalEnemyGroupFunction
 {
-    //Î¬»¤Ò»¸ö²¨´ÎÌõÄ¿ÁĞ±í
+    //ç»´æŠ¤ä¸€ä¸ªæ³¢æ¬¡æ¡ç›®åˆ—è¡¨
     public static List<EnemyGroupItem> enemyGroupItems;
 
-    //Î¬»¤Ïà¹ØUI½Å±¾£¬ĞèÒª¿ØÖÆÆä¼¤»î×´Ì¬£¬ÓÃÓÚÏÔÊ¾°´Å¥Óë·ñ
+    //ç»´æŠ¤ç›¸å…³UIè„šæœ¬ï¼Œéœ€è¦æ§åˆ¶å…¶æ¿€æ´»çŠ¶æ€ï¼Œç”¨äºæ˜¾ç¤ºæŒ‰é’®ä¸å¦
     public static GameObject nextOneBigButton;
 
-    //Î¬»¤Ò»¸öÖ¸ÏòÁĞ±íÌõÄ¿µÄË÷Òı
+    //ç»´æŠ¤ä¸€ä¸ªæŒ‡å‘åˆ—è¡¨æ¡ç›®çš„ç´¢å¼•
     static int index = 0;
 
-    //Î¬»¤µ±Ç°²¨´Î£¬ÊÇµ±Ç°£¬µ±Ç°£¡
+    //ç»´æŠ¤å½“å‰æ³¢æ¬¡ï¼Œæ˜¯å½“å‰ï¼Œå½“å‰ï¼
     public static EnemyGroupItem item;
 
-    //Î¬»¤Ò»¸öÉúÃüÖÜÆÚ£¬È·±£µĞÈËµÄÉú³ÉÄÜ¹»ÉèÖÃÊ±³¤ÓĞ¹Ø·½·¨
+    //ç»´æŠ¤ä¸€ä¸ªç”Ÿå‘½å‘¨æœŸï¼Œç¡®ä¿æ•Œäººçš„ç”Ÿæˆèƒ½å¤Ÿè®¾ç½®æ—¶é•¿æœ‰å…³æ–¹æ³•
     public static MonoBehaviour mono;
 
 
-    //¿ªÊ¼ÊÍ·ÅÒ»²¨µĞÈË
+    //å¼€å§‹é‡Šæ”¾ä¸€æ³¢æ•Œäºº
     public static void StartOneEnemyGroup()
     {
         if(index >= enemyGroupItems.Count)
@@ -28,17 +28,17 @@ public static class GlobalEnemyGroupFunction
             return;
         }
         item = enemyGroupItems[index];
-        //¿ªÊ¼ÊÍ·ÅµĞÈË
+        //å¼€å§‹é‡Šæ”¾æ•Œäºº
         //item.enemySpawn.Switch();
         mono.StartCoroutine(DispatchEnemy());
 
-        //¹Ø±Õ°´Å¥
+        //å…³é—­æŒ‰é’®
         CloseButton();
 
         ++index;
     }
 
-    //¼ÓÈëÊ±¼ä²îÊÍ·ÅµÄµĞÈË
+    //åŠ å…¥æ—¶é—´å·®é‡Šæ”¾çš„æ•Œäºº
     public static IEnumerator DispatchEnemy()
     {
         foreach(EnemySpawn spawn in item.enemySpawnGroup)
@@ -50,13 +50,13 @@ public static class GlobalEnemyGroupFunction
     }
 
 
-    //¼ì²â²¨´ÎÊÇ·ñ½áÊø
+    //æ£€æµ‹æ³¢æ¬¡æ˜¯å¦ç»“æŸ
     public static void CheckEnd()
     {
-        //¼ì²éÊÇ·ñÈ«¾ÖµĞÈËÁĞ±íÖĞµÄµĞÈËÊÇ·ñ´¦ÓÚ¼¤»î×´Ì¬
+        //æ£€æŸ¥æ˜¯å¦å…¨å±€æ•Œäººåˆ—è¡¨ä¸­çš„æ•Œäººæ˜¯å¦å¤„äºæ¿€æ´»çŠ¶æ€
         foreach (Enemy enemy in GlobalData.globalEnemies)
         {
-            //ÓĞÒ»¸ö»¹¼¤»î×Å£¬¾Íreturn
+            //æœ‰ä¸€ä¸ªè¿˜æ¿€æ´»ç€ï¼Œå°±return
             if (enemy.gameObject.activeInHierarchy)
             {
                 return;
@@ -66,50 +66,53 @@ public static class GlobalEnemyGroupFunction
         EndEnemyGroup();
     }
 
-    //Îª±¾²¨´ÎÊÕÎ²
+    //ä¸ºæœ¬æ³¢æ¬¡æ”¶å°¾
     public static void EndEnemyGroup() 
     { 
         if (index >= enemyGroupItems.Count)
         {
-            //ÕâÀï±àĞ´¹Ø¿¨³É¹¦Í¨¹ıµÄÂß¼­
-            Debug.Log("¹Ø¿¨ÒÑ¾­½áÊøÁËºÜºó»Ú¾ÍºÃ¹ş¹ş¹ş¹ş¹ş");
+            //
+            //è¿™é‡Œç¼–å†™å…³å¡æˆåŠŸé€šè¿‡çš„é€»è¾‘
+            //
+            GlobalData.Pass();
+            //Debug.Log("å…³å¡å·²ç»ç»“æŸäº†å¾ˆåæ‚”å°±å¥½å“ˆå“ˆå“ˆå“ˆå“ˆ");
             return;
         }
 
-        //»ñÈ¡±¾²¨½ğ¶î
+        //è·å–æœ¬æ³¢é‡‘é¢
         GlobalElementPowerFunction.AddCount(item.elementPower);
 
-        //Çå¿ÕµĞÈËÁĞ±í
+        //æ¸…ç©ºæ•Œäººåˆ—è¡¨
         GlobalData.globalEnemies.Clear();
 
-        //Õ¹¿ªUI°´Å¥
+        //å±•å¼€UIæŒ‰é’®
         OpenButton();
     }
 
 
-    //ÏÔÊ¾°´Å¥
+    //æ˜¾ç¤ºæŒ‰é’®
     public static void OpenButton()
     {
         nextOneBigButton.SetActive(true);
     }
-    //²»ÏÔÊ¾°´Å¥
+    //ä¸æ˜¾ç¤ºæŒ‰é’®
     public static void CloseButton() { 
         nextOneBigButton.SetActive(false);
     }
 
-    //ÖØÖÃËùÓĞ¾²Ì¬±äÁ¿
+    //é‡ç½®æ‰€æœ‰é™æ€å˜é‡
     public static void ResetAllData()
     {
-        //Î¬»¤Ò»¸ö²¨´ÎÌõÄ¿ÁĞ±í
+        //ç»´æŠ¤ä¸€ä¸ªæ³¢æ¬¡æ¡ç›®åˆ—è¡¨
         enemyGroupItems = new List<EnemyGroupItem>();
 
-        //Î¬»¤Ïà¹ØUI½Å±¾£¬ĞèÒª¿ØÖÆÆä¼¤»î×´Ì¬£¬ÓÃÓÚÏÔÊ¾°´Å¥Óë·ñ
+        //ç»´æŠ¤ç›¸å…³UIè„šæœ¬ï¼Œéœ€è¦æ§åˆ¶å…¶æ¿€æ´»çŠ¶æ€ï¼Œç”¨äºæ˜¾ç¤ºæŒ‰é’®ä¸å¦
         nextOneBigButton = null;
 
-        //Î¬»¤Ò»¸öÖ¸ÏòÁĞ±íÌõÄ¿µÄË÷Òı
+        //ç»´æŠ¤ä¸€ä¸ªæŒ‡å‘åˆ—è¡¨æ¡ç›®çš„ç´¢å¼•
         index = 0;
 
-        //Î¬»¤µ±Ç°²¨´Î£¬ÊÇµ±Ç°£¬µ±Ç°£¡
+        //ç»´æŠ¤å½“å‰æ³¢æ¬¡ï¼Œæ˜¯å½“å‰ï¼Œå½“å‰ï¼
         item = null;
     }
 }

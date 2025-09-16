@@ -32,6 +32,11 @@ public class MainInterface : MonoBehaviour
     //关卡选择按钮(通过场景名称寻找)
     public void Select_Level(string name)
     {
+        //重置所有静态变量
+        GlobalData.ResetAllData();
+        GlobalElementPowerFunction.ResetAllData();
+        GlobalEnemyGroupFunction.ResetAllData();
+
         SceneManager.LoadScene(name);
     }
 

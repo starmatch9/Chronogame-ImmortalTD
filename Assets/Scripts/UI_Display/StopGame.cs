@@ -118,4 +118,14 @@ public class StopGame : MonoBehaviour
         SceneManager.LoadScene("MainInterface");
         //Application.Quit();
     }
+
+    public void NextLevel()
+    {
+        //重置所有静态变量
+        GlobalData.ResetAllData();
+        GlobalElementPowerFunction.ResetAllData();
+        GlobalEnemyGroupFunction.ResetAllData();
+
+        SceneManager.LoadScene(GlobalData.nextName);
+    }
 }

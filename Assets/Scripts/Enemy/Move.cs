@@ -1,11 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor.Overlays;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using UnityEngine.UIElements;
 
 public class Move : MonoBehaviour
 {

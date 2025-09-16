@@ -146,6 +146,11 @@ public abstract class Tower : MonoBehaviour
         }
 
         //xiaohui
+        TowerDie();
+    }
+
+    public virtual void TowerDie()
+    {
         Destroy(gameObject);
     }
 

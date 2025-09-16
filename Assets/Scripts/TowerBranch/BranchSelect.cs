@@ -46,7 +46,9 @@ public class BranchSelect : MonoBehaviour
         transform.parent.gameObject.SetActive(false);
 
         GlobalData.towers.Remove(transform.parent.gameObject.GetComponent<Tower>());
-        Destroy(transform.parent.gameObject); //销毁
+        //销毁
+        transform.parent.gameObject.GetComponent<Tower>().TowerDie();
+        //Destroy(transform.parent.gameObject); //销毁
     }
 
     //选择分支1

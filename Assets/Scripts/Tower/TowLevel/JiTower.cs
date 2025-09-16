@@ -104,6 +104,8 @@ public class JiTower : Tower
         }
     }
 
+    
+
     //生成荆棘
     void SpawnThorns(Enemy enemy)
     {
@@ -113,9 +115,9 @@ public class JiTower : Tower
         }
         //生成荆棘实例         (第四个参数为父物体位置，表示生成物作为子物体)
         GameObject thorns = Instantiate(thornsPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
-        
+
         //设置荆棘的持续时间
-        StartCoroutine(ThornsLifetime(thorns, enemy));
+        GlobalEnemyGroupFunction.mono.StartCoroutine(ThornsLifetime(thorns, enemy));
     }
 
     //荆棘生命周期协程
@@ -137,7 +139,7 @@ public class JiTower : Tower
 
         while (bigTimer < thornsDuration)
         {
-            if(target == null)
+            if (target == null)
             {
                 Destroy(thorns);
                 yield break;

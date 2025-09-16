@@ -115,6 +115,7 @@ public class StopGame : MonoBehaviour
     //这里是返回标题，这里先退出
     public void BackToTitle()
     {
-        Application.Quit();
+        SceneManager.LoadScene("MainInterface");
+        //Application.Quit();
     }
 }

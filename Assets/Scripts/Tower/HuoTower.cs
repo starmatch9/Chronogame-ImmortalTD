@@ -1,19 +1,19 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class HuoTower : Tower
 {
-    //¡ª¡ª »ğËş ¡ª¡ª
+    //â€”â€” ç«å¡” â€”â€”
 
-    //×Óµ¯Ô¤ÖÆÌå£¬ÒªÅÚµÄ×Óµ¯£¬½¦ÉäÉËº¦
-    [Header("×Óµ¯Ô¤ÖÆ¼ş")]
+    //å­å¼¹é¢„åˆ¶ä½“ï¼Œè¦ç‚®çš„å­å¼¹ï¼Œæº…å°„ä¼¤å®³
+    [Header("å­å¼¹é¢„åˆ¶ä»¶")]
     public GameObject paoBullet;
 
     [TextArea]
-    public string Tips = "×¢Òâ£º×Óµ¯µÄÉËº¦²ÎÊı¼ÇµÃÒªÈ¥×Óµ¯Ô¤ÖÆ¼şÀïÃæµ÷¡£";
+    public string Tips = "æ³¨æ„ï¼šå­å¼¹çš„ä¼¤å®³å‚æ•°è®°å¾—è¦å»å­å¼¹é¢„åˆ¶ä»¶é‡Œé¢è°ƒã€‚";
 
-    //ÖØĞ´Ã¿¸ôÒ»¶ÎÊ±¼äÖ´ĞĞµÄĞĞÎª
+    //é‡å†™æ¯éš”ä¸€æ®µæ—¶é—´æ‰§è¡Œçš„è¡Œä¸º
     public override void TowerAction()
     {
         if (FindClosestToFinishEnemy() == null)
@@ -25,16 +25,16 @@ public class HuoTower : Tower
         Shoot(target);
     }
 
-    //·¢Éä×Óµ¯£¬¼°Éú³É×Óµ¯ÊµÀı
+    //å‘å°„å­å¼¹ï¼ŒåŠç”Ÿæˆå­å¼¹å®ä¾‹
     void Shoot(GameObject enemy)
     {
-        // Æ«ÒÆ £º×Óµ¯ÔÚËşÉÏ·½1.5Ã×µÄÎ»ÖÃ·¢Éä
+        // åç§» ï¼šå­å¼¹åœ¨å¡”ä¸Šæ–¹1.5ç±³çš„ä½ç½®å‘å°„
         Vector3 offset = new Vector3(0, 1f, 0);
 
-        //ÊµÀı»¯×Óµ¯
+        //å®ä¾‹åŒ–å­å¼¹
         GameObject bullet = Instantiate(paoBullet, transform.position + offset, Quaternion.identity);
 
-        //ĞèÒªÃª¶¨×Óµ¯µÄÄ¿±ê£¬»ñÈ¡×Óµ¯µÄĞĞÎª½Å±¾
+        //éœ€è¦é”šå®šå­å¼¹çš„ç›®æ ‡ï¼Œè·å–å­å¼¹çš„è¡Œä¸ºè„šæœ¬
         Bullet bulletScript = bullet.GetComponent<Bullet>();
         bulletScript.SetTarget(enemy);
     }

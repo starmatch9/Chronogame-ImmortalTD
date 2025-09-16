@@ -106,10 +106,10 @@ public class RongTower : Tower
             lava.GetComponent<Lava>().SetTower(this);
 
             //开始熔岩的生命周期
-            StartCoroutine(LavaLifetime(lava));
+            GlobalEnemyGroupFunction.mono.StartCoroutine(LavaLifetime(lava));
         }
         //生成熔岩的同时，开始烫脚周期
-        StartCoroutine(LavaAttackLife());
+        GlobalEnemyGroupFunction.mono.StartCoroutine(LavaAttackLife());
     }
 
     IEnumerator LavaAttackLife()
@@ -131,6 +131,7 @@ public class RongTower : Tower
             bigTimer += Time.deltaTime;
             smallTimer += Time.deltaTime;
         }
+
     }
 
     //熔岩的生命周期

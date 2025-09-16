@@ -158,7 +158,7 @@ public class LangTower : Tower
             Move move = enemy.gameObject.GetComponent<Move>();
             if (!move.isStopMove)
             {
-                StartCoroutine(EnemyBack(enemy));
+                GlobalEnemyGroupFunction.mono.StartCoroutine(EnemyBack(enemy));
             }
         }
     }
@@ -211,7 +211,7 @@ public class LangTower : Tower
             {
                 continue;
             }
-            StartCoroutine(SpawnOneWave(t));
+            GlobalEnemyGroupFunction.mono.StartCoroutine(SpawnOneWave(t));
 
         }
     }

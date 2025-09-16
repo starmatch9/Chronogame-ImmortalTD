@@ -46,7 +46,7 @@ public class LuTower : Tower
             {
                 return;
             }
-            StartCoroutine(furnaceLife());
+            GlobalEnemyGroupFunction.mono.StartCoroutine(furnaceLife());
             timer0 = 0f; //重置计时器
         }
     }
@@ -125,7 +125,7 @@ public class LuTower : Tower
         yield return new WaitForSeconds(furnaceDuration - 0.2f - absorbDuration);
 
         //元素力增加的协程动画
-        StartCoroutine(AddElementPower());
+        GlobalEnemyGroupFunction.mono.StartCoroutine(AddElementPower());
 
         //生成元素力
         GlobalElementPowerFunction.AddCount(elementAmount);
@@ -148,7 +148,6 @@ public class LuTower : Tower
         elementPower.SetActive(true);
         while (timer < duration)
         {
-
             if (elementPower != null)
             {
                 //颜色改变
@@ -167,6 +166,7 @@ public class LuTower : Tower
         }
         elementPower.SetActive(false);
         elementPower.transform.position = originalposition;
+
     }
 
 }

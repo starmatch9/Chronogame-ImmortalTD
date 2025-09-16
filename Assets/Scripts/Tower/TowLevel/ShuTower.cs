@@ -20,7 +20,7 @@ public class ShuTower : Tower
     public override void TowerAction()
     {
         //元素力增加的协程动画
-        StartCoroutine(AddElementPower());
+        GlobalEnemyGroupFunction.mono.StartCoroutine(AddElementPower());
 
         //生成元素力
         GlobalElementPowerFunction.AddCount(elementAmount);
@@ -41,6 +41,7 @@ public class ShuTower : Tower
 
             if (elementPower != null)
             {
+
                 //颜色改变
                 float alpha = Mathf.Lerp(1f, 0f, timer / duration);
                 Color color = renderer.color;
@@ -57,5 +58,6 @@ public class ShuTower : Tower
         }
         elementPower.SetActive(false);
         elementPower.transform.position = originalposition;
+
     }
 }

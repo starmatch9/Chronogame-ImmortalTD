@@ -49,23 +49,35 @@ public class ShuiTower : Tower
 
     public void startSlow(Enemy enemy)
     {
-        if(enemy != null)
+        if (enemy != null)
         {
-            StartCoroutine(slowEnemy(enemy));
+            /*重要*/
+            //新知识
+            //
+            //防止物体销毁后协程无辜暂停的方法：
+            //————将协程挂载到始终激活的 “管理器类物体”！！！
+            //
+            GlobalEnemyGroupFunction.mono.StartCoroutine(slowEnemy(enemy));
         }
     }
 
-    IEnumerator slowEnemy(Enemy enemy) {
+    IEnumerator slowEnemy(Enemy enemy)
+    {
 
         Move move = enemy.gameObject.GetComponent<Move>();
         //减速
         move.ChangeSpeed(slowFactor);
 
         float timer = 0;
-        while (timer < slowTime) {
+        while (timer < slowTime)
+        {
 
-            if(enemy == null)
+            if (enemy == null)
             {
+                //if (isDead)
+                //{
+                //    break;
+                //}
                 yield break;
             }
 
@@ -78,5 +90,4 @@ public class ShuiTower : Tower
         //重置速度
         move.ResetSpeed();
     }
-
 }

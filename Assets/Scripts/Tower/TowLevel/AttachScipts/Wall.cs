@@ -87,6 +87,11 @@ public class Wall : MonoBehaviour
         List<Enemy> enemiesCopy = new List<Enemy>(blockedEnemies);
         foreach (Enemy enemy in enemiesCopy)
         {
+            if(enemy == null)
+            {
+                continue;
+            }
+
             Move move = enemy.gameObject.GetComponent<Move>();
             if (move != null)
             {

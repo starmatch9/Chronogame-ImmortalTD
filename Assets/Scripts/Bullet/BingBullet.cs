@@ -69,6 +69,12 @@ public class BingBullet : Bullet
     //生成雪花
     IEnumerator SpawnSnow(Enemy enemy)
     {
+        //如果已经除以处于停止移动的状态则无法选中
+        if (enemy.gameObject.GetComponent<Move>().isStopMove)
+        {
+            yield break;
+        }
+
         //生成雪花实例         (第四个参数为父物体位置，表示生成物作为子物体)
         GameObject snow = Instantiate(snowPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
         //设置雪花的持续时间
@@ -78,6 +84,12 @@ public class BingBullet : Bullet
     //雪花生命周期协程
     IEnumerator SnowLifetime(GameObject snow, Enemy enemy)
     {
+        //如果已经除以处于停止移动的状态则无法选中
+        if (enemy.gameObject.GetComponent<Move>().isStopMove)
+        {
+            yield break;
+        }
+
         enemy.gameObject.GetComponent<Move>().StopMove();
         //加伤
         //enemy.SetDefense(1f - mul);

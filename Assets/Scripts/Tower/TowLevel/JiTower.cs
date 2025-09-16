@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class JiTower : Tower
 {
@@ -106,6 +107,10 @@ public class JiTower : Tower
     //生成荆棘
     void SpawnThorns(Enemy enemy)
     {
+        if (enemy.gameObject.GetComponent<Move>().isStopMove)
+        {
+            return;
+        }
         //生成荆棘实例         (第四个参数为父物体位置，表示生成物作为子物体)
         GameObject thorns = Instantiate(thornsPrefab, enemy.GetGameObject().transform.position, Quaternion.identity, enemy.GetGameObject().transform);
         
@@ -116,6 +121,12 @@ public class JiTower : Tower
     //荆棘生命周期协程
     IEnumerator ThornsLifetime(GameObject thorns, Enemy target)
     {
+        //如果已经除以处于停止移动的状态则无法选中
+        if (target.gameObject.GetComponent<Move>().isStopMove)
+        {
+            yield break;
+        }
+
         //停止敌人的移动
         target.gameObject.GetComponent<Move>().StopMove();
 

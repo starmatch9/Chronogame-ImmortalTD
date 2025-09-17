@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 3
   attackRange: 3
   actionTime: 1
   paoBullet: {fileID: 478984118592094871, guid: b418f64933a85a64f9be0a6e72848e4a, type: 3}

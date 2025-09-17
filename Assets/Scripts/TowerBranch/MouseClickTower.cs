@@ -1,22 +1,22 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MouseClickTower : MonoBehaviour
 {
-    [Header("µ±Ç°Ëş")]
+    [Header("å½“å‰å¡”")]
     public Tower tower = null;
 
-    [Header("SelectedÎïÌå")]
+    [Header("Selectedç‰©ä½“")]
     public GameObject selected = null;
 
-    [Header("¹ØÓÚÕ¹¿ª")]
+    [Header("å…³äºå±•å¼€")]
     public GameObject optionCanva = null;
 
     Vector3 originalCanvaScale;
 
-    //ÅĞ¶ÏÓÃ»§ÊÇ·ñÕ¹¿ªÑ¡Ïî½çÃæ
+    //åˆ¤æ–­ç”¨æˆ·æ˜¯å¦å±•å¼€é€‰é¡¹ç•Œé¢
     bool isSelecting = false;
 
     Coroutine OpenCloseOptionCavan = null;
@@ -30,9 +30,14 @@ public class MouseClickTower : MonoBehaviour
         originalCanvaScale = optionCanva.transform.localScale;
     }
 
-    // Êó±êĞüÍ£
+    // é¼ æ ‡æ‚¬åœ
     public void OnMouseEnter()
     {
+        if (!GlobalData.towerClick)
+        {
+            return;
+        }
+
         if (isSelecting)
         {
             return;
@@ -41,16 +46,19 @@ public class MouseClickTower : MonoBehaviour
         selected.SetActive(true);
 
 
-        //µã»÷ºóÖ´ĞĞµÄ·½·¨£¨ÈçÏÔÊ¾¹¥»÷·¶Î§£©
+        //ç‚¹å‡»åæ‰§è¡Œçš„æ–¹æ³•ï¼ˆå¦‚æ˜¾ç¤ºæ”»å‡»èŒƒå›´ï¼‰
         if (tower != null)
         {
             tower.DrawAttackArea();
         }
     }
 
-    // Êó±êÀë¿ª
+    // é¼ æ ‡ç¦»å¼€
     public void OnMouseExit()
     {
+        
+        
+
         if (isSelecting)
         {
             return;
@@ -59,16 +67,21 @@ public class MouseClickTower : MonoBehaviour
         selected.SetActive(false);
 
 
-        //µã»÷ºóÖ´ĞĞµÄ·½·¨ÖØÖÃ£¨ÈçÏÔÊ¾¹¥»÷·¶Î§£©
+        //ç‚¹å‡»åæ‰§è¡Œçš„æ–¹æ³•é‡ç½®ï¼ˆå¦‚æ˜¾ç¤ºæ”»å‡»èŒƒå›´ï¼‰
         if (tower != null)
         {
             tower.EraseAttackArea();
         }
     }
 
-    //Êó±ê°´ÏÂ
+    //é¼ æ ‡æŒ‰ä¸‹
     public void OnMouseDown()
     {
+        if (!GlobalData.towerClick)
+        {
+            return;
+        }
+
         if (optionCanva == null)
         {
             return;
@@ -80,10 +93,10 @@ public class MouseClickTower : MonoBehaviour
         }
         isSelecting = true;
 
-        //µã»÷ºóÖ´ĞĞµÄ·½·¨£¨ÈçÏÔÊ¾¹¥»÷·¶Î§£©
+        //ç‚¹å‡»åæ‰§è¡Œçš„æ–¹æ³•ï¼ˆå¦‚æ˜¾ç¤ºæ”»å‡»èŒƒå›´ï¼‰
         //tower.DrawAttackArea();
 
-        //¹âÒíÕ¹¿ª£¡£¡
+        //å…‰ç¿¼å±•å¼€ï¼ï¼
         if (OpenCloseOptionCavan != null)
         {
             StopCoroutine(OpenCloseOptionCavan);
@@ -99,18 +112,18 @@ public class MouseClickTower : MonoBehaviour
             return;
         }
 
-        //ÖØÖÃÑ¡Ïî½çÃæ
+        //é‡ç½®é€‰é¡¹ç•Œé¢
         isSelecting = false;
-        //ÖØÖÃÑ¡ÖĞ×´Ì¬
+        //é‡ç½®é€‰ä¸­çŠ¶æ€
         selected.SetActive(false);
 
-        //µã»÷ºóÖ´ĞĞµÄ·½·¨ÖØÖÃ£¨ÈçÏÔÊ¾¹¥»÷·¶Î§£©
+        //ç‚¹å‡»åæ‰§è¡Œçš„æ–¹æ³•é‡ç½®ï¼ˆå¦‚æ˜¾ç¤ºæ”»å‡»èŒƒå›´ï¼‰
         if (tower != null)
         {
             tower.EraseAttackArea();
         }
 
-        //ÊÕ
+        //æ”¶
         if (OpenCloseOptionCavan != null)
         {
             StopCoroutine(OpenCloseOptionCavan);
@@ -124,10 +137,10 @@ public class MouseClickTower : MonoBehaviour
         optionCanva.transform.localScale = Vector3.zero;
         optionCanva.SetActive(true);
         float timer = 0;
-        //ÕâÀïµ÷½ÚÊ±³££¨ÓĞÁ½¸öµØ·½£¬±ğÂ©ÁË£©
+        //è¿™é‡Œè°ƒèŠ‚æ—¶å¸¸ï¼ˆæœ‰ä¸¤ä¸ªåœ°æ–¹ï¼Œåˆ«æ¼äº†ï¼‰
         while (timer < 0.3f)
         {
-            //´ÓÁãµ½Ô­Ê¼Ëõ·Å±ÈÀı£¬²åÖµ
+            //ä»é›¶åˆ°åŸå§‹ç¼©æ”¾æ¯”ä¾‹ï¼Œæ’å€¼
             optionCanva.transform.localScale = Vector3.Lerp(Vector3.zero, originalCanvaScale, timer / 0.3f);
             timer += Time.deltaTime;
             yield return null;
@@ -140,7 +153,7 @@ public class MouseClickTower : MonoBehaviour
         float timer = 0;
         while (timer < 0.3f)
         {
-            //´ÓÔ­Ê¼Ëõ·Å±ÈÀıµ½Áã£¬²åÖµ
+            //ä»åŸå§‹ç¼©æ”¾æ¯”ä¾‹åˆ°é›¶ï¼Œæ’å€¼
             optionCanva.transform.localScale = Vector3.Lerp(originalCanvaScale, Vector3.zero, timer / 0.3f);
             timer += Time.deltaTime;
             yield return null;

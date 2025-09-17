@@ -130,6 +130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 2
   attackRange: 2
   actionTime: 0.5
   shuiBullet: {fileID: 163347775286739632, guid: b5d4525b0224bcb46ae133fcc79a0842, type: 3}

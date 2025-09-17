@@ -270,6 +270,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 4
   attackRange: 2
   actionTime: 8
   maxNumber: 4

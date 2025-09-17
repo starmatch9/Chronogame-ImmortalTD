@@ -388,6 +388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 1
   attackRange: 5
   actionTime: 4
   bulletPref: {fileID: 4770538392129537883, guid: 40527528e9ce0a340a1775265c70fce6, type: 3}
@@ -397,3 +398,5 @@ MonoBehaviour:
   thornsAttackInterval: 0.6
   thornsAttackDamage: 0
   maxNumber: 4
+  attackAttribute: 2
+  elementAttribute: 5

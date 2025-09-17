@@ -15,7 +15,6 @@ public class Bullet : MonoBehaviour
     [Header("基础伤害")]
     [Range(0f, 100f)]public float baseAttack = 10f;
 
-
     [Header("移动速度")]
     [Range(0f, 20f)]public float moveSpeed = 5f;
 

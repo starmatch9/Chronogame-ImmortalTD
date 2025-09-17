@@ -130,12 +130,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 4
   attackRange: 3
   actionTime: 4
   maxNumber: 5
   wallDuration: 3
   wallDamage: 5
   wallPrefab: {fileID: 6600280846830873079, guid: 1c611249c9c585546a3c0c27b23d751e, type: 3}
+  attackAttribute: 2
+  elementAttribute: 5
 --- !u!1 &7432862915855703653
 GameObject:
   m_ObjectHideFlags: 0

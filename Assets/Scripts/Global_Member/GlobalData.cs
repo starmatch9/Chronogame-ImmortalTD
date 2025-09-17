@@ -25,6 +25,9 @@ public static class GlobalData
     //游戏失败时，到达终点的敌人数量
     public static int maxNumber = 5;
 
+    //游戏的鼠标是否处于可以点击塔的状态
+    public static bool towerClick = true;
+
 
     //这下面是游戏结时用到的东西
     public static StopGame sg = null;
@@ -90,6 +93,9 @@ public static class GlobalData
 
         //游戏失败时，到达终点的敌人数量
         maxNumber = 5;
+
+        //塔点击许可
+        towerClick = true;
     }
 
 

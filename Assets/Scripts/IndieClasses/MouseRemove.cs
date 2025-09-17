@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,21 +8,24 @@ public class MouseRemove : MonoBehaviour
 
     bool following = false;
 
-    //ÊÇ·ñ¿ÉÒÔµã»÷£¬¼´Êó±êÔÚËşµÄÉÏ·½
+    //æ˜¯å¦å¯ä»¥ç‚¹å‡»ï¼Œå³é¼ æ ‡åœ¨å¡”çš„ä¸Šæ–¹
     bool canClick = false;
 
     GameObject currentCollision = null;
 
-    //¿ªÊ¼¸úËæÊó±ê
+    //å¼€å§‹è·Ÿéšé¼ æ ‡
     public void StartFollow()
     {
         following = true;
+        GlobalData.towerClick = false;
     }
 
-    //Í£Ö¹¸úËæÊó±ê
+    //åœæ­¢è·Ÿéšé¼ æ ‡
     public void StopFollow()
     {
         following = false;
+        currentCollision = null;
+        GlobalData.towerClick = true;
         transform.position = originalPosition;
     }
 
@@ -33,7 +36,7 @@ public class MouseRemove : MonoBehaviour
 
     private void Update()
     {
-        //ÓÒ»÷È¡Ïû
+        //å³å‡»å–æ¶ˆ
         if(following && Input.GetMouseButton(1))
         {
             StopFollow();
@@ -44,17 +47,21 @@ public class MouseRemove : MonoBehaviour
             FollowMousePosition();
         }
 
-        if (canClick && Input.GetMouseButton(0))
+        if (following && canClick && Input.GetMouseButton(0))
         {
-            //Ö´ĞĞËş¹¦ÄÜ
+            //æ‰§è¡Œå¡”åŠŸèƒ½
             ExecuteRemove();
+            StopFollow();
+        }else if (following && !canClick && Input.GetMouseButton(0))
+        {
+            StopFollow();
         }
     }
 
-    //Ö´ĞĞËşµÄÒÆ³ı¹¦ÄÜ
+    //æ‰§è¡Œå¡”çš„ç§»é™¤åŠŸèƒ½
     void ExecuteRemove()
     {
-        //»ñÈ¡ÓĞ½Å±¾µÄÓÎÏ·¶ÔÏó
+        //è·å–æœ‰è„šæœ¬çš„æ¸¸æˆå¯¹è±¡
         GameObject tower = currentCollision.transform.parent.gameObject;
    
 
@@ -64,42 +71,40 @@ public class MouseRemove : MonoBehaviour
 
             t.Remove();
         }
-
-        StopFollow();
     }
 
 
-    //¸úËæ·½·¨Ö÷Ìâ
+    //è·Ÿéšæ–¹æ³•ä¸»é¢˜
     private void FollowMousePosition()
     {
         Vector3 mousePosition = Input.mousePosition;
-        //ÉèÖÃz×ø±êÎªÎïÌåµ½Ïà»úµÄ¾àÀë£¬·ñÔò¿´²»¼û
+        //è®¾ç½®zåæ ‡ä¸ºç‰©ä½“åˆ°ç›¸æœºçš„è·ç¦»ï¼Œå¦åˆ™çœ‹ä¸è§
         mousePosition.z = 4.5f;
-        //×ª»»ÎªÊÀ½ç×ø±ê
+        //è½¬æ¢ä¸ºä¸–ç•Œåæ ‡
         Vector3 worldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
         worldPosition.z = originalPosition.z;
-        //¸üĞÂÎïÌåÎ»ÖÃ
+        //æ›´æ–°ç‰©ä½“ä½ç½®
         transform.position = worldPosition;
     }
 
-    //¼ì²âËş
+    //æ£€æµ‹å¡”
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Tower")) { 
             
             SpriteRenderer renderer = collision.gameObject.GetComponent<SpriteRenderer>();
-            //±ä³É°ëÍ¸Ã÷
+            //å˜æˆåŠé€æ˜
             renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 0.5f);
 
             canClick = true;
 
             currentCollision = collision.gameObject;
             
-            //Debug.Log("ÎÒÒª½øÀ´ÁË£¡£¡");
+            //Debug.Log("æˆ‘è¦è¿›æ¥äº†ï¼ï¼");
         }
     }
 
-    //Àë¿ªËş
+    //ç¦»å¼€å¡”
     private void OnCollisionExit2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Tower"))

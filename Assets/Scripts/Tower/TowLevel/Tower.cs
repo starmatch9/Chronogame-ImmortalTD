@@ -10,6 +10,9 @@ public abstract class Tower : MonoBehaviour
     [HideInInspector]
     public Transform hole;
 
+    //一个塔一种属性
+    public GlobalData.ElementAttribute attribute = GlobalData.ElementAttribute.JIN;
+
     //攻击范围半径
     [Header("索敌范围")]
     [Range(0, 20)] public float attackRange = 2f;

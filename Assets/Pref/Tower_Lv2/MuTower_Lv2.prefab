@@ -1320,6 +1320,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
+  attribute: 1
   attackRange: 2
   actionTime: 0.5
   bulletPref: {fileID: 8691032042871870139, guid: 8abc185813983e64b8da9b3889184f8b, type: 3}

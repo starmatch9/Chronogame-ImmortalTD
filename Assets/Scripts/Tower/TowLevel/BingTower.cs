@@ -1,25 +1,25 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BingTower : Tower
 {
 
-    //    *- ±ù -*
+    //    *- å†° -*
 
-    //³ıÁË×Óµ¯£¬ÆäËûÃ»ÓĞÊ²Ã´ÌØ±ğÖ®´¦
+    //é™¤äº†å­å¼¹ï¼Œå…¶ä»–æ²¡æœ‰ä»€ä¹ˆç‰¹åˆ«ä¹‹å¤„
 
-    //Õâ¸öËşĞèÒª×Óµ¯Ô¤ÖÆÌå
-    [Header("×Óµ¯Ô¤ÖÆ¼ş")]
+    //è¿™ä¸ªå¡”éœ€è¦å­å¼¹é¢„åˆ¶ä½“
+    [Header("å­å¼¹é¢„åˆ¶ä»¶")]
     public GameObject bingBullet;
 
-    [Header("´ò»÷¼¸´Îºó¶³½á")]
+    [Header("æ‰“å‡»å‡ æ¬¡åå†»ç»“")]
     public int freezeCount = 4;
 
     [TextArea]
-    public string Tips = "×¢Òâ£º×Óµ¯µÄÉËº¦²ÎÊı¼ÇµÃÒªÈ¥×Óµ¯Ô¤ÖÆ¼şÀïÃæµ÷¡£";
+    public string Tips = "æ³¨æ„ï¼šå­å¼¹çš„ä¼¤å®³å‚æ•°è®°å¾—è¦å»å­å¼¹é¢„åˆ¶ä»¶é‡Œé¢è°ƒã€‚";
 
-    //ÖØĞ´Ã¿¸ôÒ»¶ÎÊ±¼äÖ´ĞĞµÄĞĞÎª
+    //é‡å†™æ¯éš”ä¸€æ®µæ—¶é—´æ‰§è¡Œçš„è¡Œä¸º
     public override void TowerAction()
     {
         if (FindClosestToFinishEnemy() == null)
@@ -31,20 +31,23 @@ public class BingTower : Tower
         Shoot(target);
     }
 
-    //·¢Éä×Óµ¯£¬¼°Éú³É×Óµ¯ÊµÀı
+    //å‘å°„å­å¼¹ï¼ŒåŠç”Ÿæˆå­å¼¹å®ä¾‹
     void Shoot(GameObject enemy)
     {
-        // Æ«ÒÆ £º×Óµ¯ÔÚËşÉÏ·½1.5Ã×µÄÎ»ÖÃ·¢Éä
+        // åç§» ï¼šå­å¼¹åœ¨å¡”ä¸Šæ–¹1.5ç±³çš„ä½ç½®å‘å°„
         Vector3 offset = new Vector3(0, 1f, 0);
 
-        //ÊµÀı»¯×Óµ¯
+        //å®ä¾‹åŒ–å­å¼¹
         GameObject bullet = Instantiate(bingBullet, transform.position + offset, Quaternion.identity);
 
-        //ĞèÒªÃª¶¨×Óµ¯µÄÄ¿±ê£¬»ñÈ¡×Óµ¯µÄĞĞÎª½Å±¾
+        //éœ€è¦é”šå®šå­å¼¹çš„ç›®æ ‡ï¼Œè·å–å­å¼¹çš„è¡Œä¸ºè„šæœ¬
         Bullet bulletScript = bullet.GetComponent<Bullet>();
 
-        //ÉèÖÃ¶³½áËùĞè´ÎÊı
+        //è®¾ç½®å†»ç»“æ‰€éœ€æ¬¡æ•°
         bullet.GetComponent<BingBullet>().SetMaxCount(freezeCount);
+
+        //è®¾ç½®æ”»å‡»ä¼¤å®³
+        bulletScript.baseAttack = bulletAttack;
 
         bulletScript.SetTarget(enemy);
     }

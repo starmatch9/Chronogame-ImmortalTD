@@ -43,6 +43,10 @@ public class ShuiTower : Tower
 
         //需要锚定子弹的目标，获取子弹的行为脚本
         ShuiBullet bulletScript = bullet.GetComponent<ShuiBullet>();
+
+        //设置攻击伤害
+        bulletScript.baseAttack = bulletAttack;
+
         bulletScript.SetFactor(slowFactor, this);
         bulletScript.SetTarget(enemy);
     }

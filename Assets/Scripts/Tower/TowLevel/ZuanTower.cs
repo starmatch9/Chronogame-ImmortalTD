@@ -28,15 +28,19 @@ public class ZuanTower : Tower
         GameObject bullet0 = Instantiate(drill, transform.position, Quaternion.identity);
         bullet0.GetComponent<Drill>().SetDir(0);
         bullet0.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        bullet0.GetComponent<Drill>().baseAttack = bulletAttack;
         GameObject bullet1 = Instantiate(drill, transform.position, Quaternion.identity);
         bullet1.GetComponent<Drill>().SetDir(1);
         bullet1.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        bullet1.GetComponent<Drill>().baseAttack = bulletAttack;
         GameObject bullet2 = Instantiate(drill, transform.position, Quaternion.identity);
         bullet2.GetComponent<Drill>().SetDir(2);
         bullet2.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        bullet2.GetComponent<Drill>().baseAttack = bulletAttack;
         GameObject bullet3 = Instantiate(drill, transform.position, Quaternion.identity);
         bullet3.GetComponent<Drill>().SetDir(3);
         bullet3.GetComponent<Drill>().SetPenetrateCount(maxPenetrate);
+        bullet3.GetComponent<Drill>().baseAttack = bulletAttack;
     }
 
     //绕塔转一周

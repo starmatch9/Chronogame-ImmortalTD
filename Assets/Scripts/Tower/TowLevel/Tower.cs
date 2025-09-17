@@ -13,6 +13,10 @@ public abstract class Tower : MonoBehaviour
     //一个塔一种属性
     public GlobalData.ElementAttribute attribute = GlobalData.ElementAttribute.JIN;
 
+    //子弹伤害，方便脱离子弹预制件单独修改伤害
+    [Header("子弹伤害（有子弹的话）")]
+    public float bulletAttack = 10f;
+
     //攻击范围半径
     [Header("索敌范围")]
     [Range(0, 20)] public float attackRange = 2f;
@@ -147,6 +151,8 @@ public abstract class Tower : MonoBehaviour
         {
             GlobalData.towers.Remove(this);
         }
+
+        GlobalLink.RemoveLink(this);
 
         //xiaohui
         TowerDie();

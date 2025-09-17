@@ -24,11 +24,45 @@ public class Link : MonoBehaviour
     [Header("冷却时间(秒)")]
     public float time = 1f;
 
+    [Header("——相生增益倍数——")]
+    [Header("子弹伤害")]
+    [Range(1f, 20f)]public float a1 = 1f;
+    [Header("攻击范围")]
+    [Range(1f, 20f)] public float r1 = 1f;
+    [Header("子弹间隔时间")]
+    [Range(1f, 20f)] public float i1 = 1f;
+
+    [Header("——主克增益倍数——")]
+    [Header("子弹伤害")]
+    [Range(1f, 20f)] public float a2 = 1f;
+    [Header("攻击范围")]
+    [Range(1f, 20f)] public float r2 = 1f;
+    [Header("子弹间隔时间")]
+    [Range(1f, 20f)] public float i2 = 1f;
+
+    //[Header("——被克增益倍数——")]
+    //[Header("子弹伤害")]
+    //[Range(1f, 20f)] public float a3 = 1f;
+    //[Header("攻击范围")]
+    //[Range(1f, 20f)] public float r3 = 1f;
+    //[Header("子弹间隔时间")]
+    //[Range(1f, 20f)] public float i3 = 1f;
+
     //这是准备连接的两座塔
     GameObject towerA = null;
     GameObject towerB = null;
 
+    void Start()
+    {
+        originalPosition = transform.position;
 
+        GlobalLink.a1 = a1;
+        GlobalLink.a2 = a2;
+        GlobalLink.r1 = r1;
+        GlobalLink.r2 = r2;
+        GlobalLink.i1 = i1;
+        GlobalLink.i2 = i2;
+    }
 
     private void Update()
     {
@@ -184,16 +218,66 @@ public class Link : MonoBehaviour
     {
         //A生B
 
+        GlobalLink.ResetBuff();
+
+        TowerLinkMap ALM = new TowerLinkMap();
+        ALM.relation = 1;
+        ALM.tower = A;
+        ALM.originalAttackRange = A.attackRange;
+        ALM.originalActionTime = A.actionTime;
+        ALM.originalBulletAttack = A.bulletAttack;
+        GlobalLink.linkedTowers[A] = ALM;
+        GlobalLink.linksTower_1.Add(ALM);
 
 
+        TowerLinkMap BLM = new TowerLinkMap();
+        ALM.relation = 1;
+        BLM.tower = B;
+        BLM.originalAttackRange = B.attackRange;
+        BLM.originalActionTime = B.actionTime;
+        BLM.originalBulletAttack = B.bulletAttack;
+        GlobalLink.linkedTowers[B] = BLM;
+        GlobalLink.linksTower_1.Add(BLM);
+
+        TheLink link = new TheLink();
+        link.A = A;
+        link.B = B;
+        GlobalLink.theLinks.Add(link);
+
+        GlobalLink.FlashLink();
     }
 
     public void Xiang_Ke(Tower A, Tower B)
     {
         //A克B
 
+        GlobalLink.ResetBuff();
+
+        TowerLinkMap ALM = new TowerLinkMap();
+        ALM.relation = 2;
+        ALM.tower = A;
+        ALM.originalAttackRange = A.attackRange;
+        ALM.originalActionTime = A.actionTime;
+        ALM.originalBulletAttack = A.bulletAttack;
+        GlobalLink.linkedTowers[A] = ALM;
+        GlobalLink.linksTower_2.Add(ALM);
 
 
+        TowerLinkMap BLM = new TowerLinkMap();
+        BLM.relation = 3;
+        BLM.tower = B;
+        BLM.originalAttackRange = B.attackRange;
+        BLM.originalActionTime = B.actionTime;
+        BLM.originalBulletAttack = B.bulletAttack;
+        GlobalLink.linkedTowers[B] = BLM;
+        GlobalLink.linksTower_3.Add(BLM);
+
+        TheLink link = new TheLink();
+        link.A = A;
+        link.B = B;
+        GlobalLink.theLinks.Add(link);
+
+        GlobalLink.FlashLink();
     }
 
 
@@ -238,11 +322,6 @@ public class Link : MonoBehaviour
         following = false;
         GlobalData.towerClick = true;
         transform.position = originalPosition;
-    }
-
-    private void Start()
-    {
-        originalPosition = transform.position;
     }
 
     //跟随方法主题

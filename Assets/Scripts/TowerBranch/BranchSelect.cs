@@ -24,6 +24,10 @@ public class BranchSelect : MonoBehaviour
         //初始化游戏对象
         GameObject newTower = Instantiate(tower, transform.parent.position, Quaternion.identity);
         Transform originalHole = transform.parent.gameObject.GetComponent<Tower>().hole;
+
+        //继承连接关系
+        GlobalLink.Inherit(newTower.GetComponent<Tower>(), transform.parent.gameObject.GetComponent<Tower>());
+
         // --------------------这个后面记得改成Tower，二级塔的基类--------------------
         newTower.GetComponent<Tower>().SetHole(originalHole); //设置对应的坑
 

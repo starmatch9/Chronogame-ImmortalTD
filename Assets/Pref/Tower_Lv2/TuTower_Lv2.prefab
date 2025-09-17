@@ -329,6 +329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
   attribute: 4
+  bulletAttack: 10
   attackRange: 2
   actionTime: 8
   maxNumber: 4

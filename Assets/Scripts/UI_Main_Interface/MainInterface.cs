@@ -34,6 +34,7 @@ public class MainInterface : MonoBehaviour
     {
         //重置所有静态变量
         GlobalData.ResetAllData();
+        GlobalLink.ResetAllData();
         GlobalElementPowerFunction.ResetAllData();
         GlobalEnemyGroupFunction.ResetAllData();
 

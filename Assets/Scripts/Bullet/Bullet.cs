@@ -12,7 +12,7 @@ public class Bullet : MonoBehaviour
     [Header("是否穿透伤害")]
     public bool penetrate = false;
 
-    [Header("基础伤害")]
+    [Header("基础伤害（已名存实亡，请前往塔预制件修改）")]
     [Range(0f, 100f)]public float baseAttack = 10f;
 
     [Header("移动速度")]

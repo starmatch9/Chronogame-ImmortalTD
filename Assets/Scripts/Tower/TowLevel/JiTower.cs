@@ -80,6 +80,10 @@ public class JiTower : Tower
 
         //需要锚定子弹的目标，获取子弹的行为脚本
         Bullet bulletScript = bullet.GetComponent<Bullet>();
+
+        //设置攻击伤害
+        bulletScript.baseAttack = bulletAttack;
+
         bulletScript.SetTarget(enemy);
     }
 

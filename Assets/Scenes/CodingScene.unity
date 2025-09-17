@@ -10414,9 +10414,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a93a674a3e91044d88f4d114feda1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 0
+  maxLevel: 3
   JinLock: 0
-  MuLock: 1
+  MuLock: 0
   ShuiLock: 0
   HuoLock: 0
   TuLock: 0

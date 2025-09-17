@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class TheLink
 {
-
     public Tower A;
 
     public Tower B;

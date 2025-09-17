@@ -5596,6 +5596,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI_Shade: {fileID: 1703009291}
   time: 3
+  a1: 1
+  r1: 2.9
+  i1: 1
+  a2: 1
+  r2: 3.7
+  i2: 1
 --- !u!50 &667810910
 Rigidbody2D:
   serializedVersion: 4

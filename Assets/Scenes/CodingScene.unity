@@ -5595,6 +5595,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UI_Shade: {fileID: 1703009291}
+  theLight: {fileID: 404291805979450606, guid: 94042d0087667ab4eb0399adb6676984, type: 3}
   time: 3
   a1: 1
   r1: 2.9

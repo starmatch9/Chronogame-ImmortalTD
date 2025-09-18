@@ -21,6 +21,9 @@ public class Link : MonoBehaviour
     [Header("UI冷却阴影")]
     public GameObject UI_Shade = null;
 
+    [Header("神秘光电预制件")]
+    public GameObject theLight = null;
+
     [Header("冷却时间(秒)")]
     public float time = 1f;
 
@@ -62,6 +65,8 @@ public class Link : MonoBehaviour
         GlobalLink.r2 = r2;
         GlobalLink.i1 = i1;
         GlobalLink.i2 = i2;
+
+        GlobalLink.lightPref = theLight;
     }
 
     private void Update()
@@ -108,6 +113,12 @@ public class Link : MonoBehaviour
             }
             towerB = currentTower;
             currentTower = null;
+
+            //不可选已经连接的塔
+            if (GlobalLink.linkedTowers.ContainsKey(towerA.GetComponent<Tower>()) || GlobalLink.linkedTowers.ContainsKey(towerB.GetComponent<Tower>()))
+            {
+                return;
+            }
 
             LinkTower(towerA, towerB);
 
@@ -239,10 +250,17 @@ public class Link : MonoBehaviour
         GlobalLink.linkedTowers[B] = BLM;
         GlobalLink.linksTower_1.Add(BLM);
 
+        GameObject mysteriousLight = Instantiate(theLight);
+        TheLight l = mysteriousLight.GetComponent<TheLight>();
+        l.A = A;
+        l.B = B;
+
         TheLink link = new TheLink();
         link.A = A;
         link.B = B;
+        link.light = l;
         GlobalLink.theLinks.Add(link);
+        link.light.StartMove();
 
         GlobalLink.FlashLink();
     }
@@ -272,10 +290,17 @@ public class Link : MonoBehaviour
         GlobalLink.linkedTowers[B] = BLM;
         GlobalLink.linksTower_3.Add(BLM);
 
+        GameObject mysteriousLight = Instantiate(theLight);
+        TheLight l = mysteriousLight.GetComponent<TheLight>();
+        l.A = A;
+        l.B = B;
+
         TheLink link = new TheLink();
         link.A = A;
         link.B = B;
+        link.light = l;
         GlobalLink.theLinks.Add(link);
+        link.light.StartMove();
 
         GlobalLink.FlashLink();
     }

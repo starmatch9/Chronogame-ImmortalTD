@@ -38,6 +38,9 @@ public static class GlobalLink
     //[Header("子弹间隔时间")]
     public static float i2 = 1f;
 
+    //[Header("神秘光电预制件")]
+    public static GameObject lightPref = null;
+
     //刷新连接的方法，刷新后即为增幅后的塔
     public static void FlashLink()
     {
@@ -68,14 +71,14 @@ public static class GlobalLink
             tower.enabled = false;
         }
 
-        //遍历塔对进行贴图连接显示
-        foreach (var link in theLinks)
-        {
-            //
-            //
-            Debug.Log(link.A.gameObject.name);
-            Debug.Log(link.B.gameObject.name);
-        }
+        ////遍历塔对进行贴图连接显示
+        //foreach (var link in theLinks)
+        //{
+        //    //
+        //    //
+        //    Debug.Log(link.A.gameObject.name);
+        //    Debug.Log(link.B.gameObject.name);
+        //}
     }
 
     public static void ResetBuff()
@@ -153,6 +156,8 @@ public static class GlobalLink
 
         linkedTowers.Remove(A);
         linkedTowers.Remove(B);
+        
+        link.light.Die();
 
         theLinks.Remove(link);
 
@@ -189,6 +194,15 @@ public static class GlobalLink
                     TheLink newLink = new TheLink();
                     newLink.B = link.B;
                     newLink.A = A;
+                    
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>();
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
 
                     theLinks.Add(newLink);
                 }
@@ -198,8 +212,18 @@ public static class GlobalLink
                     newLink.A = link.A;
                     newLink.B = A;
 
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>();
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
+
                     theLinks.Add(newLink);
                 }
+                link.light.Die();
                 theLinks.Remove(link);
 
             }
@@ -215,6 +239,15 @@ public static class GlobalLink
                     newLink.B = link.B;
                     newLink.A = A;
 
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>(); ;
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
+
                     theLinks.Add(newLink);
                 }
                 else if (link.B == B)
@@ -223,8 +256,18 @@ public static class GlobalLink
                     newLink.A = link.A;
                     newLink.B = A;
 
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>();
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
+
                     theLinks.Add(newLink);
                 }
+                link.light.Die();
                 theLinks.Remove(link);
             }
             else if (r == 3)
@@ -239,6 +282,15 @@ public static class GlobalLink
                     newLink.B = link.B;
                     newLink.A = A;
 
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>();
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
+
                     theLinks.Add(newLink);
                 }
                 else if (link.B == B)
@@ -247,8 +299,18 @@ public static class GlobalLink
                     newLink.A = link.A;
                     newLink.B = A;
 
+                    GameObject mysteriousLight = MonoBehaviour.Instantiate(lightPref);
+                    TheLight newLight = mysteriousLight.GetComponent<TheLight>();
+                    newLight.A = newLink.A;
+                    newLight.B = newLink.B;
+
+                    newLink.light = newLight;
+
+                    newLight.StartMove();
+
                     theLinks.Add(newLink);
                 }
+                link.light.Die();
                 theLinks.Remove(link);
             }
 

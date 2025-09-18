@@ -8,4 +8,6 @@ public class TheLink
     public Tower A;
 
     public Tower B;
+
+    public TheLight light;
 }

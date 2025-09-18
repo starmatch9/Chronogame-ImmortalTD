@@ -437,10 +437,13 @@ public class Link : MonoBehaviour
     {
         if (GlobalData.globalEnemies.Count == 0)
         {
+            GlobalMusic._Window.Play();
             GlobalData.JumpTip("准备阶段无法使用技能");
             return;
         }
 
+
+        GlobalMusic._Skill.Play();
         GlobalData.JumpTip("右击取消技能释放");
 
         following = true;

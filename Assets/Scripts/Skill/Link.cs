@@ -27,6 +27,9 @@ public class Link : MonoBehaviour
     [Header("冷却时间(秒)")]
     public float time = 1f;
 
+    [Header("连接持续时间(秒)")]
+    public float duration = 30f;
+
     [Header("——相生增益倍数——")]
     [Header("子弹伤害")]
     [Range(1f, 20f)]public float a1 = 1f;
@@ -312,6 +315,13 @@ public class Link : MonoBehaviour
         }
     }
 
+    public IEnumerator TimeCalculate(TheLink link)
+    {
+        //一段时间后取消连接
+        yield return new WaitForSeconds(duration);
+
+        GlobalLink.RemoveLink(link.A);
+    }
 
     public void Xiang_Sheng(Tower A, Tower B)
     {
@@ -351,6 +361,8 @@ public class Link : MonoBehaviour
         link.light.StartMove();
 
         GlobalLink.FlashLink();
+
+        StartCoroutine(TimeCalculate(link));
     }
 
     public void Xiang_Ke(Tower A, Tower B)
@@ -391,6 +403,8 @@ public class Link : MonoBehaviour
         link.light.StartMove();
 
         GlobalLink.FlashLink();
+
+        StartCoroutine(TimeCalculate(link));
     }
 
 
@@ -421,6 +435,12 @@ public class Link : MonoBehaviour
     //开始跟随鼠标
     public void StartFollow()
     {
+        if (GlobalData.globalEnemies.Count == 0)
+        {
+            GlobalData.JumpTip("准备阶段无法使用技能");
+            return;
+        }
+
         GlobalData.JumpTip("右击取消技能释放");
 
         following = true;

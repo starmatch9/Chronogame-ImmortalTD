@@ -6515,6 +6515,7 @@ MonoBehaviour:
   UI_Shade: {fileID: 1703009291}
   theLight: {fileID: 404291805979450606, guid: 94042d0087667ab4eb0399adb6676984, type: 3}
   time: 3
+  duration: 30
   a1: 1
   r1: 2.9
   i1: 1
@@ -17719,10 +17720,10 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 637897336}
   - {fileID: 1082339019}
-  - {fileID: 114112049}
   - {fileID: 1409143463}
   - {fileID: 128731699}
   - {fileID: 703219727}
+  - {fileID: 114112049}
   - {fileID: 630755479}
   - {fileID: 1109238263}
   - {fileID: 1344134410}

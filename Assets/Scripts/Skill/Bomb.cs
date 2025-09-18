@@ -62,6 +62,13 @@ public class Bomb : MonoBehaviour
     //开始跟随鼠标
     public void StartFollow()
     {
+        if(GlobalData.globalEnemies.Count == 0)
+        {
+            GlobalData.JumpTip("准备阶段无法使用技能");
+            return;
+        }
+
+
         GlobalData.JumpTip("右击取消技能释放");
 
         following = true;

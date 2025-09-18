@@ -154,6 +154,9 @@ public abstract class Tower : MonoBehaviour
 
         GlobalLink.RemoveLink(this);
 
+        
+        GlobalMusic.PlayOnce(GlobalMusic._Remove);
+
         //xiaohui
         TowerDie();
     }

@@ -134,6 +134,8 @@ public class MouseClickTower : MonoBehaviour
 
     IEnumerator optionCancaOpen()
     {
+        GlobalMusic._Window.Play();
+
         optionCanva.transform.localScale = Vector3.zero;
         optionCanva.SetActive(true);
         float timer = 0;

@@ -19,6 +19,11 @@ public class ShuTower : Tower
 
     public override void TowerAction()
     {
+        if(GlobalData.globalEnemies.Count == 0)
+        {
+            return;
+        }
+
         //元素力增加的协程动画
         GlobalEnemyGroupFunction.mono.StartCoroutine(AddElementPower());
 
@@ -28,6 +33,8 @@ public class ShuTower : Tower
 
     public IEnumerator AddElementPower()
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Money);
+
         SpriteRenderer renderer = elementPower.GetComponent<SpriteRenderer>();
         Vector3 originalposition = elementPower.transform.position;
 

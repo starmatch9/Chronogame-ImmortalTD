@@ -113,6 +113,8 @@ public class JiTower : Tower
     //生成荆棘
     void SpawnThorns(Enemy enemy)
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Miss);
+
         if (enemy.gameObject.GetComponent<Move>().isStopMove)
         {
             return;

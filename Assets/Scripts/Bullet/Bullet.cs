@@ -112,6 +112,8 @@ public class Bullet : MonoBehaviour
     //注意，此时目标敌人已经收到伤害
     public virtual void Die(Enemy enemy)
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Hit);
+
         //子弹死亡时，也就是销毁前需要调用的逻辑
         StartCoroutine(DieAction());
     }

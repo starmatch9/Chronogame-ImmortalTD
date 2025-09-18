@@ -84,6 +84,8 @@ public class LuTower : Tower
     //炼丹炉的生命周期
     IEnumerator furnaceLife()
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Miss);
+
         //把敌人吸过来
         GameObject enemy = FindClosestToFinishEnemy().gameObject;
         if (enemy == null)
@@ -141,6 +143,8 @@ public class LuTower : Tower
     //元素力标志
     public IEnumerator AddElementPower()
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Money);
+
         SpriteRenderer renderer = elementPower.GetComponent<SpriteRenderer>();
         Vector3 originalposition = elementPower.transform.position;
 

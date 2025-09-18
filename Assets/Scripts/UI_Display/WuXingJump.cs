@@ -44,6 +44,8 @@ public class WuXingJump : MonoBehaviour
     }
     public IEnumerator JumpIn()
     {
+        GlobalMusic._Window.Play();
+
         //修改局部坐标而非世界坐标
         Vector3 original = Vector3.zero;
         window.transform.localPosition = original;
@@ -66,6 +68,8 @@ public class WuXingJump : MonoBehaviour
 
     public IEnumerator JumpOut()
     {
+        GlobalMusic._Window.Play();
+
         //修改局部坐标而非世界坐标
         Vector3 original = new Vector3(500, 0, 0);
         window.transform.localPosition = original;

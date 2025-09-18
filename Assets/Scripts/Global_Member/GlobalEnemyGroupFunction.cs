@@ -31,6 +31,10 @@ public static class GlobalEnemyGroupFunction
         //开始释放敌人
         //item.enemySpawn.Switch();
 
+        GlobalMusic._BGM.Play();
+
+        GlobalMusic._Button.Play();
+
         GlobalData.JumpTip("敌人来袭！！！");
 
         mono.StartCoroutine(DispatchEnemy());
@@ -71,7 +75,9 @@ public static class GlobalEnemyGroupFunction
 
     //为本波次收尾
     public static void EndEnemyGroup() 
-    { 
+    {
+        GlobalMusic._BGM.Stop();
+
         if (index >= enemyGroupItems.Count)
         {
             //

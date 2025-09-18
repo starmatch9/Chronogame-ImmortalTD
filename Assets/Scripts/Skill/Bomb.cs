@@ -143,6 +143,8 @@ public class Bomb : MonoBehaviour
     //复制一份炮子弹（
     IEnumerator Dash()
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Boom);
+
         GetComponent<SpriteRenderer>().enabled = false;
 
         //0.25秒内将dash缩放为爆炸半径的大小

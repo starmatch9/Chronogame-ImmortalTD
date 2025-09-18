@@ -12,6 +12,8 @@ public class BranchSelect : MonoBehaviour
     //与TowerSelect类似
     void PlaceTower(GameObject tower)
     {
+        GlobalMusic._Button.Play();
+
         //找售价
         int price = GlobalElementPowerFunction.towerSale[tower];
         if (!GlobalElementPowerFunction.CanMinus(price))

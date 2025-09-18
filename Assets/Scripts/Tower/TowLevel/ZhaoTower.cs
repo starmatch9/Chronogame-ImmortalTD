@@ -71,20 +71,21 @@ public class ZhaoTower : Tower
     //刷新敌人列表
     private void UpdateEnemies()
     {
-        foreach (Enemy enemy in enemyList)
+        for (int i = enemyList.Count - 1; i >= 0; i--)
         {
-            //移除不需要攻击的敌人
-            if (enemy.NoMoreShotsNeeded())
+            Enemy enemy = enemyList[i];
+
+            // 移除不需要攻击的敌人
+            if (enemy == null || enemy.NoMoreShotsNeeded())
             {
-                enemyList.Remove(enemy);
+                enemyList.RemoveAt(i);
                 continue;
             }
             float distance = Vector2.Distance(transform.position, enemy.GetGameObject().transform.position);
-            //勾股定理
             float range = Mathf.Sqrt(Mathf.Pow(length / 2, 2) + Mathf.Pow(length, 2));
             if (distance > range)
             {
-                enemyList.Remove(enemy);
+                enemyList.RemoveAt(i);
                 continue;
             }
         }
@@ -102,6 +103,7 @@ public class ZhaoTower : Tower
             {
                 continue;
             }
+            GlobalMusic.PlayOnce(GlobalMusic._Accept);
             enemy.AcceptAttack(mudAttack, attackAttribute, elementAttribute);
         }
     }

@@ -55,6 +55,7 @@ public class RongTower : Tower
     //熔岩的攻击
     void LavaAttack()
     {
+       
         //列表本体总是变化，所以需要复制一份
         List<Enemy> enemiesCopy = new List<Enemy>(enemies);
 
@@ -65,6 +66,7 @@ public class RongTower : Tower
             {
                 continue;
             }
+            GlobalMusic.PlayOnce(GlobalMusic._Accept);
             enemy.AcceptAttack(lavaAttack, attackAttribute, elementAttribute);
         }
     }

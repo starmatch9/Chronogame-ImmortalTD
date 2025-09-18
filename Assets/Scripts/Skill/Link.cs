@@ -103,6 +103,8 @@ public class Link : MonoBehaviour
 
         if(towerA == null && towerB == null)
         {
+            GlobalMusic._Skill.Play();
+
             towerA = currentTower;
             currentTower = null;
         }else if(towerA != null && towerB == null)
@@ -112,6 +114,9 @@ public class Link : MonoBehaviour
                 GlobalData.JumpTip("不可连接同一个塔");
                 return;
             }
+
+            GlobalMusic._Window.Play();
+
             towerB = currentTower;
             currentTower = null;
 

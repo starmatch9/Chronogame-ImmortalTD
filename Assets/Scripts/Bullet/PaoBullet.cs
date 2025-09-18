@@ -42,6 +42,8 @@ public class PaoBullet : Bullet
 
     IEnumerator Dash()
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Boom);
+
         //0.25秒内将dash缩放为爆炸半径的大小
         float timer = 0f;
         Vector3 targetScale = Vector3.one * explosionRange * explosionRange;//应该是平方，需要测试

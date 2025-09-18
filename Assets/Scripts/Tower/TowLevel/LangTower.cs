@@ -169,6 +169,8 @@ public class LangTower : Tower
 
     IEnumerator EnemyBack(Enemy enemy) {
 
+        GlobalMusic.PlayOnce(GlobalMusic._Wave);
+
         //及时止损
         Move move = enemy.gameObject.GetComponent<Move>();
         if (move.isStopMove)

@@ -59,7 +59,6 @@ public class Wall : MonoBehaviour
 
     public IEnumerator WallLife(float wallDuration, float wallDamage)
     {
-
         //等待墙的持续时间
         //yield return new WaitForSeconds(wallDuration);
 
@@ -105,6 +104,8 @@ public class Wall : MonoBehaviour
 
     IEnumerator FallDownRotate(float fallTime)
     {
+        GlobalMusic.PlayOnce(GlobalMusic._Boom);
+
         float timer = 0f;
 
         Quaternion startRotation = transform.rotation;

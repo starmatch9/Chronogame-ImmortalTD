@@ -1,24 +1,24 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MouseClick : MonoBehaviour
 {
-    [Header("¹ØÓÚËõ·Å")]
-    //ÕâÊÇÂÖÀª×ÓÎïÌå
+    [Header("å…³äºç¼©æ”¾")]
+    //è¿™æ˜¯è½®å»“å­ç‰©ä½“
     public GameObject outline;
-    //Ô­À´µÄËõ·Å±ÈÀı
+    //åŸæ¥çš„ç¼©æ”¾æ¯”ä¾‹
     Vector3 originalScale;
-    //µÚÒ»¼¶Ëõ·Å±¶Êı
+    //ç¬¬ä¸€çº§ç¼©æ”¾å€æ•°
     public float hoverScale = 1.2f;
 
-    [Header("¹ØÓÚÕ¹¿ª")]
-    public GameObject optionCanva;//ÕâÊ±£¬ËûµÄËõ·ÅÊÇ1.428571¡£ÎªÁË·ÅÖÃ¶ªÊ§£¬Ğ´ÔÚÕâÀï
+    [Header("å…³äºå±•å¼€")]
+    public GameObject optionCanva;//è¿™æ—¶ï¼Œä»–çš„ç¼©æ”¾æ˜¯1.428571ã€‚ä¸ºäº†æ”¾ç½®ä¸¢å¤±ï¼Œå†™åœ¨è¿™é‡Œ
 
     Vector3 originalCanvaScale;
 
-    //ÅĞ¶ÏÓÃ»§ÊÇ·ñÕ¹¿ªÑ¡Ïî½çÃæ
+    //åˆ¤æ–­ç”¨æˆ·æ˜¯å¦å±•å¼€é€‰é¡¹ç•Œé¢
     bool isSelecting = false;
 
     Coroutine OpenCloseOptionCavan = null;
@@ -31,22 +31,22 @@ public class MouseClick : MonoBehaviour
     }
 
 
-    /*ÒÔÏÂÊÇÊó±ê¼ì²â·½·¨£¬Ç°Ìá£º±ØĞëÊÇÅö×²Æ÷£¡£¡£¡Ö÷ÉãÏñ»ú±ØĞëÌí¼Ó Physics2DRaycaster ×é¼ş£¡£¡£¡*/
-    /*ÒÔÏÂÁ½¸ö·½·¨Ö»Ê¹ÓÃÓë2DÎïÀíÏµÍ³ÖĞµÄspriteÎïÌå£¡£¡£¡*/
-    /*ÏëÔÚUIÏµÍ³Ê¹ÓÃµÄ»°ÓÃÕâ¸ö
+    /*ä»¥ä¸‹æ˜¯é¼ æ ‡æ£€æµ‹æ–¹æ³•ï¼Œå‰æï¼šå¿…é¡»æ˜¯ç¢°æ’å™¨ï¼ï¼ï¼ä¸»æ‘„åƒæœºå¿…é¡»æ·»åŠ  Physics2DRaycaster ç»„ä»¶ï¼ï¼ï¼*/
+    /*ä»¥ä¸‹ä¸¤ä¸ªæ–¹æ³•åªä½¿ç”¨ä¸2Dç‰©ç†ç³»ç»Ÿä¸­çš„spriteç‰©ä½“ï¼ï¼ï¼*/
+    /*æƒ³åœ¨UIç³»ç»Ÿä½¿ç”¨çš„è¯ç”¨è¿™ä¸ª
      * 
      *public void OnPointerEnter(PointerEventData eventData) {}
      *public void OnPointerExit(PointerEventData eventData) {}
      */
 
-    // Êó±êĞüÍ£
+    // é¼ æ ‡æ‚¬åœ
     public void OnMouseEnter()
     {
         transform.localScale = originalScale * hoverScale;
         outline.SetActive(true);
     }
 
-    // Êó±êÀë¿ª
+    // é¼ æ ‡ç¦»å¼€
     public void OnMouseExit()
     {
         if (isSelecting)
@@ -57,7 +57,7 @@ public class MouseClick : MonoBehaviour
         outline.SetActive(false);
     }
 
-    //Êó±ê°´ÏÂ
+    //é¼ æ ‡æŒ‰ä¸‹
     public void OnMouseDown()
     {
         if (isSelecting)
@@ -71,7 +71,7 @@ public class MouseClick : MonoBehaviour
 
         isSelecting = true;
 
-        //¹âÒíÕ¹¿ª£¡£¡
+        //å…‰ç¿¼å±•å¼€ï¼ï¼
         if (OpenCloseOptionCavan != null)
         {
             StopCoroutine(OpenCloseOptionCavan);
@@ -81,7 +81,7 @@ public class MouseClick : MonoBehaviour
 
     }
 
-    //Êó±êÌ§Æğ
+    //é¼ æ ‡æŠ¬èµ·
     public void OnMouseUp()
     {
         //if (isOnHole)
@@ -91,18 +91,18 @@ public class MouseClick : MonoBehaviour
     }
 
     //
-    //¹ØÓÚÈçºÎ½â¾öÊó±êµã»÷ÆäËûµØ·½ÖØÖÃ×´Ì¬µÄ¼ÇÂ¼£º
-    //½¨Á¢Ãæ°å£¬ÕÚµ²ÆäËû¶ÔÏó£¬Ìí¼ÓÊÂ¼şµã»÷Æ÷ÖØÖÃ×´Ì¬£¡£¡ºÜÖØÒªµÄË¼Â·£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡
+    //å…³äºå¦‚ä½•è§£å†³é¼ æ ‡ç‚¹å‡»å…¶ä»–åœ°æ–¹é‡ç½®çŠ¶æ€çš„è®°å½•ï¼š
+    //å»ºç«‹é¢æ¿ï¼Œé®æŒ¡å…¶ä»–å¯¹è±¡ï¼Œæ·»åŠ äº‹ä»¶ç‚¹å‡»å™¨é‡ç½®çŠ¶æ€ï¼ï¼å¾ˆé‡è¦çš„æ€è·¯ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼ï¼
     //
     public void MouseReset()
     {
-        //ÖØÖÃ¿Ó´óĞ¡£¬ÖØÖÃÂÖÀª
+        //é‡ç½®å‘å¤§å°ï¼Œé‡ç½®è½®å»“
         transform.localScale = originalScale;
         outline.SetActive(false);
-        //ÖØÖÃÑ¡Ïî½çÃæ
+        //é‡ç½®é€‰é¡¹ç•Œé¢
         isSelecting = false;
 
-        //ÊÕ
+        //æ”¶
         if (OpenCloseOptionCavan != null)
         {
             StopCoroutine(OpenCloseOptionCavan);
@@ -113,13 +113,15 @@ public class MouseClick : MonoBehaviour
 
     IEnumerator optionCancaOpen()
     {
+        GlobalMusic._Window.Play();
+
         optionCanva.transform.localScale = Vector3.zero;
         optionCanva.SetActive(true);
         float timer = 0;
-        //ÕâÀïµ÷½ÚÊ±³££¨ÓĞÁ½¸öµØ·½£¬±ğÂ©ÁË£©
+        //è¿™é‡Œè°ƒèŠ‚æ—¶å¸¸ï¼ˆæœ‰ä¸¤ä¸ªåœ°æ–¹ï¼Œåˆ«æ¼äº†ï¼‰
         while (timer < 0.3f)
         {
-            //´ÓÁãµ½Ô­Ê¼Ëõ·Å±ÈÀı£¬²åÖµ
+            //ä»é›¶åˆ°åŸå§‹ç¼©æ”¾æ¯”ä¾‹ï¼Œæ’å€¼
             optionCanva.transform.localScale = Vector3.Lerp(Vector3.zero, originalCanvaScale, timer / 0.3f);
             timer += Time.deltaTime;
             yield return null;
@@ -132,7 +134,7 @@ public class MouseClick : MonoBehaviour
         float timer = 0;
         while (timer < 0.3f)
         {
-            //´ÓÔ­Ê¼Ëõ·Å±ÈÀıµ½Áã£¬²åÖµ
+            //ä»åŸå§‹ç¼©æ”¾æ¯”ä¾‹åˆ°é›¶ï¼Œæ’å€¼
             optionCanva.transform.localScale = Vector3.Lerp(originalCanvaScale, Vector3.zero, timer / 0.3f);
             timer += Time.deltaTime;
             yield return null;

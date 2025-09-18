@@ -18,6 +18,11 @@ public class ZuanTower : Tower
 
     public override void TowerAction()
     {
+        if (GlobalData.globalEnemies.Count == 0)
+        {
+            return;
+        }
+
         Shoot();
     }
 

@@ -1,15 +1,15 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-//¼Ç×¡£¬Õâ¸ö½Å±¾¹ÒÔØÔÚ¡°Setting¡±¶ÔÏóÉÏ
+//è®°ä½ï¼Œè¿™ä¸ªè„šæœ¬æŒ‚è½½åœ¨â€œSettingâ€å¯¹è±¡ä¸Š
 public class SettingButtons : MonoBehaviour
 {
-    //·Ö±æÂÊÁĞ±í
+    //åˆ†è¾¨ç‡åˆ—è¡¨
     List<string> resolutions = new List<string>();
 
-    //ÏÔÊ¾Ä£Ê½ÁĞ±í
+    //æ˜¾ç¤ºæ¨¡å¼åˆ—è¡¨
     List<string> displays = new List<string>();
 
     public TMP_Text currentDisplay;
@@ -21,11 +21,11 @@ public class SettingButtons : MonoBehaviour
     {
         if (Screen.fullScreen)
         {
-            currentDisplay.text = "È«  ÆÁ";
+            currentDisplay.text = "å…¨  å±";
         }
         else
         {
-            currentDisplay.text = "´°  ¿Ú";
+            currentDisplay.text = "çª—  å£";
         }
 
         if(Screen.height == 1440 || Screen.height == 1080 || Screen.height == 720)
@@ -33,19 +33,21 @@ public class SettingButtons : MonoBehaviour
             currentResolution.text = Screen.height * 16 / 9 + "*" + Screen.height;
         }
 
-        //³õÊ¼»¯·Ö±æÂÊÁĞ±í
+        //åˆå§‹åŒ–åˆ†è¾¨ç‡åˆ—è¡¨
         resolutions.Add("1280*720");
         resolutions.Add("1920*1080");
         resolutions.Add("2560*1440");
 
-        //³õÊ¼»¯ÏÔÊ¾Ä£Ê½ÁĞ±í
-        displays.Add("´°  ¿Ú");
-        displays.Add("È«  ÆÁ");
+        //åˆå§‹åŒ–æ˜¾ç¤ºæ¨¡å¼åˆ—è¡¨
+        displays.Add("çª—  å£");
+        displays.Add("å…¨  å±");
     }
 
     public void LeftDisplaySelection()
     {
-        //µÃµ½ÕıÈ·µÄË÷Òı
+        GlobalMusic._Button.Play();
+
+        //å¾—åˆ°æ­£ç¡®çš„ç´¢å¼•
         int selectionIndex = 0;
         for (int i = 0; i < displays.Count; i++)
         {
@@ -56,7 +58,7 @@ public class SettingButtons : MonoBehaviour
             }
         }
 
-        //Ë÷Òı¼õÒ»ºó¸ü¸ÄÊı×Ö
+        //ç´¢å¼•å‡ä¸€åæ›´æ”¹æ•°å­—
         int targetIndex = selectionIndex - 1;
         if(targetIndex >= 0 && targetIndex < displays.Count)
         {
@@ -66,6 +68,8 @@ public class SettingButtons : MonoBehaviour
     }
     public void RightDisplaySelection() 
     {
+        GlobalMusic._Button.Play();
+
         int selectionIndex = 0;
         for (int i = 0; i < displays.Count; i++)
         {
@@ -76,7 +80,7 @@ public class SettingButtons : MonoBehaviour
             }
         }
 
-        //Ë÷Òı¼ÓÒ»ºó¸ü¸ÄÊı×Ö
+        //ç´¢å¼•åŠ ä¸€åæ›´æ”¹æ•°å­—
         int targetIndex = selectionIndex + 1;
         if (targetIndex >= 0 && targetIndex < displays.Count)
         {
@@ -86,7 +90,9 @@ public class SettingButtons : MonoBehaviour
 
     public void LeftResolutionSelection()
     {
-        //µÃµ½ÕıÈ·µÄË÷Òı
+        GlobalMusic._Button.Play();
+
+        //å¾—åˆ°æ­£ç¡®çš„ç´¢å¼•
         int selectionIndex = 0;
         for (int i = 0; i < resolutions.Count; i++)
         {
@@ -97,7 +103,7 @@ public class SettingButtons : MonoBehaviour
             }
         }
 
-        //Ë÷Òı¼õÒ»ºó¸ü¸ÄÊı×Ö
+        //ç´¢å¼•å‡ä¸€åæ›´æ”¹æ•°å­—
         int targetIndex = selectionIndex - 1;
         if (targetIndex >= 0 && targetIndex < resolutions.Count)
         {
@@ -107,6 +113,8 @@ public class SettingButtons : MonoBehaviour
 
     public void RightResolutionSelection()
     {
+        GlobalMusic._Button.Play();
+
         int selectionIndex = 0;
         for (int i = 0; i < resolutions.Count; i++)
         {
@@ -126,12 +134,16 @@ public class SettingButtons : MonoBehaviour
 
     public void ExitGame()
     {
+        GlobalMusic._Button.Play();
+
         Application.Quit();
     }
 
     public void SaveChange()
     {
-        if(currentResolution.text == "1280*720")
+        GlobalMusic._Button.Play();
+
+        if (currentResolution.text == "1280*720")
         {
             Screen.SetResolution(1280, 720, true);
         }
@@ -144,11 +156,11 @@ public class SettingButtons : MonoBehaviour
             Screen.SetResolution(2569, 1440, true);
         }
 
-        if(currentDisplay.text == "´°  ¿Ú")
+        if(currentDisplay.text == "çª—  å£")
         {
             Screen.fullScreen = false;
         }
-        else if(currentDisplay.text == "È«  ÆÁ")
+        else if(currentDisplay.text == "å…¨  å±")
         {
             Screen.fullScreen = true;
         }

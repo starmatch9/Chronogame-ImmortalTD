@@ -33,6 +33,7 @@ public class SoundEffects : MonoBehaviour
         GlobalMusic._Miss = miss;
         GlobalMusic._Money = money;
         GlobalMusic._Wave = wave;
+        GlobalMusic._Accept = accept;
         GlobalMusic._Remove = remove;
     }
 

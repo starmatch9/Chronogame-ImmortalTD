@@ -16,6 +16,8 @@ public class MouseRemove : MonoBehaviour
     //开始跟随鼠标
     public void StartFollow()
     {
+        GlobalData.JumpTip("右击取消技能释放");
+
         following = true;
         GlobalData.towerClick = false;
     }
@@ -54,6 +56,7 @@ public class MouseRemove : MonoBehaviour
             StopFollow();
         }else if (following && !canClick && Input.GetMouseButton(0))
         {
+            GlobalData.JumpTip("请选中目标塔");
             StopFollow();
         }
     }

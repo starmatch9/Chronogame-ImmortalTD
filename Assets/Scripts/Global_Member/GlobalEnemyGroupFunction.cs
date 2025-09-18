@@ -30,6 +30,9 @@ public static class GlobalEnemyGroupFunction
         item = enemyGroupItems[index];
         //开始释放敌人
         //item.enemySpawn.Switch();
+
+        GlobalData.JumpTip("敌人来袭！！！");
+
         mono.StartCoroutine(DispatchEnemy());
 
         //关闭按钮

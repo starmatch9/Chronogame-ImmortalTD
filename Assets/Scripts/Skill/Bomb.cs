@@ -62,6 +62,8 @@ public class Bomb : MonoBehaviour
     //开始跟随鼠标
     public void StartFollow()
     {
+        GlobalData.JumpTip("右击取消技能释放");
+
         following = true;
         GlobalData.towerClick = false;
     }
@@ -131,6 +133,7 @@ public class Bomb : MonoBehaviour
         }
         else
         {
+            GlobalData.JumpTip("爆炸技能只能放置在路面上");
             StopFollow();
             return;
         }

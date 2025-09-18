@@ -1,9 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public static class GlobalData
 {
+    public static MonoBehaviour mono;
+
     //敌人列表
     public static List<Enemy> globalEnemies = new List<Enemy>();
 
@@ -40,6 +44,10 @@ public static class GlobalData
 
     //[Header("失败弹窗游戏对象")]
     public static GameObject noPassWindow = null;
+
+    //[Header("提示弹窗游戏对象")]
+    public static GameObject tipWindow = null;
+
 
     //枚举本身即为静态类型
     //在后续开发中，敌人的接受攻击函数，传入此攻击属性作为参数，达到抗性效果
@@ -123,5 +131,57 @@ public static class GlobalData
 
         noPassWindow.SetActive(true);
 
+    }
+
+
+    //弹出提示方法
+    static Coroutine tipCoroutine = null;
+    public static void JumpTip(string text)
+    {
+        TextMeshProUGUI textComponent = tipWindow.GetComponentInChildren<TextMeshProUGUI>();
+        textComponent.text = text;
+
+        if(tipCoroutine != null)
+        {
+
+            mono.StopCoroutine(tipCoroutine);
+            tipCoroutine = null;
+        }
+        tipCoroutine = mono.StartCoroutine(Jump());
+    }
+    public static System.Collections.IEnumerator Jump()
+    {
+        //修改局部坐标而非世界坐标
+        Vector3 original = Vector3.zero;
+        tipWindow.transform.localPosition = original;
+        float timer = 0;
+        //一秒钟如何
+        while (timer < 0.5f)
+        {
+            //从0到-200插值
+            float y = Mathf.Lerp(0, -200, timer / 0.5f);
+            Vector3 v = new Vector3 (tipWindow.transform.localPosition.x, y, tipWindow.transform.localPosition.z);
+            tipWindow.transform.localPosition = v;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        tipWindow.transform.localPosition = new Vector3(tipWindow.transform.localPosition.x, -200, tipWindow.transform.localPosition.z);
+        yield return new WaitForSeconds(2f);
+        timer = 0;
+        //一秒钟如何
+        while (timer < 0.5f)
+        {
+            //从-200到0插值
+            float y = Mathf.Lerp(-200, 0, timer / 0.5f);
+            Vector3 v = new Vector3(tipWindow.transform.localPosition.x, y, tipWindow.transform.localPosition.z);
+            tipWindow.transform.localPosition = v;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        tipWindow.transform.localPosition = new Vector3(tipWindow.transform.localPosition.x, 0, tipWindow.transform.localPosition.z);
+
+        tipCoroutine = null;
     }
 }

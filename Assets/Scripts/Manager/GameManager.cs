@@ -20,8 +20,13 @@ public class GameManager : MonoBehaviour
     [Header("失败弹窗游戏对象")]
     public GameObject noPassWindow = null;
 
+    [Header("提示弹窗游戏对象")]
+    public GameObject tipWindow = null;
+
     void Awake()
     {
+        GlobalData.mono = this;
+
         GlobalData.maxNumber = maxNumber;
 
         //关卡结束相关
@@ -29,6 +34,7 @@ public class GameManager : MonoBehaviour
         GlobalData.nextName = nextName;
         GlobalData.passWindow = passWindow;
         GlobalData.noPassWindow = noPassWindow;
+        GlobalData.tipWindow = tipWindow;
     }
 
     private void Start()

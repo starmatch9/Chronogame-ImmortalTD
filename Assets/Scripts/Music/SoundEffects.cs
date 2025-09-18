@@ -20,7 +20,7 @@ public class SoundEffects : MonoBehaviour
     public GameObject accept;
     public GameObject remove;
 
-    void Start()
+    void Awake()
     {
         GlobalMusic._Button = button;
         GlobalMusic._Page = page;

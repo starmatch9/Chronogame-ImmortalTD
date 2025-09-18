@@ -23,6 +23,12 @@ public class GameManager : MonoBehaviour
     [Header("提示弹窗游戏对象")]
     public GameObject tipWindow = null;
 
+    [Header("介绍窗口游戏对象")]
+    public GameObject introWindow = null;
+
+    [Header("Page的介绍列表")]
+    public List<GameObject> list = new List<GameObject>();
+
     void Awake()
     {
         GlobalData.mono = this;
@@ -44,6 +50,38 @@ public class GameManager : MonoBehaviour
         PlayerPrefs.SetInt(name, 1);
         PlayerPrefs.Save();
 
+        if (list.Count == 0)
+        {
+            introWindow.SetActive(false);
+        }
+        else
+        {
+            pageIndex = 0;
+            introWindow.SetActive(true);
+            NextPage();
+        }
+    }
+
+    int pageIndex = 0;
+    public void NextPage()
+    {
+        GlobalMusic._Page.Play();
+
+        if(pageIndex >= list.Count)
+        {
+            //整个禁用（因为是父物体所以就确保都禁了）
+            introWindow.SetActive(false);
+            return;
+        }
+
+        if(pageIndex - 1 >= 0)
+        {
+            list[pageIndex - 1].SetActive(false);
+        }
+
+        list[pageIndex].SetActive(true);
+
+        pageIndex++;
 
     }
 }

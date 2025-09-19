@@ -85,6 +85,8 @@ MonoBehaviour:
   penetrate: 0
   baseAttack: 10
   moveSpeed: 5
+  attackAttribute: 2
+  elementAttribute: 5
 --- !u!1 &8624567754075745626
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,8 +113,8 @@ Transform:
   m_GameObject: {fileID: 8624567754075745626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalPosition: {x: 0.054, y: 0, z: 0}
+  m_LocalScale: {x: 1.7999998, y: 1.7999998, z: 1.7999998}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 7852324051640807291}
@@ -158,8 +160,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 03fb09098643cdd4583f715057ef60e3, type: 3}
-  m_Color: {r: 0.41509432, g: 0.525806, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 6d56307f2628f9f4caec9720c5f79954, type: 3}
+  m_Color: {r: 0.7216981, g: 0.7739964, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

@@ -83,12 +83,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  penetrate: 0
   baseAttack: 5
   moveSpeed: 5
+  attackAttribute: 2
+  elementAttribute: 5
   explosionAttack: 5
   explosionRange: 2
   bulletRenderer: {fileID: 2085998699466803353}
   dash: {fileID: 8733015174411134369}
+  PattackAttribute: 2
+  PelementAttribute: 5
 --- !u!1 &1762608457048450231
 GameObject:
   m_ObjectHideFlags: 0
@@ -114,13 +119,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1762608457048450231}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.22, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
+  m_LocalRotation: {x: -0, y: -0, z: -0.6980593, w: 0.7160399}
+  m_LocalPosition: {x: 0.068, y: -0.125, z: 0}
+  m_LocalScale: {x: 1.7, y: 1.7, z: 1.7}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2750276084879732061}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -88.543}
 --- !u!212 &2085998699466803353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -162,7 +167,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 524e1c3f16cea0f4881e5721138af605, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1ab5c74f7aebe374cae1143436b7c975, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -246,7 +251,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: ce07df1012fbea347841372aa1debafd, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 928c23e3b0357224a9186b327e2ae6a4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

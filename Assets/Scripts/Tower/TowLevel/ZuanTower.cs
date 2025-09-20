@@ -23,6 +23,11 @@ public class ZuanTower : Tower
             return;
         }
 
+        if (FindClosestToFinishEnemy() == null)
+        {
+            return;
+        }
+
         Shoot();
     }
 

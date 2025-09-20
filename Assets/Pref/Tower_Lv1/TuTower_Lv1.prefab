@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1059432815
-  m_SortingLayer: -1
+  m_SortingLayer: -2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 62f6927b2ec0732498ca763d5f6379df, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -369,6 +369,7 @@ GameObject:
   - component: {fileID: 7305592590299381523}
   - component: {fileID: 6792408033642795174}
   - component: {fileID: 2176773656992267625}
+  - component: {fileID: 2935563115301792927}
   m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
@@ -489,6 +490,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2935563115301792927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4212180713868861152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f19fb0aa3bdb704599878fc838f02e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 4287608571632905629, guid: 30dc60b08289452419b71f68ed8ac333, type: 3}
 --- !u!1 &4722522666536586205
 GameObject:
   m_ObjectHideFlags: 0

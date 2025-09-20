@@ -11,6 +11,8 @@ public class TowerLevelUp : MonoBehaviour
     //与TowerSelect类似
     void PlaceTower(GameObject tower)
     {
+        GlobalData.priceWindow.GetComponent<FollowMouse>().StopFollow();
+
         GlobalMusic._Button.Play();
 
         //找售价
@@ -18,6 +20,8 @@ public class TowerLevelUp : MonoBehaviour
         if (!GlobalElementPowerFunction.CanMinus(price))
         {
             //输出“元素力数量不够”的字样
+            GlobalData.JumpTip("元素力数量不足。");
+
             return;
         }
         GlobalElementPowerFunction.MinusCount(price);
@@ -59,6 +63,8 @@ public class TowerLevelUp : MonoBehaviour
     //选择分支
     public void BranchSelect()
     {
+
         PlaceTower(branch);
     }
+
 }

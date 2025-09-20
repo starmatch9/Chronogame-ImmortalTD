@@ -162,6 +162,7 @@ GameObject:
   - component: {fileID: 6867466497121430295}
   - component: {fileID: 2290672726879344764}
   - component: {fileID: 5193492416125824720}
+  - component: {fileID: 6669011688444513678}
   m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
@@ -282,6 +283,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &6669011688444513678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4111513364515202837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f19fb0aa3bdb704599878fc838f02e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 1093827655561632576, guid: ba05e7926ac0728469754199ec4c403b, type: 3}
 --- !u!1 &4287608571632905629
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,6 +364,7 @@ GameObject:
   - component: {fileID: 5082448504388097469}
   - component: {fileID: 495891486192114304}
   - component: {fileID: 7840146639151776397}
+  - component: {fileID: 2376454930294443932}
   m_Layer: 6
   m_Name: Button
   m_TagString: Untagged
@@ -470,6 +485,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2376454930294443932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4515530313100491105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f19fb0aa3bdb704599878fc838f02e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tower: {fileID: 4339834107446091296, guid: a7c97c21d56f5c2479205d1961e28ec8, type: 3}
 --- !u!1 &4687616144687050793
 GameObject:
   m_ObjectHideFlags: 0

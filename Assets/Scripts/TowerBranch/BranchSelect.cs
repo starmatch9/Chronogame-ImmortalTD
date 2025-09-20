@@ -12,6 +12,8 @@ public class BranchSelect : MonoBehaviour
     //与TowerSelect类似
     void PlaceTower(GameObject tower)
     {
+        GlobalData.priceWindow.GetComponent<FollowMouse>().StopFollow();
+
         GlobalMusic._Button.Play();
 
         //找售价
@@ -60,12 +62,14 @@ public class BranchSelect : MonoBehaviour
     //选择分支1
     public void Branch1Select()
     {
+
         PlaceTower(branch_1);
     }
 
     //选择分支2
     public void Branch2Select()
     {
+
         PlaceTower(branch_2);
     }
 }

@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviour
     [Header("介绍窗口游戏对象")]
     public GameObject introWindow = null;
 
+    [Header("价格窗口游戏对象")]
+    public GameObject priceWindow = null;
+
     [Header("Page的介绍列表")]
     public List<GameObject> list = new List<GameObject>();
 
@@ -41,6 +44,7 @@ public class GameManager : MonoBehaviour
         GlobalData.passWindow = passWindow;
         GlobalData.noPassWindow = noPassWindow;
         GlobalData.tipWindow = tipWindow;
+        GlobalData.priceWindow = priceWindow;
     }
 
     private void Start()

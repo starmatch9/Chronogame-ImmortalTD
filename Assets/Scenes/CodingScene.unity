@@ -4915,10 +4915,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialElementPower: 99999
   _JinTower: 100
-  _MuTower: 100
-  _ShuiTower: 100
-  _HuoTower: 100
-  _TuTower: 100
+  _MuTower: 200
+  _ShuiTower: 300
+  _HuoTower: 400
+  _TuTower: 500
   _JinTower_Lv1: 0
   _MuTower_Lv1: 0
   _ShuiTower_Lv1: 0

@@ -215,7 +215,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e07574b652666544b9a9961683ce3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.7
   direction: 4
   roadTilemap: {fileID: 0}
   survivalTime: 0
@@ -245,9 +245,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62b15e023a924b549bdd9999ac21965d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 30
   elementAttribute: 3
-  physicsDefense: 0
+  physicsDefense: 1
   magicDefense: 0
   unbeatable: 0
 --- !u!1 &6559222777452973245

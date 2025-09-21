@@ -169,5 +169,5 @@ MonoBehaviour:
   penetrate: 0
   baseAttack: 10
   moveSpeed: 5
-  attackAttribute: 2
-  elementAttribute: 5
+  attackAttribute: 1
+  elementAttribute: 0

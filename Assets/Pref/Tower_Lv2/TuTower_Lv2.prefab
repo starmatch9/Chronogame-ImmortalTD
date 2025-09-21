@@ -329,15 +329,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
   attribute: 4
-  bulletAttack: 10
+  bulletAttack: 0
   attackRange: 2
-  actionTime: 8
-  maxNumber: 4
-  wallDuration: 5
-  wallDamage: 40
+  actionTime: 6.5
+  maxNumber: 3
+  wallDuration: 5.5
+  wallDamage: 37
   wallPrefab: {fileID: 6600280846830873079, guid: 1c611249c9c585546a3c0c27b23d751e, type: 3}
-  attackAttribute: 2
-  elementAttribute: 5
+  attackAttribute: 1
+  elementAttribute: 4
 --- !u!1 &4515530313100491105
 GameObject:
   m_ObjectHideFlags: 0

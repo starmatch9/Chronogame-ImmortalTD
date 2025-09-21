@@ -292,17 +292,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hole: {fileID: 0}
   attribute: 4
-  bulletAttack: 10
-  attackRange: 1.5
-  actionTime: 1.6
+  bulletAttack: 0
+  attackRange: 0
+  actionTime: 0.5
   Tips: "\u6CE8\u610F\uFF1A\u6CBC\u6CFD\u5854\u7684\u201C\u7D22\u654C\u8303\u56F4\u201D\u4E0D\u751F\u6548\u3002\u53EF\u4EE5\u90FD\u8BBE\u7F6E\u4E3A0\u51CF\u5C11\u6027\u80FD\u5F00\u9500"
   length: 3
-  slowFactor: 0.684
+  slowFactor: 0.7
   enemyList: []
   mudPrefab: {fileID: 2169182946583768639, guid: 4638c7eef6456a44daeb8a5d31f9aa4b, type: 3}
-  mudAttack: 20
+  mudAttack: 5
   attackAttribute: 2
-  elementAttribute: 5
+  elementAttribute: 4
 --- !u!1 &5184420204636894131
 GameObject:
   m_ObjectHideFlags: 0

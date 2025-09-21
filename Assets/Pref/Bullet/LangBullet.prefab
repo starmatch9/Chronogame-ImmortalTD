@@ -85,8 +85,8 @@ MonoBehaviour:
   penetrate: 0
   baseAttack: 10
   moveSpeed: 5
-  attackAttribute: 2
-  elementAttribute: 5
+  attackAttribute: 0
+  elementAttribute: 2
 --- !u!1 &8624567754075745626
 GameObject:
   m_ObjectHideFlags: 0

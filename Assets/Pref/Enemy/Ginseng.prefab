@@ -262,7 +262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e07574b652666544b9a9961683ce3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.4
   direction: 4
   roadTilemap: {fileID: 0}
   survivalTime: 0
@@ -294,7 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   elementAttribute: 1
-  physicsDefense: 0
+  physicsDefense: 1
   magicDefense: 0
   unbeatable: 0
   littleGinsengPrefab: {fileID: 2556877316511395142, guid: 13050237ca63af149955b4a29bc3e6b2, type: 3}

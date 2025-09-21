@@ -83,13 +83,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
-  penetrate: 0
-  baseAttack: 5
+  penetrate: 1
+  baseAttack: 0
   moveSpeed: 5
-  attackAttribute: 2
-  elementAttribute: 5
-  explosionAttack: 5
-  explosionRange: 2
+  attackAttribute: 0
+  elementAttribute: 3
+  explosionAttack: 75
+  explosionRange: 1.35
   bulletRenderer: {fileID: 2085998699466803353}
   dash: {fileID: 8733015174411134369}
   PattackAttribute: 2

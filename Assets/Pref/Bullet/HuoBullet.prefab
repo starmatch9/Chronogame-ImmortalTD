@@ -168,11 +168,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   penetrate: 0
-  baseAttack: 5
+  baseAttack: 0
   moveSpeed: 5
   attackAttribute: 0
   elementAttribute: 3
-  explosionAttack: 5
+  explosionAttack: 11.5
   explosionRange: 1.15
   bulletRenderer: {fileID: 2074054901169582920}
   dash: {fileID: 7036875721465653985}

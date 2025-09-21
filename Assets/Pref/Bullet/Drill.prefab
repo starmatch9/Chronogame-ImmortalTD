@@ -102,8 +102,8 @@ MonoBehaviour:
   penetrate: 1
   baseAttack: 10
   moveSpeed: 5
-  attackAttribute: 2
-  elementAttribute: 5
+  attackAttribute: 1
+  elementAttribute: 0
 --- !u!60 &4179397242184804836
 PolygonCollider2D:
   m_ObjectHideFlags: 0

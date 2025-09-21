@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e07574b652666544b9a9961683ce3e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
+  speed: 0.5
   direction: 4
   roadTilemap: {fileID: 0}
   survivalTime: 0
@@ -321,12 +321,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d320ed03fd0e4f54b858fd52a390f46f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 30
   elementAttribute: 2
   physicsDefense: 0
-  magicDefense: 0
+  magicDefense: 5
   unbeatable: 1
-  maxNumber: 5
+  maxNumber: 2
   Shield: {fileID: 6445665016764927265}
 --- !u!1 &5240778941763849681
 GameObject:

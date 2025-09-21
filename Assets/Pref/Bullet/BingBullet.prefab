@@ -169,8 +169,8 @@ MonoBehaviour:
   penetrate: 0
   baseAttack: 5
   moveSpeed: 5
-  attackAttribute: 2
-  elementAttribute: 5
+  attackAttribute: 0
+  elementAttribute: 2
   snowPrefab: {fileID: 355812718014240502, guid: 1498643219becc54db214b265339804e, type: 3}
-  freezeTime: 2.7
+  freezeTime: 5
   mul: 1.2

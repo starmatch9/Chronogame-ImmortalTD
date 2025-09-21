@@ -48,11 +48,11 @@ MonoBehaviour:
   hole: {fileID: 0}
   attribute: 0
   bulletAttack: 10
-  attackRange: 3.6
-  actionTime: 0.6
-  damage: 5
+  attackRange: 3
+  actionTime: 2.3
+  damage: 35
   drill: {fileID: 4051112680635372469, guid: b636d28350d71a84daba5c5ac4cbc38e, type: 3}
-  maxPenetrate: 4
+  maxPenetrate: 3
 --- !u!1 &4246478310408755343
 GameObject:
   m_ObjectHideFlags: 0

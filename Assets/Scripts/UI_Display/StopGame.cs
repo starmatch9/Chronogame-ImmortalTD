@@ -49,6 +49,12 @@ public class StopGame : MonoBehaviour
         {
             tower.enabled = false;
         }
+
+        //所有技能停止冷却
+        GlobalData.bomb.StopCold();
+        GlobalData.link.StopCold();
+
+
     }
     
     public void BackGame()
@@ -96,6 +102,10 @@ public class StopGame : MonoBehaviour
         {
             tower.enabled = true;
         }
+
+        //所有技能继续冷却
+        GlobalData.bomb.ContinueCold();
+        GlobalData.link.ContinueCold();
     }
 
     //

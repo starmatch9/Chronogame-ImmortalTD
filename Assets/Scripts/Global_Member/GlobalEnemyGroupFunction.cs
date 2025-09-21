@@ -37,6 +37,10 @@ public static class GlobalEnemyGroupFunction
 
         GlobalData.JumpTip("敌人来袭！！！");
 
+        //冷却继续
+        GlobalData.bomb.ContinueCold();
+        GlobalData.link.ContinueCold();
+
         mono.StartCoroutine(DispatchEnemy());
 
         //关闭按钮
@@ -77,6 +81,10 @@ public static class GlobalEnemyGroupFunction
     public static void EndEnemyGroup() 
     {
         GlobalMusic._BGM.Stop();
+
+        //冷却暂停
+        GlobalData.bomb.StopCold();
+        GlobalData.link.StopCold();
 
         if (index >= enemyGroupItems.Count)
         {

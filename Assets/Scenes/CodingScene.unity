@@ -9710,7 +9710,7 @@ MonoBehaviour:
   - enemySpawnGroup:
     - {fileID: 1285216395}
     - {fileID: 1850281429}
-    timeDiff: 0.5
+    timeDiff: 3.99
     elementPower: 606
   - enemySpawnGroup:
     - {fileID: 1892255207}

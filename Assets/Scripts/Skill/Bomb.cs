@@ -11,6 +11,8 @@ public class Bomb : MonoBehaviour
 
     bool following = false;
 
+    bool stop = false;
+
     Coroutine coldCoroutine = null;
 
     [Header("UI冷却阴影")]
@@ -41,6 +43,16 @@ public class Bomb : MonoBehaviour
         coldCoroutine = StartCoroutine(fill());
     }
 
+    public void StopCold()
+    {
+        stop = true; 
+    }
+    public void ContinueCold()
+    {
+        stop = false;
+    }
+
+
     IEnumerator fill()
     {
         UI_Shade.SetActive(true);
@@ -50,6 +62,11 @@ public class Bomb : MonoBehaviour
         float timer = 0;
         while(timer < time)
         {
+            while (stop)
+            {
+                yield return null;
+            }
+
             image.fillAmount = Mathf.Lerp(1f, 0f, timer / time);
 
             timer += Time.deltaTime;
@@ -82,6 +99,11 @@ public class Bomb : MonoBehaviour
         following = false;
         GlobalData.towerClick = true;
         transform.position = originalPosition;
+    }
+
+    private void Awake()
+    {
+        GlobalData.bomb = this;
     }
 
     private void Start()

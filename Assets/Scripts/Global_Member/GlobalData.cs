@@ -51,6 +51,12 @@ public static class GlobalData
     //[Header("价格窗口游戏对象")]
     public static GameObject priceWindow = null;
 
+    //技能：炸弹
+    public static Bomb bomb = null;
+
+    //技能：连接
+    public static Link link = null;
+
 
     //枚举本身即为静态类型
     //在后续开发中，敌人的接受攻击函数，传入此攻击属性作为参数，达到抗性效果

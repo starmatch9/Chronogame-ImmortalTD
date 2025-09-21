@@ -10,6 +10,8 @@ public class Link : MonoBehaviour
 
     bool following = false;
 
+    bool stop = false;
+
     Coroutine coldCoroutine = null;
 
     //是否可以点击，即鼠标在塔的上方
@@ -58,6 +60,11 @@ public class Link : MonoBehaviour
     GameObject towerA = null;
     GameObject towerB = null;
 
+    private void Awake()
+    {
+        GlobalData.link = this;
+    }
+
     void Start()
     {
         originalPosition = transform.position;
@@ -97,6 +104,14 @@ public class Link : MonoBehaviour
         }
     }
 
+    public void StopCold()
+    {
+        stop = true;
+    }
+    public void ContinueCold()
+    {
+        stop = false;
+    }
     public void Prune()
     {
         if(currentTower == null)
@@ -423,6 +438,11 @@ public class Link : MonoBehaviour
         float timer = 0;
         while (timer < time)
         {
+            while (stop)
+            {
+                yield return null;
+            }
+
             image.fillAmount = Mathf.Lerp(1f, 0f, timer / time);
 
             timer += Time.deltaTime;

@@ -1,76 +1,76 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
 public class ElementPowerManager : MonoBehaviour
 {
-    //ºóĞøĞèÒªÓÃÀ´ºÍ¡°²¨´Î¹ÜÀíÆ÷¡±ÅäºÏ¹ÜÀíÔªËØÁ¦ÊıÁ¿
+    //åç»­éœ€è¦ç”¨æ¥å’Œâ€œæ³¢æ¬¡ç®¡ç†å™¨â€é…åˆç®¡ç†å…ƒç´ åŠ›æ•°é‡
 
-    //ÕâÀïĞèÒªÅäÖÃÃ¿¸öËş·ÅÖÃĞèÒªµÄ»õ±ÒÊıÁ¿
+    //è¿™é‡Œéœ€è¦é…ç½®æ¯ä¸ªå¡”æ”¾ç½®éœ€è¦çš„è´§å¸æ•°é‡
 
-    [Header("³õÊ¼½ğ¶î")]
+    [Header("åˆå§‹é‡‘é¢")]
     [Range(0, 99999)]public int initialElementPower = 0;
 
-    [Header("Îå×ù»ù´¡ËşµÄÊÛ¼Û")]
-    [Header("½ğ")]
+    [Header("äº”åº§åŸºç¡€å¡”çš„å”®ä»·")]
+    [Header("é‡‘")]
     [Range(0, 99999)] public int _JinTower = 0;
-    [Header("Ä¾")]
+    [Header("æœ¨")]
     [Range(0, 99999)] public int _MuTower = 0;
-    [Header("Ë®")]
+    [Header("æ°´")]
     [Range(0, 99999)] public int _ShuiTower = 0;
-    [Header("»ğ")]
+    [Header("ç«")]
     [Range(0, 99999)] public int _HuoTower = 0;
-    [Header("ÍÁ")]
+    [Header("åœŸ")]
     [Range(0, 99999)] public int _TuTower = 0;
 
-    [Header("Îå×ù»ù´¡ËşLv1µÄÊÛ¼Û")]
-    [Header("½ğ")]
+    [Header("äº”åº§åŸºç¡€å¡”Lv1çš„å”®ä»·")]
+    [Header("é‡‘")]
     [Range(0, 99999)] public int _JinTower_Lv1 = 0;
-    [Header("Ä¾")]
+    [Header("æœ¨")]
     [Range(0, 99999)] public int _MuTower_Lv1 = 0;
-    [Header("Ë®")]
+    [Header("æ°´")]
     [Range(0, 99999)] public int _ShuiTower_Lv1 = 0;
-    [Header("»ğ")]
+    [Header("ç«")]
     [Range(0, 99999)] public int _HuoTower_Lv1 = 0;
-    [Header("ÍÁ")]
+    [Header("åœŸ")]
     [Range(0, 99999)] public int _TuTower_Lv1 = 0;
 
-    [Header("Îå×ù»ù´¡ËşLv2µÄÊÛ¼Û")]
-    [Header("½ğ")]
+    [Header("äº”åº§åŸºç¡€å¡”Lv2çš„å”®ä»·")]
+    [Header("é‡‘")]
     [Range(0, 99999)] public int _JinTower_Lv2 = 0;
-    [Header("Ä¾")]
+    [Header("æœ¨")]
     [Range(0, 99999)] public int _MuTower_Lv2 = 0;
-    [Header("Ë®")]
+    [Header("æ°´")]
     [Range(0, 99999)] public int _ShuiTower_Lv2 = 0;
-    [Header("»ğ")]
+    [Header("ç«")]
     [Range(0, 99999)] public int _HuoTower_Lv2 = 0;
-    [Header("ÍÁ")]
+    [Header("åœŸ")]
     [Range(0, 99999)] public int _TuTower_Lv2 = 0;
 
-    [Header("Ê®×ù¶ş¼¶ËşµÄÊÛ¼Û")]
-    [Header("×ê")]
+    [Header("ååº§äºŒçº§å¡”çš„å”®ä»·")]
+    [Header("é’»")]
     [Range(0, 99999)] public int _ZuanTower = 0;
-    [Header("Â¯")]
+    [Header("ç‚‰")]
     [Range(0, 99999)] public int _LuTower = 0;
-    [Header("¼¬")]
+    [Header("æ£˜")]
     [Range(0, 99999)] public int _JiTower = 0;
-    [Header("Ê÷")]
+    [Header("æ ‘")]
     [Range(0, 99999)] public int _ShuTower = 0;
-    [Header("ÀË")]
+    [Header("æµª")]
     [Range(0, 99999)] public int _LangTower = 0;
-    [Header("±ù")]
+    [Header("å†°")]
     [Range(0, 99999)] public int _BingTower = 0;
-    [Header("ÅÚ")]
+    [Header("ç‚®")]
     [Range(0, 99999)] public int _PaoTower = 0;
-    [Header("ÈÛ")]
+    [Header("ç†”")]
     [Range(0, 99999)] public int _RongTower = 0;
-    [Header("Ç½")]
+    [Header("å¢™")]
     [Range(0, 99999)] public int _QiangTower = 0;
-    [Header("ÕÓ")]
+    [Header("æ²¼")]
     [Range(0, 99999)] public int _ZhaoTower = 0;
 
-    //ÊÛ¼Û
+    //å”®ä»·
     Dictionary<GameObject, int> prices = new Dictionary<GameObject, int>();
 
     void Start()
@@ -80,7 +80,7 @@ public class ElementPowerManager : MonoBehaviour
         GlobalElementPowerFunction.towerSale = prices;
     }
 
-    //ÉèÖÃËùÓĞËşµÄ¼Û¸ñ
+    //è®¾ç½®æ‰€æœ‰å¡”çš„ä»·æ ¼
     void SetPrice()
     {
         foreach (GameObject towerPref in GlobalData.globalTowerPrefabs)
@@ -145,43 +145,43 @@ public class ElementPowerManager : MonoBehaviour
             {
                 prices[towerPref] = _TuTower_Lv2;
             }
-            if (towerPref.name.Contains("Zuan"))
+            if (towerPref.name.Contains("Zuan") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _ZuanTower;
             }
-            if (towerPref.name.Contains("Lu"))
+            if (towerPref.name.Contains("Lu") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _LuTower;
             }
-            if (towerPref.name.Contains("Ji"))
+            if (towerPref.name.Contains("Ji") && !towerPref.name.Contains("Lv") && !towerPref.name.Contains("n"))
             {
                 prices[towerPref] = _JiTower;
             }
-            if (towerPref.name.Contains("Shu"))
+            if (towerPref.name.Contains("Shu") && !towerPref.name.Contains("Lv") && !towerPref.name.Contains("i"))
             {
                 prices[towerPref] = _ShuTower;
             }
-            if (towerPref.name.Contains("Lang"))
+            if (towerPref.name.Contains("Lang") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _LangTower;
             }
-            if (towerPref.name.Contains("Bing"))
+            if (towerPref.name.Contains("Bing") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _BingTower;
             }
-            if (towerPref.name.Contains("Pao"))
+            if (towerPref.name.Contains("Pao") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _PaoTower;
             }
-            if (towerPref.name.Contains("Rong"))
+            if (towerPref.name.Contains("Rong") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _RongTower;
             }
-            if (towerPref.name.Contains("Qiang"))
+            if (towerPref.name.Contains("Qiang") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _QiangTower;
             }
-            if (towerPref.name.Contains("Zhao"))
+            if (towerPref.name.Contains("Zhao") && !towerPref.name.Contains("Lv"))
             {
                 prices[towerPref] = _ZhaoTower;
             }

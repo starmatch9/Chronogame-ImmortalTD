@@ -20,6 +20,8 @@ public class TowerSelect : MonoBehaviour
     //一个公用方法，在当前位置放置塔
     void PlaceTower(GameObject tower)
     {
+        GlobalData.priceWindow.GetComponent<FollowMouse>().StopFollow();
+
         GlobalMusic._Button.Play();
 
         //找售价

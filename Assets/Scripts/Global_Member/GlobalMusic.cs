@@ -28,6 +28,7 @@ public static class GlobalMusic
     public static GameObject _Wave;
     public static GameObject _Accept;
     public static GameObject _Remove;
+    public static GameObject _Fail;
 
     public static void PlayOnce(GameObject g)
     {

@@ -9640,6 +9640,7 @@ MonoBehaviour:
   wave: {fileID: 6408227475177828729, guid: 4ff0625b0edb7254ebae267b3cb25b3b, type: 3}
   accept: {fileID: 7713441890129554625, guid: 4b2c2b33e61223a4285c08868d883a13, type: 3}
   remove: {fileID: 6680051854407403038, guid: 3c9b7d80faef61d40b2670c0da7a1942, type: 3}
+  fail: {fileID: 2404739646508453361, guid: 281e53b76146a2f488715064c047395c, type: 3}
 --- !u!1 &1109238262
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class SoundEffects : MonoBehaviour
     public GameObject wave;
     public GameObject accept;
     public GameObject remove;
+    public GameObject fail;
 
     void Awake()
     {
@@ -35,6 +36,7 @@ public class SoundEffects : MonoBehaviour
         GlobalMusic._Wave = wave;
         GlobalMusic._Accept = accept;
         GlobalMusic._Remove = remove;
+        GlobalMusic._Fail = fail;
     }
 
     public void playBGM()

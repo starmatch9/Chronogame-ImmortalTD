@@ -12,7 +12,11 @@ public class FinalDetector : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
+            GlobalMusic.PlayOnce(GlobalMusic._Fail);
+
             Enemy enemy = collision.GetComponent<Enemy>();
+            //赐死前，清空掉落物
+            enemy.dropElementPower = 0;
             //赐死
             enemy.AcceptAttack(999999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
             CheckNumber();

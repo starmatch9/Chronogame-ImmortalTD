@@ -15,7 +15,7 @@ public class PriceDisplay : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     //显示售价与不显示
     public void DisplayPrice()
     {
-        GlobalData.priceWindow.GetComponent<FollowMouse>().StartFollow(GlobalElementPowerFunction.towerSale[tower]);
+        GlobalData.priceWindow.GetComponent<FollowMouse>().StartFollow(GlobalElementPowerFunction.towerSale[tower], GlobalIntroduction.towerIntroduction[tower]);
 
     }
     public void NoDisplayPrice()

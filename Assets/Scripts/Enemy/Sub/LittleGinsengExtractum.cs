@@ -5,7 +5,7 @@ using UnityEngine;
 public class LittleGinsengExtractum : Enemy
 {
     //————小人参精————
-
+    public bool attach = false;
     public override void OtherSpawn()
     {
         
@@ -13,6 +13,11 @@ public class LittleGinsengExtractum : Enemy
 
     public override void OtherReset()
     {
+        if (!attach)
+        {
+            return;
+        }
+
         if (GlobalData.globalEnemies.Contains(this))
         {
             GlobalData.globalEnemies.Remove(this);

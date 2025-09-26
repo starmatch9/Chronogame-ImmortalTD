@@ -14,7 +14,8 @@ public class FollowMouse : MonoBehaviour
     //UI的原位置
     Vector2 originalPosition;
 
-    TextMeshProUGUI textMeshProUGUI = null;
+    TextMeshProUGUI priceText = null;
+    TextMeshProUGUI introText = null;
 
     bool follow = false;
 
@@ -28,12 +29,24 @@ public class FollowMouse : MonoBehaviour
         //直接获得UI原来的画布内坐标
         originalPosition = rectTransform.localPosition;
 
-        textMeshProUGUI = GetComponentInChildren<TextMeshProUGUI>();
+        TextMeshProUGUI[] textMeshProUGUIs = GetComponentsInChildren<TextMeshProUGUI>();
+        foreach (TextMeshProUGUI text in textMeshProUGUIs)
+        {
+            if (text.gameObject.name == "PriceText")
+            {
+                priceText = text;
+            }
+            if (text.gameObject.name == "IntroText")
+            {
+                introText = text;
+            }
+        }
     }
 
-    public void StartFollow(int price)
+    public void StartFollow(int price, string introduction)
     {
-        textMeshProUGUI.text = "售价：" + price;
+        priceText.text = "售价：" + price;
+        introText.text = "    " + introduction;
 
         follow = true;
     }

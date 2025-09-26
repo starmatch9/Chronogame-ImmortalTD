@@ -71,7 +71,8 @@ public class Ginseng : Enemy
             move.roadTilemap = GetComponent<Move>().roadTilemap;
             move.direction = GetComponent<Move>().direction;
 
-            Enemy enemyScript = littleGinseng.GetComponent<Enemy>();
+            LittleGinsengExtractum enemyScript = littleGinseng.GetComponent<LittleGinsengExtractum>();
+            enemyScript.attach = true;
             //调用小人参精的生成方法
             enemyScript.GameObjectSpawn();
             if (!GlobalData.globalEnemies.Contains(enemyScript))

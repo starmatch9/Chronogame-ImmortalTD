@@ -324,7 +324,7 @@ MonoBehaviour:
   maxHealth: 30
   elementAttribute: 2
   physicsDefense: 0
-  magicDefense: 5
+  magicDefense: 1
   unbeatable: 1
   dropElementPower: 50
   maxNumber: 2

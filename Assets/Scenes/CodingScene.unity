@@ -9934,14 +9934,6 @@ MonoBehaviour:
       duration: 0
       waitAllDead: 0
     elementPower: 606
-  - enemySpawnGroup:
-    - spawn: {fileID: 0}
-      duration: 5
-      waitAllDead: 0
-    - spawn: {fileID: 0}
-      duration: 5
-      waitAllDead: 0
-    elementPower: 606
 --- !u!1001 &1202197272
 PrefabInstance:
   m_ObjectHideFlags: 0

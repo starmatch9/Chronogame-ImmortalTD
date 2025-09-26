@@ -294,7 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   elementAttribute: 1
-  physicsDefense: 1
+  physicsDefense: 0
   magicDefense: 0
   unbeatable: 0
   dropElementPower: 50

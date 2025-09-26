@@ -21,11 +21,11 @@ public abstract class Enemy : MonoBehaviour
     [Header("元素属性")]  //默认为无属性
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
 
-    [Header("物理防御值")]
-    public float physicsDefense = 0f;
+    [Header("物理防御减伤百分比")]
+    [Range(0, 1f)]public float physicsDefense = 0f;
 
-    [Header("魔法防御值")]
-    public float magicDefense = 0f;
+    [Header("魔法防御减伤百分比")]
+    [Range(0, 1f)]public float magicDefense = 0f;
 
     [Header("是否无敌")]
     public bool unbeatable = false;
@@ -102,12 +102,12 @@ public abstract class Enemy : MonoBehaviour
         if(attackAttribute == GlobalData.AttackAttribute.Magic)
         {
             //魔攻
-            value = attack - magicDefense;
+            value = attack - attack * magicDefense;
         }
         else if (attackAttribute == GlobalData.AttackAttribute.Physics)
         {
             //物攻
-            value = attack - physicsDefense;
+            value = attack - attack * physicsDefense;
         }
         else
         {

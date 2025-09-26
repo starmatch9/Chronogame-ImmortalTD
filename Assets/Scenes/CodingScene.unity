@@ -9926,14 +9926,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyGroupItems:
   - enemySpawnGroup:
-    - {fileID: 1285216395}
-    - {fileID: 1850281429}
-    timeDiff: 3.99
+    - spawn: {fileID: 1285216395}
+      duration: 12.8
+      waitAllDead: 1
+    - spawn: {fileID: 1850281429}
+      duration: 0
+      waitAllDead: 0
     elementPower: 606
   - enemySpawnGroup:
-    - {fileID: 1892255207}
-    - {fileID: 1850281429}
-    timeDiff: 0.5
+    - spawn: {fileID: 0}
+      duration: 5
+      waitAllDead: 0
+    - spawn: {fileID: 0}
+      duration: 5
+      waitAllDead: 0
     elementPower: 606
 --- !u!1001 &1202197272
 PrefabInstance:
@@ -14209,17 +14215,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1891438119}
   m_CullTransparentMesh: 1
---- !u!114 &1892255207 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 358675734319646389, guid: 11243f7dc75b88a42b0cd36e9655c62c, type: 3}
-  m_PrefabInstance: {fileID: 1462512041}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 587b3d429be085344b0aad68403e9a6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1910902500
 PrefabInstance:
   m_ObjectHideFlags: 0

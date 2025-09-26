@@ -11,9 +11,9 @@ public class StopGame : MonoBehaviour
         //所有生成器停止生成！！
         if(GlobalEnemyGroupFunction.item != null)
         {
-            foreach(EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
+            foreach(SpawnAndDuration spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
             {
-                spawn.enabled = false;
+                spawn.spawn.enabled = false;
             }
         }
 
@@ -62,9 +62,9 @@ public class StopGame : MonoBehaviour
         //所有生成器启动！！
         if (GlobalEnemyGroupFunction.item != null)
         {
-            foreach (EnemySpawn spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
+            foreach (SpawnAndDuration spawn in GlobalEnemyGroupFunction.item.enemySpawnGroup)
             {
-                spawn.enabled = true;
+                spawn.spawn.enabled = true;
             }
 
             //GlobalEnemyGroupFunction.item.enemySpawn.enabled = true;

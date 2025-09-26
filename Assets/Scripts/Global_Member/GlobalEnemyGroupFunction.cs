@@ -41,7 +41,7 @@ public static class GlobalEnemyGroupFunction
         GlobalData.bomb.ContinueCold();
         GlobalData.link.ContinueCold();
 
-        mono.StartCoroutine(DispatchEnemy());
+        SpawnCoroutine = mono.StartCoroutine(DispatchEnemy());
 
         //关闭按钮
         CloseButton();
@@ -49,15 +49,28 @@ public static class GlobalEnemyGroupFunction
         ++index;
     }
 
+    public static Coroutine SpawnCoroutine = null;
     //加入时间差释放的敌人
     public static IEnumerator DispatchEnemy()
     {
-        foreach(EnemySpawn spawn in item.enemySpawnGroup)
+        foreach(SpawnAndDuration aSpawn in item.enemySpawnGroup)
         {
-            spawn.Switch();
+            aSpawn.spawn.Switch();
 
-            yield return new WaitForSeconds(item.timeDiff);  
+            if (aSpawn.waitAllDead)
+            {
+                while (aSpawn.spawn.isSpawning || aSpawn.spawn.ExistEnemy())
+                {
+                    yield return null;
+                }
+                continue;
+            }
+
+            yield return new WaitForSeconds(aSpawn.duration);  
         }
+
+        //确保协程引用清空
+        SpawnCoroutine = null;
     }
 
 
@@ -72,6 +85,10 @@ public static class GlobalEnemyGroupFunction
             {
                 return;
             }
+        }
+        if (SpawnCoroutine != null)
+        {
+            return;
         }
 
         EndEnemyGroup();

@@ -22,7 +22,11 @@ public class EnemySpawn : MonoBehaviour
 
     [Range(0f, 5f)]public float spawnInterval = 1f; //生成间隔时间
 
-    bool isSpawning = false;
+    [HideInInspector]
+    public bool isSpawning = false;
+
+    //维护自己生成的几个小怪
+    List<Enemy> spawnEnemy = new List<Enemy>();
 
     void Start()
     {
@@ -45,6 +49,9 @@ public class EnemySpawn : MonoBehaviour
     //开关
     public void Switch()
     {
+        //维护的小怪清空
+        spawnEnemy = new List<Enemy>();
+
         isSpawning = true;
     }
 
@@ -128,11 +135,30 @@ public class EnemySpawn : MonoBehaviour
 
         Enemy enemyScript = oneEnemy.GetComponent<Enemy>();
 
+        //维护自己生成的敌人
+        if (!spawnEnemy.Contains(enemyScript))
+        {
+            spawnEnemy.Add(enemyScript);
+        }
+
         if (!globalEnemies.Contains(enemyScript))
         {
             //添加到全局敌人列表
             globalEnemies.Add(enemyScript);
         }
 
+    }
+
+    public bool ExistEnemy()
+    {
+        foreach (Enemy enemy in spawnEnemy)
+        {
+            //有一个还激活着，就return
+            if (enemy.gameObject.activeInHierarchy)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

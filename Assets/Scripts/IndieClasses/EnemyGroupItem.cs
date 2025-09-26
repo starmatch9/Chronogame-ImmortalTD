@@ -1,21 +1,21 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//ÈÃ×Ö¶ÎÔÚ¼ì²éÆ÷ÖĞ¿É¼û
+//è®©å­—æ®µåœ¨æ£€æŸ¥å™¨ä¸­å¯è§
 [System.Serializable]
 public class EnemyGroupItem
 {
-    //[Header("±¾²¨´ÎµÄµĞÈËÉú³ÉÆ÷")]
+    //[Header("æœ¬æ³¢æ¬¡çš„æ•Œäººç”Ÿæˆå™¨")]
     //public EnemySpawn enemySpawn;
 
-    [Header("±¾²¨´ÎµÄµĞÈËÉú³ÉÆ÷£¨¶à¸ö°æ£©")]
-    public List<EnemySpawn> enemySpawnGroup;
+    [Header("æœ¬æ³¢æ¬¡çš„æ•Œäººç”Ÿæˆå™¨ï¼ˆå¤šä¸ªç‰ˆï¼‰")]
+    public List<SpawnAndDuration> enemySpawnGroup;
 
-    [Header("Á½Á½µĞÈËÖ®¼äµÄÊÍ·ÅÊ±¼ä²î")]
-    [Range(0, 5)]public float timeDiff = 0.5f;
+    //[Header("ä¸¤ä¸¤æ•Œäººä¹‹é—´çš„é‡Šæ”¾æ—¶é—´å·®")]
+    //[Range(0, 5)]public float timeDiff = 0.5f;
 
-    [Header("±¾²¨´Î½áÊøºóÌá¹©ÔªËØÁ¦ÊıÁ¿")]
+    [Header("æœ¬æ³¢æ¬¡ç»“æŸåæä¾›å…ƒç´ åŠ›æ•°é‡")]
     [Range(0, 99999)]public int elementPower =1000;
 
 }

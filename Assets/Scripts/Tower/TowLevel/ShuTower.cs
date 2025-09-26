@@ -24,8 +24,9 @@ public class ShuTower : Tower
             return;
         }
 
+        GlobalElementPowerFunction.mono.StartCoroutine(GlobalElementPowerFunction.AddElementPowerAnim());
         //元素力增加的协程动画
-        GlobalEnemyGroupFunction.mono.StartCoroutine(AddElementPower());
+        GlobalElementPowerFunction.mono.StartCoroutine(AddElementPower());
 
         //生成元素力
         GlobalElementPowerFunction.AddCount(elementAmount);
@@ -33,7 +34,7 @@ public class ShuTower : Tower
 
     public IEnumerator AddElementPower()
     {
-        GlobalMusic.PlayOnce(GlobalMusic._Money);
+        //GlobalMusic.PlayOnce(GlobalMusic._Money);
 
         SpriteRenderer renderer = elementPower.GetComponent<SpriteRenderer>();
         Vector3 originalposition = elementPower.transform.position;

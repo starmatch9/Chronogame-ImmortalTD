@@ -250,6 +250,7 @@ MonoBehaviour:
   physicsDefense: 1
   magicDefense: 0
   unbeatable: 0
+  dropElementPower: 50
 --- !u!1 &6559222777452973245
 GameObject:
   m_ObjectHideFlags: 0

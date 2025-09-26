@@ -5,6 +5,8 @@ using UnityEngine;
 public class LittleGinsengExtractum : Enemy
 {
     //————小人参精————
+
+    [HideInInspector]
     public bool attach = false;
     public override void OtherSpawn()
     {

@@ -30,6 +30,9 @@ public abstract class Enemy : MonoBehaviour
     [Header("是否无敌")]
     public bool unbeatable = false;
 
+    [Header("掉落元素力数量")]
+    public int dropElementPower = 50;
+
     //血量值，用于计算与显示的值
     float health = 100f;
 
@@ -229,8 +232,14 @@ public abstract class Enemy : MonoBehaviour
     //敌人死后或到达终点时调用一次的函数(seal的意思是封印，参考团藏死前释放里四象封印术)
     public void SealFunction()
     {
+        if(dropElementPower != 0)
+        {
+            GlobalElementPowerFunction.mono.StartCoroutine(GlobalElementPowerFunction.AddElementPowerAnim());
+            //生成元素力
+            GlobalElementPowerFunction.AddCount(dropElementPower);
+        }
+
         //基本上都是全局方法了
         GlobalEnemyGroupFunction.CheckEnd();
-        
     }
 }

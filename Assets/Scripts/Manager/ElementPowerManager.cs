@@ -73,6 +73,10 @@ public class ElementPowerManager : MonoBehaviour
     //售价
     Dictionary<GameObject, int> prices = new Dictionary<GameObject, int>();
 
+    void Awake()
+    {
+        GlobalElementPowerFunction.mono = this;
+    }
     void Start()
     {
         GlobalElementPowerFunction.AddCount(initialElementPower);

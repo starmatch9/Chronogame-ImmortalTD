@@ -222,6 +222,8 @@ MonoBehaviour:
   physicsDefense: 0
   magicDefense: 0
   unbeatable: 0
+  dropElementPower: 50
+  attach: 0
 --- !u!1 &4825672070352618673
 GameObject:
   m_ObjectHideFlags: 0

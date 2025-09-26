@@ -297,6 +297,7 @@ MonoBehaviour:
   physicsDefense: 1
   magicDefense: 0
   unbeatable: 0
+  dropElementPower: 50
   littleGinsengPrefab: {fileID: 2556877316511395142, guid: 13050237ca63af149955b4a29bc3e6b2, type: 3}
   duration: 4
   number: 4

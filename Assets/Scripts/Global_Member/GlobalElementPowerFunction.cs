@@ -1,21 +1,27 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public static class GlobalElementPowerFunction
 {
-    //È«¾ÖÎ¨Ò»¼ÇÂ¼»õ±ÒÊıÁ¿
+    public static MonoBehaviour mono;
+
+    //å…¨å±€å”¯ä¸€è®°å½•è´§å¸æ•°é‡
     public static int count = 0;
 
-    //È«¾ÖÖ»ÓĞÒ»¸öElementPowerCountÓÃÀ´¸üĞÂUIÏÔÊ¾µÄÔªËØÁ¦ÊıÁ¿
+    //å…¨å±€åªæœ‰ä¸€ä¸ªElementPowerCountç”¨æ¥æ›´æ–°UIæ˜¾ç¤ºçš„å…ƒç´ åŠ›æ•°é‡
     public static ElementPowerCount countDisplay;
 
-    //ÕâÀïÈÃÊÛ¼ÛÓëËşÒÔ×ÖµäµÄĞÎÊ½Ò»Ò»¶ÔÓ¦
+    //è¿™é‡Œè®©å”®ä»·ä¸å¡”ä»¥å­—å…¸çš„å½¢å¼ä¸€ä¸€å¯¹åº”
     public static Dictionary<GameObject, int> towerSale = new Dictionary<GameObject, int>();
+
+    //åŠ¨ç”»ç”¨å…ƒç´ å›¾æ ‡
+    public static GameObject elementPower;
 
     public static void AddCount(int n)
     {
-        //ÉèÖÃÉÏÏŞ
+        //è®¾ç½®ä¸Šé™
         if (count + n > 99999999)
         {
             count = 99999999;
@@ -50,16 +56,76 @@ public static class GlobalElementPowerFunction
         }
     }
 
-    //ÖØÖÃËùÓĞ¾²Ì¬±äÁ¿
+    //é‡ç½®æ‰€æœ‰é™æ€å˜é‡
     public static void ResetAllData()
     {
-        //È«¾ÖÎ¨Ò»¼ÇÂ¼»õ±ÒÊıÁ¿
+        //å…¨å±€å”¯ä¸€è®°å½•è´§å¸æ•°é‡
         count = 0;
 
-        //È«¾ÖÖ»ÓĞÒ»¸öElementPowerCountÓÃÀ´¸üĞÂUIÏÔÊ¾µÄÔªËØÁ¦ÊıÁ¿
+        //å…¨å±€åªæœ‰ä¸€ä¸ªElementPowerCountç”¨æ¥æ›´æ–°UIæ˜¾ç¤ºçš„å…ƒç´ åŠ›æ•°é‡
         countDisplay = null;
 
-        //ÕâÀïÈÃÊÛ¼ÛÓëËşÒÔ×ÖµäµÄĞÎÊ½Ò»Ò»¶ÔÓ¦
+        //è¿™é‡Œè®©å”®ä»·ä¸å¡”ä»¥å­—å…¸çš„å½¢å¼ä¸€ä¸€å¯¹åº”
         towerSale = new Dictionary<GameObject, int>();
+    }
+
+    public static IEnumerator AddElementPowerAnim()
+    {
+        GlobalMusic.PlayOnce(GlobalMusic._Money);
+
+        Image renderer = elementPower.GetComponent<Image>();
+        RectTransform rectTransform = elementPower.GetComponent<RectTransform>();
+        Vector3 originalPosition = rectTransform.position;
+
+        //è®¾ç½®åŠ¨ç”»æ—¶é—´ä¸º0.6ç§’
+        //è®¾ç½®åŠ¨ç”»æ—¶é—´
+        float duration = 1f;
+        float timer = 0f;
+
+        elementPower.SetActive(true);
+
+        //ç¡®ä¿åˆå§‹çŠ¶æ€
+        if (renderer != null)
+        {
+            Color color = renderer.color;
+            color.a = 1f;
+            renderer.color = color;
+        }
+
+        while (timer < duration)
+        {
+            if (elementPower != null && renderer != null)
+            {
+                //é¢œè‰²
+                float alpha = Mathf.Lerp(1f, 0f, timer / duration);
+                Color color = renderer.color;
+                color.a = alpha;
+                renderer.color = color;
+
+                //å‘ä¸Šç§»åŠ¨
+                float distance = Mathf.Lerp(0f, 50f, timer / duration);
+                Vector3 newPosition = originalPosition + Vector3.up * distance;
+                rectTransform.position = newPosition;
+            }
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        //é‡ç½®çŠ¶æ€
+        if (elementPower != null)
+        {
+            elementPower.SetActive(false);
+            rectTransform.position = originalPosition;
+
+            //é‡ç½®é€æ˜åº¦
+            if (renderer != null)
+            {
+                Color color = renderer.color;
+                color.a = 1f;
+                renderer.color = color;
+            }
+        }
+
     }
 }

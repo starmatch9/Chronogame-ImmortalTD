@@ -38,6 +38,9 @@ public class ZhaoTower : Tower
     [Header("沼泽的元素属性")]
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
 
+    [Header("受影响敌人列表")]
+    public List<MudEnemy> missEnemies = new List<MudEnemy>();
+
     public override void TowerAction() {
 
         //刷新后进行攻击方法
@@ -62,6 +65,7 @@ public class ZhaoTower : Tower
         {
             //生成泥潭方格
             GameObject mud = Instantiate(mudPrefab, point, Quaternion.identity);
+            mud.GetComponent<Mud>().missEnemies = missEnemies;
             mud.GetComponent<Mud>().SetTower(this);
             mud.gameObject.GetComponent<Mud>().SetSlowFactor(slowFactor);
         }

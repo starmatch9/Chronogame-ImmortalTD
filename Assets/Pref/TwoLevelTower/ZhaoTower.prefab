@@ -303,6 +303,9 @@ MonoBehaviour:
   mudAttack: 5
   attackAttribute: 2
   elementAttribute: 4
+  missEnemies:
+  - enemyPrefab: {fileID: 4092111175752588685, guid: af11d8b8ff763ae40bf65f26646691ac, type: 3}
+    swampEffect: 1.78
 --- !u!1 &5184420204636894131
 GameObject:
   m_ObjectHideFlags: 0

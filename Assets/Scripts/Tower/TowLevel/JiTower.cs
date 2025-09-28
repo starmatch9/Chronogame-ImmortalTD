@@ -42,6 +42,9 @@ public class JiTower : Tower
     [Header("荆棘的元素属性")]
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
 
+    [Header("无效敌人列表")]
+    public List<GameObject> missEnemies = new List<GameObject>();
+
     //维护一个荆棘生命周期中需要攻击的敌人列表
     List<Enemy> enemies = new List<Enemy>();
 
@@ -132,6 +135,28 @@ public class JiTower : Tower
         //如果已经除以处于停止移动的状态则无法选中
         if (target.gameObject.GetComponent<Move>().isStopMove)
         {
+            yield break;
+        }
+
+        //无法选中无效敌人  lambda表达式提供临时变量
+        if (missEnemies.Exists(missEnemy =>
+        missEnemy != null &&
+        target.gameObject.name.Contains(missEnemy.name)))
+        {
+
+            float tempTimer = 0f;
+
+            while (tempTimer < 0.1f)
+            {
+                if (target == null)
+                {
+                    Destroy(thorns);
+                    yield break;
+                }
+                yield return null;
+                tempTimer += Time.deltaTime;
+            }
+            Destroy(thorns);
             yield break;
         }
 

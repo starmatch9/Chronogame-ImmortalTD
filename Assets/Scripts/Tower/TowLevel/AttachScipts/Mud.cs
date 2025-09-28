@@ -10,6 +10,9 @@ public class Mud : MonoBehaviour
     //速度减为原来的百分之多少
     float slowFactor = 0.3f;
 
+    [HideInInspector]
+    public List<MudEnemy> missEnemies = new List<MudEnemy>();
+
     public void SetSlowFactor(float slowFactor)
     {
         this.slowFactor = slowFactor;
@@ -32,10 +35,20 @@ public class Mud : MonoBehaviour
                 t.enemyList.Add(enemy);
             }
 
+            //处理受影响敌人  lambda表达式提供临时变量
+            float effectForEnemy = 1f;
+            MudEnemy foundEnemy = missEnemies.Find(missEnemy =>
+                missEnemy != null &&
+                enemy.gameObject.name.Contains(missEnemy.enemyPrefab.name));
+            if (foundEnemy != null)
+            {
+                effectForEnemy = foundEnemy.swampEffect;
+            }
+
             Move move = collision.GetComponent<Move>();
             if (move != null)
             {
-                move.ChangeSpeed(slowFactor);
+                move.ChangeSpeed(slowFactor * effectForEnemy);
 
             }
         }
@@ -53,11 +66,21 @@ public class Mud : MonoBehaviour
                 t.enemyList.Add(enemy);
             }
 
+            //处理受影响敌人  lambda表达式提供临时变量
+            float effectForEnemy = 1f;
+            MudEnemy foundEnemy = missEnemies.Find(missEnemy =>
+                missEnemy != null &&
+                enemy.gameObject.name.Contains(missEnemy.enemyPrefab.name));
+            if (foundEnemy != null)
+            {
+                effectForEnemy = foundEnemy.swampEffect;
+            }
+
             Move move = collision.GetComponent<Move>();
             //如果恢复了原速，继续减速
             if(move.GetSpeed() == move.speed)
             {
-                move.ChangeSpeed(slowFactor);
+                move.ChangeSpeed(slowFactor * effectForEnemy);
             }
         }
     }

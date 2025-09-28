@@ -401,3 +401,5 @@ MonoBehaviour:
   maxNumber: 3
   attackAttribute: 1
   elementAttribute: 1
+  missEnemies:
+  - {fileID: 4092111175752588685, guid: af11d8b8ff763ae40bf65f26646691ac, type: 3}

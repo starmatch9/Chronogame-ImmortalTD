@@ -140,6 +140,8 @@ MonoBehaviour:
   wallPrefab: {fileID: 6600280846830873079, guid: 1c611249c9c585546a3c0c27b23d751e, type: 3}
   attackAttribute: 2
   elementAttribute: 5
+  missEnemies:
+  - {fileID: 4092111175752588685, guid: af11d8b8ff763ae40bf65f26646691ac, type: 3}
 --- !u!1 &2116402596330666936
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Wall : MonoBehaviour
 {
     //最大敌人数
     int maxEnemy = 0;
+
+    bool wall_Exit = false;
 
     //每次生成一堵墙，所以可以在脚本里维护挡住的敌人列表
     List<Enemy> blockedEnemies = new List<Enemy>();
@@ -15,6 +18,9 @@ public class Wall : MonoBehaviour
 
     [HideInInspector]
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
+
+    [HideInInspector]
+    public List<GameObject> missEnemies = new List<GameObject>();
 
     public void SetMaxEnemy(int m)
     {
@@ -26,8 +32,18 @@ public class Wall : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            Move move = collision.GetComponent<Move>();
             Enemy enemy = collision.GetComponent<Enemy>();
+
+            //无法选中无效敌人  lambda表达式提供临时变量
+            if (missEnemies.Exists(missEnemy =>
+            missEnemy != null &&
+            enemy.gameObject.name.Contains(missEnemy.name)))
+            {
+                wall_Exit = true;
+                return;
+            }
+
+            Move move = collision.GetComponent<Move>();
 
             if (enemy != null) {
                 //无法移动
@@ -66,6 +82,11 @@ public class Wall : MonoBehaviour
         float timer = 0;
         while(timer <= wallDuration)
         {
+            if (wall_Exit)
+            {
+                break;
+            }
+
             //数量过大退出
             if (blockedEnemies.Count >= maxEnemy)
             {

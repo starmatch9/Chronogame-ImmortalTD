@@ -24,6 +24,9 @@ public class QiangTower : Tower
     [Header("墙倒塌的元素属性")]
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
 
+    [Header("无效敌人列表")]
+    public List<GameObject> missEnemies = new List<GameObject>();
+
     private void Start()
     {
         TowerAction(); //在开始时执行一次塔的行为
@@ -46,6 +49,7 @@ public class QiangTower : Tower
 
         //开始墙的生命周期
         Wall w = wall.GetComponent<Wall>();
+        w.missEnemies = missEnemies;
         w.elementAttribute = elementAttribute;
         w.attackAttribute = attackAttribute;
         //最大阻挡数量

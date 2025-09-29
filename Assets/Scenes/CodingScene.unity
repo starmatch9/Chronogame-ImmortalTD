@@ -8497,7 +8497,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UI_Shade: {fileID: 176568083}
   time: 4
-  explosionAttack: 30
+  explosionAttack: 100
   explosionRange: 2
   dash: {fileID: 48999261}
   PattackAttribute: 2

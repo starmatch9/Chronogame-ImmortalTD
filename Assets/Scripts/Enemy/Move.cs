@@ -31,6 +31,11 @@ public class Move : MonoBehaviour
     //记录当前移动速度
     Vector2 currentVelocity;
 
+    public void SetBoolMoving(bool v)
+    {
+        isMoving = v;
+    }
+
     /* 以下两个是一组 */
 
     //减速或加速移动(参数为百分比)

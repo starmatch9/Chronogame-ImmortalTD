@@ -167,6 +167,12 @@ public abstract class Enemy : MonoBehaviour
 
     }
 
+    //敌人死亡时调用的行为
+    public virtual void Die()
+    {
+
+    }
+
     //判断的依据可以在子类中重写
     //是否不再需要攻击
     public virtual bool NoMoreShotsNeeded()
@@ -219,6 +225,8 @@ public abstract class Enemy : MonoBehaviour
         {
             isDead = true;
             gameObject.SetActive(false); //敌人死亡
+
+            Die();
 
             //封印术，调用所有死前行为（敌人到达终点时也要使用）
             SealFunction();

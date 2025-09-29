@@ -151,6 +151,10 @@ public class Ginseng : Enemy
 
         //让小人参精的方向与本体的移动方向一致
         Move move = littleGinseng.GetComponent<Move>();
+
+        move.Re_Move();
+        move.SetBoolMoving(true);
+
         move.StopMove();
         move.survivalTime = GetComponent<Move>().survivalTime;
         move.roadTilemap = GetComponent<Move>().roadTilemap;
@@ -178,10 +182,10 @@ public class Ginseng : Enemy
                 yield return null;
             }
 
-            while (InCorner(GetComponent<Move>().roadTilemap))
-            {
-                yield return null;
-            }
+            //while (InCorner(GetComponent<Move>().roadTilemap))
+            //{
+            //    yield return null;
+            //}
 
             SpawnOne();
 
@@ -190,42 +194,42 @@ public class Ginseng : Enemy
         }
     }
 
-    //是否在拐角
-    bool InCorner(Tilemap t)
-    {
-        Vector3 currentPosition = transform.position;//当前物体位置
-        Vector3 upPosition = currentPosition + new Vector3(0, 1, 0); //上方位置
-        Vector3 downPosition = currentPosition + new Vector3(0, -1, 0); //下方位置
-        Vector3 leftPosition = currentPosition + new Vector3(-1, 0, 0); //左方位置
-        Vector3 rightPosition = currentPosition + new Vector3(1, 0, 0); //右方位置
+    ////是否在拐角
+    //bool InCorner(Tilemap t)
+    //{
+    //    Vector3 currentPosition = transform.position;//当前物体位置
+    //    Vector3 upPosition = currentPosition + new Vector3(0, 1, 0); //上方位置
+    //    Vector3 downPosition = currentPosition + new Vector3(0, -1, 0); //下方位置
+    //    Vector3 leftPosition = currentPosition + new Vector3(-1, 0, 0); //左方位置
+    //    Vector3 rightPosition = currentPosition + new Vector3(1, 0, 0); //右方位置
 
-        if(IsPositionOnTile(upPosition, t) && IsPositionOnTile(leftPosition, t))
-        {
-            return true;
-        }
-        if (IsPositionOnTile(upPosition, t) && IsPositionOnTile(rightPosition, t))
-        {
-            return true;
-        }
-        if (IsPositionOnTile(downPosition, t) && IsPositionOnTile(rightPosition, t))
-        {
-            return true;
-        }
-        if (IsPositionOnTile(downPosition, t) && IsPositionOnTile(leftPosition, t))
-        {
-            return true;
-        }
+    //    if(IsPositionOnTile(upPosition, t) && IsPositionOnTile(leftPosition, t))
+    //    {
+    //        return true;
+    //    }
+    //    if (IsPositionOnTile(upPosition, t) && IsPositionOnTile(rightPosition, t))
+    //    {
+    //        return true;
+    //    }
+    //    if (IsPositionOnTile(downPosition, t) && IsPositionOnTile(rightPosition, t))
+    //    {
+    //        return true;
+    //    }
+    //    if (IsPositionOnTile(downPosition, t) && IsPositionOnTile(leftPosition, t))
+    //    {
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 
-    bool IsPositionOnTile(Vector3 worldPosition, Tilemap roadTilemap)
-    {
-        //将世界坐标转换为网格坐标
-        Vector3Int cellPosition = roadTilemap.WorldToCell(worldPosition);
-        //检查该网格位置是否有瓦片
-        return roadTilemap.HasTile(cellPosition);
-    }
+    //bool IsPositionOnTile(Vector3 worldPosition, Tilemap roadTilemap)
+    //{
+    //    //将世界坐标转换为网格坐标
+    //    Vector3Int cellPosition = roadTilemap.WorldToCell(worldPosition);
+    //    //检查该网格位置是否有瓦片
+    //    return roadTilemap.HasTile(cellPosition);
+    //}
 
     public override void StopAction()
     {

@@ -42,6 +42,7 @@ public class SkullSkeleton : Enemy
         SpawnOne();
 
         //时间到，赐死
+        dropElementPower = 0;
         AcceptAttack(99999f, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
     }
 
@@ -132,5 +133,10 @@ public class SkullSkeleton : Enemy
     public override void ContinueAction()
     {
         isStop = false;
+    }
+
+    public override void Awake()
+    {
+        base.Awake();
     }
 }

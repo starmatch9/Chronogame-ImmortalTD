@@ -7,7 +7,7 @@ public class Skull : Enemy
 {
     //--普通属性怪：骷髅
 
-    [Header("骨架的血量以及存在时间去骨架预制件中调节")]
+    [Header("骨架的血量，掉钱以及存在时间去骨架预制件中调节")]
     [Header("当前复活次数")]
     public int count = 0;
 

@@ -19,6 +19,9 @@ public class BingTower : Tower
     [TextArea]
     public string Tips = "注意：子弹的伤害参数记得要去子弹预制件里面调。";
 
+    [Header("影响冻结时间敌人列表")]
+    public List<FreezeEnemy> effectEnemies = new List<FreezeEnemy>();
+
     //重写每隔一段时间执行的行为
     public override void TowerAction()
     {
@@ -45,6 +48,8 @@ public class BingTower : Tower
 
         //设置冻结所需次数
         bullet.GetComponent<BingBullet>().SetMaxCount(freezeCount);
+
+        bullet.GetComponent<BingBullet>().effectEnemies = effectEnemies;
 
         //设置攻击伤害
         bulletScript.baseAttack = bulletAttack;

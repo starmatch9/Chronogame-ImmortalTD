@@ -386,6 +386,8 @@ MonoBehaviour:
   backTime: 1
   attackAttribute: 0
   elementAttribute: 2
+  missEnemies:
+  - {fileID: 4104600506582092247, guid: 0e5d8931c22ec204ea2397484ddb58b4, type: 3}
   enemies: []
 --- !u!1 &9186323152650669390
 GameObject:

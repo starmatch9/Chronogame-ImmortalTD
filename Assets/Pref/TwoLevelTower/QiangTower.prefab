@@ -145,6 +145,8 @@ MonoBehaviour:
   effectEnemies:
   - enemyPrefab: {fileID: 6323495022340598947, guid: e78c37ed1b3e13e42a624c4522f42879, type: 3}
     attachTime: -3
+  - enemyPrefab: {fileID: 3018753891253887513, guid: 477767454370b134e8d376c70d75d883, type: 3}
+    attachTime: 3
 --- !u!1 &7432862915855703653
 GameObject:
   m_ObjectHideFlags: 0

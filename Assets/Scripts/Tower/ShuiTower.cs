@@ -67,8 +67,13 @@ public class ShuiTower : Tower
 
     IEnumerator slowEnemy(Enemy enemy)
     {
-
         Move move = enemy.gameObject.GetComponent<Move>();
+
+        if (move.isStopMove)
+        {
+            yield break;
+        }
+
         //减速
         move.ChangeSpeed(slowFactor);
 

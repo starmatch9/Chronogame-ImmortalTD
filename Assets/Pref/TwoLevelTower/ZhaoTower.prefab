@@ -310,6 +310,8 @@ MonoBehaviour:
     swampEffect: 0.66
   - enemyPrefab: {fileID: 6323495022340598947, guid: e78c37ed1b3e13e42a624c4522f42879, type: 3}
     swampEffect: 1.31
+  - enemyPrefab: {fileID: 3018753891253887513, guid: 477767454370b134e8d376c70d75d883, type: 3}
+    swampEffect: 0.56
 --- !u!1 &5184420204636894131
 GameObject:
   m_ObjectHideFlags: 0

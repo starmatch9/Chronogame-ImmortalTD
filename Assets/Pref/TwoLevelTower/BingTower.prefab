@@ -405,3 +405,6 @@ MonoBehaviour:
   bingBullet: {fileID: 3178423238425221465, guid: 43a16981f3e266441886311328b671a8, type: 3}
   freezeCount: 3
   Tips: "\u6CE8\u610F\uFF1A\u5B50\u5F39\u7684\u4F24\u5BB3\u53C2\u6570\u8BB0\u5F97\u8981\u53BB\u5B50\u5F39\u9884\u5236\u4EF6\u91CC\u9762\u8C03\u3002"
+  effectEnemies:
+  - enemyPrefab: {fileID: 4104600506582092247, guid: 0e5d8931c22ec204ea2397484ddb58b4, type: 3}
+    attachTime: -2

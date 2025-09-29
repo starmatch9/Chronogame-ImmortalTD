@@ -28,6 +28,9 @@ public class Crab : Enemy
             Shield.SetActive(false);
         }
     }
-
+    public override void OtherReset()
+    {
+        count = 0;
+    }
 
 }

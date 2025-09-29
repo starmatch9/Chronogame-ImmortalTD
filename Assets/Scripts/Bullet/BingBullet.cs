@@ -19,6 +19,11 @@ public class BingBullet : Bullet
     [Header("冻结后敌人伤害倍数")]
     [Range(1f, 2f)] public float mul = 1.2f;
 
+    //影响冻结时间敌人列表
+    [HideInInspector]
+    public List<FreezeEnemy> effectEnemies = new List<FreezeEnemy>();
+
+
     int maxCount = 0;
 
     //子弹死亡前累计冻结
@@ -87,6 +92,7 @@ public class BingBullet : Bullet
         //如果已经除以处于停止移动的状态则无法选中
         if (enemy.gameObject.GetComponent<Move>().isStopMove)
         {
+            Destroy(snow);
             yield break;
         }
 
@@ -95,8 +101,20 @@ public class BingBullet : Bullet
         //enemy.SetDefense(1f - mul);
         enemy.SetHurtRate(mul);
 
+        //检测附加时间
+        float attachedTime = 0f;
+        //赋予附加时间  lambda表达式提供临时变量
+        FreezeEnemy foundEnemy = effectEnemies.Find(effectEnemy =>
+            effectEnemy != null &&
+            enemy.gameObject.name.Contains(effectEnemy.enemyPrefab.name));
+        if (foundEnemy != null)
+        {
+            attachedTime = foundEnemy.attachTime;
+        }
+
+
         float timer = 0;
-        while (timer < freezeTime)
+        while (timer < freezeTime + attachedTime)
         {
 
             if (enemy == null)
@@ -109,7 +127,7 @@ public class BingBullet : Bullet
             yield return null;
         }
 
-        yield return new WaitForSeconds(freezeTime); //等待冻结时间
+        //yield return new WaitForSeconds(freezeTime); //等待冻结时间
 
         Destroy(snow);
 

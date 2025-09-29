@@ -49,6 +49,9 @@ public class LangTower : Tower
     [Header("浪的元素属性")]
     public GlobalData.ElementAttribute elementAttribute = GlobalData.ElementAttribute.NONE;
 
+    [Header("无效敌人列表")]
+    public List<GameObject> missEnemies = new List<GameObject>();
+
     //维护所有进入浪塔范围的敌人列表
     //敌人列表不为空时，不能修改firstPoint。敌人列表为空时，可以修改firstPoint。
     [HideInInspector]
@@ -170,6 +173,14 @@ public class LangTower : Tower
     IEnumerator EnemyBack(Enemy enemy) {
 
         GlobalMusic.PlayOnce(GlobalMusic._Wave);
+
+        //无法推动无效敌人 
+        if (missEnemies.Exists(missEnemy =>
+        missEnemy != null &&
+        enemy.gameObject.name.Contains(missEnemy.name)))
+        {
+            yield break;
+        }
 
         //及时止损
         Move move = enemy.gameObject.GetComponent<Move>();

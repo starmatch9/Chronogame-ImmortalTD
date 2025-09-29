@@ -174,3 +174,4 @@ MonoBehaviour:
   snowPrefab: {fileID: 355812718014240502, guid: 1498643219becc54db214b265339804e, type: 3}
   freezeTime: 5
   mul: 1.2
+  effectEnemies: []

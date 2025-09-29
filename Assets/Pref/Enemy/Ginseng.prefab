@@ -302,6 +302,11 @@ MonoBehaviour:
   duration: 4
   number: 4
   durationLittle: 0.2
+  iron: 1
+  fire: 3
+  burnDuration: 5
+  burnInterval: 1
+  burnHurt: 5
 --- !u!1 &7119562321536985959
 GameObject:
   m_ObjectHideFlags: 0

@@ -22,10 +22,37 @@ public class Ginseng : Enemy
     [Header("两两小人参精生成时间间隔")]
     public float durationLittle = 0.2f;
 
+    [Header("金伤次数后失去能力")]
+    public int iron = 4;
+
+    [Header("火伤次数后开始燃烧")]
+    public int fire = 3;
+
+    [Header("燃烧持续时间")]
+    public float burnDuration = 5f;
+
+    [Header("燃烧时每多少秒造成一次伤害")]
+    public float burnInterval = 1f;
+
+    [Header("一次伤害")]
+    public float burnHurt = 5f;
+
+    //燃烧协程
+    Coroutine burnCoroutine;
+
     float timer = 0;
     bool isStop = false;
+    bool noAbility = false;
+    int ironCount = 0;
+    int fireCount = 0;
+
     public void Update()
     {
+        if (noAbility)
+        {
+            return;
+        }
+
         if (isStop)
         {
             return;
@@ -40,11 +67,106 @@ public class Ginseng : Enemy
         timer = 0;
     }
 
+    public override void ElementFunction(GlobalData.ElementAttribute elementAttribute)
+    {
+        switch (elementAttribute)
+        {
+            //金：失去能力
+            case GlobalData.ElementAttribute.JIN:
+                ironCount++;
+                if (ironCount >= iron)
+                {
+                    noAbility = true;
+                }
+                break;
+
+            //水：生成小人参精
+            case GlobalData.ElementAttribute.SHUI:
+
+                SpawnOne();
+
+                break;
+
+            //火：燃烧（可多次触发）
+            case GlobalData.ElementAttribute.HUO:
+
+                fireCount++;
+                if (fireCount >= fire)
+                {
+                    if (burnCoroutine != null)
+                    {
+                        StopCoroutine(burnCoroutine);
+                    }
+                    burnCoroutine = StartCoroutine(Burn());
+
+                    fireCount = 0;
+                }
+
+                break;
+
+        }
+    }
+
+    public IEnumerator Burn()
+    {
+        float elapsed = 0f;
+        while (elapsed < burnDuration)
+        {
+            if(elapsed % burnInterval >= 0)
+            {
+                //造成伤害(真伤)
+                AcceptAttack(burnHurt, GlobalData.AttackAttribute.None, GlobalData.ElementAttribute.NONE);
+            }
+
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+    public override void OtherReset()
+    {
+        if (burnCoroutine != null)
+        {
+            StopCoroutine(burnCoroutine);
+        }
+        burnCoroutine = null;
+
+        timer = 0;
+        ironCount = 0;
+        fireCount = 0;
+        noAbility = false;  
+    }
+
     //生成小人参精（不采用对象池）
     void SpawnLittle()
     {
         //当前的生成方式——在本体后方依次生成，移速较快可迅速移动到本体前面
         StartCoroutine(StartSpawnInOrder());
+    }
+
+    public void SpawnOne()
+    {
+        GameObject littleGinseng = Instantiate(littleGinsengPrefab);
+        littleGinseng.transform.position = transform.position;
+
+        //让小人参精的方向与本体的移动方向一致
+        Move move = littleGinseng.GetComponent<Move>();
+        move.StopMove();
+        move.survivalTime = GetComponent<Move>().survivalTime;
+        move.roadTilemap = GetComponent<Move>().roadTilemap;
+        move.direction = GetComponent<Move>().direction;
+
+        LittleGinsengExtractum enemyScript = littleGinseng.GetComponent<LittleGinsengExtractum>();
+        enemyScript.attach = true;
+        //调用小人参精的生成方法
+        enemyScript.GameObjectSpawn();
+        if (!GlobalData.globalEnemies.Contains(enemyScript))
+        {
+            //添加到全局敌人列表
+            GlobalData.globalEnemies.Add(enemyScript);
+        }
+
+        move.ContinueMove();
     }
 
     public IEnumerator StartSpawnInOrder()
@@ -61,27 +183,7 @@ public class Ginseng : Enemy
                 yield return null;
             }
 
-            GameObject littleGinseng = Instantiate(littleGinsengPrefab);
-            littleGinseng.transform.position = transform.position;
-
-            //让小人参精的方向与本体的移动方向一致
-            Move move = littleGinseng.GetComponent<Move>();
-            move.StopMove();
-            move.survivalTime = GetComponent<Move>().survivalTime;
-            move.roadTilemap = GetComponent<Move>().roadTilemap;
-            move.direction = GetComponent<Move>().direction;
-
-            LittleGinsengExtractum enemyScript = littleGinseng.GetComponent<LittleGinsengExtractum>();
-            enemyScript.attach = true;
-            //调用小人参精的生成方法
-            enemyScript.GameObjectSpawn();
-            if (!GlobalData.globalEnemies.Contains(enemyScript))
-            {
-                //添加到全局敌人列表
-                GlobalData.globalEnemies.Add(enemyScript);
-            }
-
-            move.ContinueMove();
+            SpawnOne();
 
             yield return new WaitForSeconds(durationLittle);
 

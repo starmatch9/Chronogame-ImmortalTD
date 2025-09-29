@@ -10,6 +10,9 @@ public class Wall : MonoBehaviour
 
     bool wall_Exit = false;
 
+    //土墙附加时间
+    float attachedTime = 0f;
+
     //每次生成一堵墙，所以可以在脚本里维护挡住的敌人列表
     List<Enemy> blockedEnemies = new List<Enemy>();
 
@@ -21,6 +24,9 @@ public class Wall : MonoBehaviour
 
     [HideInInspector]
     public List<GameObject> missEnemies = new List<GameObject>();
+
+    [HideInInspector]
+    public List<WallEnemy> effectEnemies = new List<WallEnemy>();
 
     public void SetMaxEnemy(int m)
     {
@@ -41,6 +47,15 @@ public class Wall : MonoBehaviour
             {
                 wall_Exit = true;
                 return;
+            }
+
+            //赋予附加时间  lambda表达式提供临时变量
+            WallEnemy foundEnemy = effectEnemies.Find(effectEnemy =>
+                effectEnemy != null &&
+                enemy.gameObject.name.Contains(effectEnemy.enemyPrefab.name));
+            if (foundEnemy != null)
+            {
+                attachedTime = foundEnemy.attachTime;
             }
 
             Move move = collision.GetComponent<Move>();
@@ -80,7 +95,7 @@ public class Wall : MonoBehaviour
 
         //计时器
         float timer = 0;
-        while(timer <= wallDuration)
+        while(timer <= wallDuration + attachedTime)
         {
             if (wall_Exit)
             {

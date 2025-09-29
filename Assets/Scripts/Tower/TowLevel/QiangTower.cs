@@ -27,6 +27,9 @@ public class QiangTower : Tower
     [Header("无效敌人列表")]
     public List<GameObject> missEnemies = new List<GameObject>();
 
+    [Header("影响土墙持续时间敌人列表")]
+    public List<WallEnemy> effectEnemies = new List<WallEnemy>();
+
     private void Start()
     {
         TowerAction(); //在开始时执行一次塔的行为
@@ -50,6 +53,7 @@ public class QiangTower : Tower
         //开始墙的生命周期
         Wall w = wall.GetComponent<Wall>();
         w.missEnemies = missEnemies;
+        w.effectEnemies = effectEnemies;
         w.elementAttribute = elementAttribute;
         w.attackAttribute = attackAttribute;
         //最大阻挡数量

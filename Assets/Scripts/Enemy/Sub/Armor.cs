@@ -50,4 +50,10 @@ public class Armor : Enemy
                 break;
         }
     }
+
+    public override void OtherReset()
+    {
+        waterCount = 0;
+        fireCount = 0;
+    }
 }

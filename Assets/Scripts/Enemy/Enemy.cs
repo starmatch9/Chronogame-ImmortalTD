@@ -38,7 +38,7 @@ public abstract class Enemy : MonoBehaviour
 
     bool isDead = false; //是否死亡
 
-    private void Awake()
+    public virtual void Awake()
     {
         //获取血条组件
         healthBar = GetComponentInChildren<HealthBar>();
@@ -114,9 +114,13 @@ public abstract class Enemy : MonoBehaviour
             //真伤
             value = attack;
         }
+
+        //元素克制可能引发的增伤减伤行为
+        value = ElementExtraHurt(elementAttribute, value);
+
         //在属性伤害计算完成后乘以倍率（目前只有冰冻子弹用到了）
         value *= hurtRate;
-       
+
         MinusHealth(value);
     }
 
@@ -132,6 +136,12 @@ public abstract class Enemy : MonoBehaviour
     public virtual void ElementFunction(GlobalData.ElementAttribute elementAttribute)
     {
 
+    }
+
+    //元素克制可能引发的增伤减伤行为
+    public virtual float ElementExtraHurt(GlobalData.ElementAttribute elementAttribute, float attack)
+    {
+        return attack;
     }
 
     //一些由子类衍生出的需要重置的条目,也是敌人死亡时的动作
